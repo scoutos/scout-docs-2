@@ -1,0 +1,122 @@
+# Scout Skills
+
+Extend your agents with powerful capabilities through Scout Skills — modular tools that connect AI agents to Scout's data platform and beyond.
+
+## What are Scout Skills?
+
+Scout Skills are modular, reusable tool definitions that give AI agents new capabilities. Think of them as "apps for your agents" — each skill provides a set of tools and knowledge that agents can use to accomplish tasks.
+
+Skills are defined using a simple format that includes:
+
+- **Metadata** — Name, description, and configuration
+- **Instructions (SKILL.md)** — Documentation that tells the agent how and when to use the skill
+- **Tools** — HTTP endpoints, functions, or integrations the skill can access
+
+## Why Skills?
+
+### Extend Agent Capabilities
+
+Agents start with conversational abilities. Skills give them superpowers:
+
+- **Data Access** — Query databases, search documents, manage tables
+- **External Integrations** — Connect to APIs, upload files, sync data
+- **Domain Knowledge** — Specialized instructions for specific use cases
+
+### Reusability
+
+Build once, use everywhere:
+
+- Share skills across multiple agents
+- Version and update capabilities independently
+- Create specialized skills for different teams or use cases
+
+### Separation of Concerns
+
+Keep your agent prompts clean:
+
+- Complex tool instructions live in skills
+- Agents simply reference the skill by name
+- Update skills without changing agent configurations
+
+## How Skills Work
+
+When an agent is given access to a skill:
+
+1. **Loading** — The skill's SKILL.md is loaded into the agent's context
+2. **Understanding** — The agent learns what tools are available and when to use them
+3. **Execution** — When a task requires the skill, the agent invokes the appropriate tool
+4. **Response** — Results are returned to the agent for processing and response
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   Agent     │────▶│    Skill    │────▶│   Tools     │
+│             │     │  (SKILL.md) │     │  (APIs)     │
+└─────────────┘     └─────────────┘     └─────────────┘
+       │                                        │
+       └────────────────────────────────────────┘
+                   Results flow back
+```
+
+## Skill Components
+
+### SKILL.md
+
+The instruction file that teaches the agent how to use the skill:
+
+```markdown
+---
+name: my-skill
+description: What this skill does and when to use it
+---
+
+# Skill Instructions
+
+Detailed documentation on:
+- Available tools and endpoints
+- When to use each capability
+- Authentication requirements
+- Example usage patterns
+```
+
+### Tools Configuration
+
+Skills define what tools agents can access:
+
+- **HTTP Endpoints** — REST API calls with authentication
+- **Functions** — Server-side code execution
+- **Integrations** — Pre-built connections to popular services
+
+## Installation
+
+Skills can be installed using the OpenClaw CLI:
+
+```bash
+# Install from GitHub
+npx skills add scoutos/scout-skills
+
+# Or copy directly to your skills folder
+```
+
+## Authentication
+
+Many skills require authentication to access external services:
+
+1. **API Keys** — Store securely in environment variables
+2. **OAuth** — Connect through Scout's integration system
+3. **Secrets Management** — Use secure credential storage
+
+Example:
+
+```bash
+# Set credentials as environment variables
+export SCOUT_API_KEY="your-api-key-here"
+```
+
+## Next Steps
+
+- [Available Skills](/skills/available-skills) — Explore built-in skills for Scout
+- [Creating Skills](/skills/creating-skills) — Learn to build custom skills
+
+---
+
+*Built with ❤️ by Scout OS*

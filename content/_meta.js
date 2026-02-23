@@ -1,8 +1,10 @@
 export default {
   index: 'Introduction',
   'getting-started': 'Getting Started',
+  agents: 'Agents',
+  skills: 'Skills',
   workflows: 'Workflows',
-  blocks: 'Blocks Reference',
+  drive: 'Drive',
   collections: 'Collections & Tables',
   about: {
     title: 'About',

@@ -1,15 +1,114 @@
-# Workflows Overview
+# Workflows
 
-Workflows are the core building blocks of Scout applications.
+Build automated processes that connect your tools, trigger on events, and run reliably at scale.
 
-## What is a Workflow?
+## What are Workflows?
 
-A workflow is a sequence of interconnected blocks that process data from input to output.
+Workflows are the automation backbone of Scout. They connect your tools and services, respond to triggers, and execute predefined sequences of actions. Think of them as "if this, then that" on steroids - with branching logic, error handling, and the power of AI agents built in.
 
-## Workflow Types
+## When to Use Workflows
 
-- **Trigger-based** - Respond to events
-- **Scheduled** - Run on a schedule
-- **Manual** - Run on demand
+### Proactive Automation
 
-(TODO: Migrate content from docs.scoutos.com)
+Workflows excel at **event-driven automation** - doing things automatically when something happens:
+
+- A new lead fills out a form → Add to CRM, research company, notify sales team
+- Meeting ends on Zoom → Transcribe, extract action items, send follow-up email
+- Support ticket created → Categorize, suggest response, escalate if urgent
+- Calendar event approaches → Prepare briefing, attach relevant docs, notify attendees
+
+### Scheduled Tasks
+
+Run processes on a schedule without manual intervention:
+
+- Daily sales report generation
+- Weekly competitor monitoring
+- Monthly data cleanup and archival
+
+### Complex Multi-Step Processes
+
+When a task requires multiple steps with conditional logic:
+
+```
+1. Receive webhook from payment system
+2. Check if customer exists in CRM
+   - If new: Create contact, assign to account rep
+   - If existing: Update purchase history
+3. Generate invoice
+4. Send confirmation email
+5. Update analytics dashboard
+```
+
+## Workflows vs. Agents
+
+| Aspect | Workflows | Agents |
+|--------|-----------|--------|
+| **Best For** | Predictable, repeatable processes | Open-ended, adaptive tasks |
+| **Control Flow** | Predefined steps and branches | Agent decides approach |
+| **Triggers** | Events, webhooks, schedules | Chat messages, mentions |
+| **Consistency** | Same output every time | May vary based on context |
+| **Complexity** | Excellent for multi-step integrations | Better for nuanced decisions |
+
+### Use Workflows When:
+- You know the exact steps in advance
+- You need reliable, repeatable automation
+- The process should be triggered automatically
+- Multiple tools need to be connected
+
+### Use Agents When:
+- The task requires judgment or creativity
+- The approach isn't predictable
+- You want conversational interaction
+- The agent needs to adapt to unexpected situations
+
+## The Power of Agent Blocks
+
+Workflows don't have to be rigid - you can include **Agent Blocks** that bring AI intelligence to your automation:
+
+- A workflow triggers when a form is submitted
+- An Agent Block analyzes the submission and decides what to do
+- The workflow routes accordingly based on the agent's decision
+
+This combines the reliability of workflows with the adaptability of agents.
+
+## Core Components
+
+### Triggers
+
+What starts your workflow:
+
+- **Webhooks** - HTTP requests from external services
+- **Schedules** - Time-based execution (cron)
+- **Events** - Scout-specific events (agent completes, file uploaded)
+- **Integrations** - Native triggers (Fireflies meeting ends, Calendar reminder)
+
+### Blocks
+
+The building blocks of your workflow:
+
+- **Action Blocks** - Perform operations (API calls, data storage, notifications)
+- **Agent Blocks** - Run AI agents as part of the workflow
+- **Condition Blocks** - Branch logic (if/else, switch)
+- **Transform Blocks** - Modify and restructure data
+
+### Data Flow
+
+Connect blocks together and pass data between them. Each block can access outputs from previous blocks, enabling powerful automation chains.
+
+## Getting Started
+
+1. Navigate to **Studio → Workflows**
+2. Click **New Workflow**
+3. Add a trigger (webhook, schedule, or integration)
+4. Connect blocks to build your process
+5. Test and activate
+
+## Next Steps
+
+- [Agent Blocks](/workflows/agent-blocks) - Use AI agents within your workflows
+- [Agents Overview](/agents) - Learn about building AI agents
+- [Drive](/drive) - Store and retrieve files for your workflows
+
+---
+
+*Built with ❤️ by Scout OS*

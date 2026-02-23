@@ -1,0 +1,410 @@
+# Querying Data
+
+Learn how to search and retrieve data from your collections using semantic search, hybrid search, and advanced filtering.
+
+## Search Types
+
+Scout Collections support multiple search modes:
+
+| Search Type | How It Works | Best For |
+|-------------|--------------|----------|
+| **Semantic (Vector)** | Matches by meaning using embeddings | Natural language queries, finding related concepts |
+| **Keyword (BM25)** | Matches exact keywords | Specific terms, product names, codes |
+| **Hybrid** | Combines both approaches | General-purpose search, mixed queries |
+
+### Semantic Search
+
+Semantic search converts your query into a vector embedding and finds documents with similar vectors. This means it can find relevant content even when exact words don't match.
+
+**Example:**
+
+```yaml
+Query: "how do I reset my password"
+Finds: Documents about "password recovery", "account access", "login issues"
+```
+
+**Best for:**
+- Natural language queries
+- Finding conceptually similar content
+- Synonym-rich domains
+- Conversational interfaces
+
+### Keyword Search
+
+Keyword search uses BM25 to find documents containing exact keyword matches. This is traditional full-text search.
+
+**Example:**
+
+```yaml
+Query: "API_KEY_12345"
+Finds: Only documents containing "API_KEY_12345" exactly
+```
+
+**Best for:**
+- Exact term matching
+- Product codes, SKUs
+- Technical identifiers
+- Precise searches
+
+### Hybrid Search
+
+Hybrid search combines semantic and keyword approaches using Reciprocal Rank Fusion (RRF). It gets the best of both worlds.
+
+**Example:**
+
+```yaml
+Query: "React hooks tutorial"
+Finds:
+  - Documents with "React", "hooks", "tutorial" (keyword matches)
+  - Documents about "state management in React" (semantic matches)
+```
+
+**Best for:**
+- General-purpose search
+- Mixed query styles
+- Maximum coverage
+- Most production applications
+
+## Querying via Workflows
+
+Use the **Query Collection Table** block in your workflows to search collections.
+
+### Configuration
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| **Collection** | Select your collection | Required |
+| **Table** | Select the table to query | Required |
+| **Search Term** | Your query (supports Jinja templating) | Required |
+| **Minimum Similarity** | Threshold for relevance (0-1) | 0.35 |
+| **Hybrid Search** | Enable combined search | false |
+| **Alpha** | Weight for semantic vs keyword (0-1) | 0.5 |
+| **Filters** | Filter results by metadata | Optional |
+| **Limit** | Maximum results to return | 10 |
+
+### Example Workflow Query
+
+```yaml
+Collection: Knowledge Base
+Table: Documentation
+Search Term: "{{inputs.user_question}}"
+Minimum Similarity: 0.5
+Hybrid Search: true
+Alpha: 0.5
+Limit: 10
+```
+
+### Using Query Results
+
+The block returns an array of results that you can use in subsequent blocks:
+
+```json
+[
+  {
+    "details": {
+      "vector_distance": 0.15,
+      "hybrid_score": null
+    },
+    "record": {
+      "id": "doc_abc123",
+      "attributes": {
+        "title": "Getting Started Guide",
+        "content": "This guide walks you through...",
+        "category": "tutorial",
+        "url": "https://docs.example.com/getting-started"
+      }
+    }
+  }
+]
+```
+
+Access in later blocks with Jinja:
+
+```jinja2
+{{ query_results.output[0].record.attributes.title }}
+```
+
+## Querying via API
+
+### Basic Query
+
+```bash
+curl -X POST https://api.scoutos.com/v2/collections/{collection_id}/tables/{table_id}/query \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "search_term": "customer support",
+    "min_similarity": 0.5,
+    "limit": 10
+  }'
+```
+
+### Hybrid Search Query
+
+```bash
+curl -X POST https://api.scoutos.com/v2/collections/{collection_id}/tables/{table_id}/query \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "search_term": "React hooks tutorial",
+    "min_similarity": 0.5,
+    "hybrid_search": true,
+    "alpha": 0.5,
+    "limit": 10
+  }'
+```
+
+### Using Python SDK
+
+```python
+from scoutos import Scout
+
+client = Scout(api_key="YOUR_API_KEY")
+
+results = client.tables.query(
+    collection_id="col_abc123",
+    table_id="tab_xyz789",
+    search_term="customer support",
+    min_similarity=0.5,
+    hybrid_search=True,
+    limit=10
+)
+
+for result in results:
+    print(f"Title: {result['record']['attributes']['title']}")
+    print(f"Distance: {result['details']['vector_distance']}")
+```
+
+### Using TypeScript SDK
+
+```typescript
+import { ScoutClient } from "scoutos";
+
+const client = new ScoutClient({ apiKey: "YOUR_API_KEY" });
+
+const results = await client.tables.query({
+  collectionId: "col_abc123",
+  tableId: "tab_xyz789",
+  searchTerm: "customer support",
+  minSimilarity: 0.5,
+  hybridSearch: true,
+  limit: 10
+});
+
+results.forEach(result => {
+  console.log(`Title: ${result.record.attributes.title}`);
+});
+```
+
+## Advanced Filtering
+
+Filters let you narrow down search results based on metadata columns. Filters use a JSON array format:
+
+```json
+["column_id", "operator", "value"]
+```
+
+### Available Operators
+
+| Operator | Description | Example |
+|----------|-------------|---------|
+| `Eq` | Equal to | `["status", "Eq", "active"]` |
+| `NotEq` | Not equal to | `["status", "NotEq", "archived"]` |
+| `In` | In a list of values | `["category", "In", ["tutorial", "guide"]]` |
+| `NotIn` | Not in a list | `["category", "NotIn", ["draft", "archived"]]` |
+| `Gt` | Greater than | `["price", "Gt", 50]` |
+| `Gte` | Greater than or equal | `["views", "Gte", 1000]` |
+| `Lt` | Less than | `["created_at", "Lt", 1704067200]` |
+| `Lte` | Less than or equal | `["stock", "Lte", 10]` |
+| `Glob` | Pattern match (case-sensitive) | `["url", "Glob", "*/docs/*"]` |
+| `IGlob` | Pattern match (case-insensitive) | `["title", "IGlob", "*quick*"]` |
+| `And` | All filters must match | `["And", [[...], [...]]]` |
+| `Or` | Any filter must match | `["Or", [[...], [...]]]` |
+
+### Filter Examples
+
+**Single Filter:**
+
+```json
+["category", "Eq", "tutorial"]
+```
+
+**Date Range:**
+
+```json
+["And", [
+  ["created_at", "Gte", 1672531200],
+  ["created_at", "Lte", 1704067200]
+]]
+```
+
+**Multiple Categories:**
+
+```json
+["category", "In", ["tutorial", "guide", "reference"]]
+```
+
+**Text Contains:**
+
+```json
+["title", "IGlob", "*getting started*"]
+```
+
+**Combined Conditions:**
+
+```json
+["And", [
+  ["category", "Eq", "tutorial"],
+  ["difficulty", "In", ["beginner", "intermediate"]],
+  ["created_at", "Gte", 1704067200]
+]]
+```
+
+### Using Filters in Workflows
+
+Apply filters dynamically using Jinja templating:
+
+```yaml
+Filters: ["category", "Eq", "{{inputs.category}}"]
+```
+
+For complex dynamic filters:
+
+```jinja2
+{% if inputs.show_archived %}
+["category", "Eq", "{{inputs.category}}"]
+{% else %}
+["And", [[\"category\", \"Eq\", \"{{inputs.category}}\"], [\"status\", \"NotEq\", \"archived\"]]]
+{% endif %}
+```
+
+## Minimum Similarity Threshold
+
+The minimum similarity threshold filters out results that aren't relevant enough.
+
+**Scale:**
+
+| Value | Behavior |
+|-------|----------|
+| **0.0 - 0.4** | Broad results, includes marginal matches |
+| **0.5 - 0.7** | Balanced precision and recall |
+| **0.8 - 1.0** | Strict, only highly relevant results |
+
+**Choosing a Threshold:**
+
+- **0.3-0.4** for exploratory searches, finding all potentially relevant content
+- **0.5-0.6** for general-purpose knowledge bases (recommended default)
+- **0.7-0.8** for technical documentation where precision matters
+- **0.8+** for finding exact or near-exact matches
+
+## Alpha Parameter (Hybrid Search)
+
+The alpha parameter controls the balance between semantic and keyword search in hybrid mode.
+
+**Scale:**
+
+| Alpha | Behavior |
+|-------|----------|
+| **0.0** | Pure keyword search (BM25 only) |
+| **0.3** | Mostly keyword, some semantic boost |
+| **0.5** | Balanced (default) |
+| **0.7** | Mostly semantic, some keyword precision |
+| **1.0** | Pure semantic search |
+
+**When to Adjust:**
+
+- **Lower alpha (0.2-0.4)** for technical docs with specific terms
+- **Medium alpha (0.5)** for general knowledge bases
+- **Higher alpha (0.7-0.9)** for natural language queries and content discovery
+
+## Best Practices
+
+### 1. Start with Defaults
+
+Begin with:
+- `min_similarity: 0.5`
+- `hybrid_search: true`
+- `alpha: 0.5`
+
+Adjust based on your results.
+
+### 2. Use Hybrid Search
+
+Hybrid search gives the best results for most use cases. It catches both exact matches and semantically related content.
+
+### 3. Leverage Filters
+
+Use metadata filters to:
+- Narrow results to relevant categories
+- Filter by date ranges
+- Exclude unwanted status values
+
+### 4. Optimize Your Content
+
+For better search results:
+- Write comprehensive, descriptive content
+- Use clear headings and structure
+- Include relevant keywords naturally
+- Keep metadata accurate and consistent
+
+### 5. Test with Real Queries
+
+Use actual user queries to tune:
+- Similarity thresholds
+- Alpha values
+- Filter configurations
+
+## Common Queries
+
+### Find Similar Documents
+
+```json
+{
+  "search_term": "{{document.content}}",
+  "min_similarity": 0.7,
+  "limit": 5
+}
+```
+
+### Recent Tutorials
+
+```json
+{
+  "search_term": "{{user_query}}",
+  "filters": ["And", [
+    ["category", "Eq", "tutorial"],
+    ["created_at", "Gte", {{thirty_days_ago}}]
+  ]],
+  "limit": 10
+}
+```
+
+### Exclude Drafts
+
+```json
+{
+  "search_term": "{{user_query}}",
+  "filters": ["status", "NotEq", "draft"],
+  "limit": 10
+}
+```
+
+### Multi-Category Search
+
+```json
+{
+  "search_term": "{{user_query}}",
+  "filters": ["category", "In", ["tutorial", "guide", "reference"]],
+  "limit": 15
+}
+```
+
+## Next Steps
+
+- [Sources](/collections/sources) — Automate data syncing
+- [Creating Collections](/collections/creating-collections) — Set up your schemas
+- [Workflows](/agents) — Build AI-powered applications
+
+---
+
+*Built with ❤️ by Scout OS*

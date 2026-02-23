@@ -1,0 +1,140 @@
+# Collections & Tables
+
+Store, organize, and search structured data with Scout's Collections and Tables — your foundation for building RAG applications, knowledge bases, and data-driven workflows.
+
+## What are Collections?
+
+Collections are groups of **Tables**, and Tables contain **Documents** — structured data records that can include both metadata and text content. The text content is automatically indexed for semantic search, enabling powerful AI-driven retrieval.
+
+```
+Collection
+├── Table 1
+│   ├── Document 1 (metadata + text)
+│   ├── Document 2 (metadata + text)
+│   └── ...
+├── Table 2
+│   └── ...
+└── Sources (sync integrations)
+```
+
+## Key Features
+
+- **Vector Search** — Text content is automatically embedded and indexed for semantic search
+- **Hybrid Search** — Combine vector (semantic) search with keyword (BM25) search
+- **Structured Metadata** — Filter and sort results using typed columns
+- **Source Syncs** — Automatically sync data from Notion, Google Sheets, web scrapes, and more
+- **Workflow Integration** — Query and save data directly from your workflows
+
+## Collections vs. Drive
+
+| Feature | Collections & Tables | Drive |
+|---------|---------------------|-------|
+| **Purpose** | Structured data & vector search | File storage (PDFs, images) |
+| **Search** | Semantic/vector search | By path/name |
+| **Use Case** | RAG, knowledge bases, CRMs | Assets, attachments, media |
+| **AI Access** | Agents can search semantically | Agents can read files |
+
+### When to Use Collections
+
+Use Collections when you need:
+- **RAG Applications** — Build chatbots that answer questions from your data
+- **Knowledge Bases** — Create searchable documentation repositories
+- **CRM & User Data** — Store and query customer information
+- **Semantic Search** — Find content by meaning, not just keywords
+
+### When to Use Drive
+
+Use Drive when you need:
+- **File Storage** — Store PDFs, images, and documents
+- **Asset Management** — Manage media files for workflows
+- **Simple Access** — Read files by path without complex querying
+
+## Quick Start
+
+### Create a Collection
+
+1. Navigate to **Collections** in the Scout dashboard
+2. Click **+ New**
+3. Enter a name and description
+4. Click **Create**
+
+Scout provisions the underlying vector database automatically (takes ~30 seconds).
+
+### Create a Table
+
+When you create a Collection, it automatically includes an "Untitled" table. Customize it:
+
+1. Click the **+** button in the table header to add columns
+2. Choose column types (Single Line Text, Multi Line Text, Number, Checkbox, URL)
+3. Add data manually or connect a Source
+
+### Add Documents
+
+**Via the API:**
+
+```bash
+curl -X POST https://api.scoutos.com/v2/collections/{collection_id}/tables/{table_id}/documents \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "documents": [{
+      "id": "doc_1",
+      "text": "Your searchable content here...",
+      "title": "Document Title",
+      "category": "documentation"
+    }]
+  }'
+```
+
+**Using Python:**
+
+```python
+from scoutos import Scout
+
+client = Scout(api_key="YOUR_API_KEY")
+
+client.documents.create(
+    collection_id="col_abc123",
+    table_id="tab_xyz789",
+    documents=[{
+        "id": "doc_1",
+        "text": "Your searchable content here...",
+        "title": "Document Title"
+    }]
+)
+```
+
+### Query Your Data
+
+**In a Workflow:**
+
+Use the [Query Collection Table](/collections/querying-data) block to search your data:
+
+```yaml
+Search Term: "{{inputs.user_question}}"
+Minimum Similarity: 0.5
+Hybrid Search: true
+Limit: 10
+```
+
+**Via the API:**
+
+```bash
+curl -X POST https://api.scoutos.com/v2/collections/{collection_id}/tables/{table_id}/query \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "search_term": "customer support",
+    "min_similarity": 0.5,
+    "limit": 10
+  }'
+```
+
+## Next Steps
+
+- [Creating Collections](/collections/creating-collections) — Learn how to create collections, configure tables, and define schemas
+- [Querying Data](/collections/querying-data) — Master semantic search, hybrid search, and advanced filtering
+
+---
+
+*Built with ❤️ by Scout OS*

@@ -1,0 +1,265 @@
+# Creating Collections & Tables
+
+Learn how to create collections, configure tables with the right schema, and populate them with data.
+
+## Creating a Collection
+
+### From the Dashboard
+
+1. Navigate to **Collections** in the Scout dashboard
+2. Click **+ New** at the top
+3. Fill in the details:
+   - **Name** (required) — A descriptive name for your collection
+   - **Description** (optional) — What this collection contains
+   - **Icon** (optional) — Visual identifier
+4. Click **Create**
+
+The collection will be provisioned with its underlying vector database. This typically takes about 30 seconds — the status will be displayed in the UI.
+
+### Via the API
+
+```bash
+curl -X POST https://api.scoutos.com/v2/collections \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Knowledge Base",
+    "description": "Product documentation and support articles"
+  }'
+```
+
+**Using Python:**
+
+```python
+from scoutos import Scout
+
+client = Scout(api_key="YOUR_API_KEY")
+
+collection = client.collections.create(
+    name="Knowledge Base",
+    description="Product documentation and support articles"
+)
+
+print(collection)  # {'id': 'col_...', 'name': 'Knowledge Base', ...}
+```
+
+**Using TypeScript:**
+
+```typescript
+import { ScoutClient } from "scoutos";
+
+const client = new ScoutClient({ apiKey: "YOUR_API_KEY" });
+
+const collection = await client.collections.create({
+  name: "Knowledge Base",
+  description: "Product documentation and support articles"
+});
+```
+
+## Configuring Tables
+
+Each Collection contains Tables. When you create a Collection, Scout automatically creates an "Untitled" table for you.
+
+### Adding Columns
+
+Tables use columns to define their schema. Each column has a type and stores a specific kind of data.
+
+**To add a column:**
+
+1. Open your table
+2. Click the **+** button in the table header row
+3. Enter a column name and select a type
+
+### Column Types
+
+| Type | Description | Best For |
+|------|-------------|----------|
+| **Single Line Text** | Short text entries | Names, titles, IDs |
+| **Multi Line Text** | Long-form content | Descriptions, notes, articles |
+| **Number** | Numeric values | Quantities, prices, timestamps |
+| **Checkbox** | Boolean true/false | Status flags, completion |
+| **URL** | Web addresses | Links, references |
+
+### Example: Documentation Table
+
+For a documentation knowledge base, create these columns:
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `title` | Single Line Text | Article title |
+| `content` | Multi Line Text | Full article text (indexed for search) |
+| `url` | URL | Original source URL |
+| `category` | Single Line Text | Topic classification |
+| `updated_at` | Number | Unix timestamp of last update |
+
+### The `content` Column
+
+The `content` column is special when vector indexing is enabled:
+
+- **Automatic Chunking** — Long content is split into ~2,500 character chunks
+- **Vector Embeddings** — Each chunk gets its own embedding for semantic search
+- **Search Results** — Results link back to the parent document
+
+**Best Practice:** Store your main searchable text in a `content` column for optimal semantic search.
+
+## Populating Tables
+
+There are several ways to add documents to your tables.
+
+### Method 1: Manual Entry
+
+For small datasets, add documents directly:
+
+1. Open your table
+2. Click **+ Add Document** or click in an empty row
+3. Fill in the fields
+4. Save
+
+### Method 2: Source Syncs
+
+Connect external data sources that automatically sync to your table:
+
+- **Web Scraping** — Crawl websites and sitemaps
+- **Notion** — Sync Notion databases and pages
+- **Google Sheets** — Sync spreadsheet rows
+
+[Learn more about Sources →](/collections/sources)
+
+### Method 3: API / SDK
+
+Programmatically add documents from your applications:
+
+```python
+from scoutos import Scout
+
+client = Scout(api_key="YOUR_API_KEY")
+
+# Add a single document
+client.documents.create(
+    collection_id="col_abc123",
+    table_id="tab_xyz789",
+    documents=[{
+        "id": "doc_001",
+        "title": "Getting Started Guide",
+        "content": "This comprehensive guide walks you through...",
+        "url": "https://docs.example.com/getting-started",
+        "category": "tutorial",
+        "updated_at": 1704067200
+    }]
+)
+
+# Add multiple documents at once
+client.documents.create(
+    collection_id="col_abc123",
+    table_id="tab_xyz789",
+    documents=[
+        {"id": "doc_001", "title": "Doc 1", "content": "...", "category": "tutorial"},
+        {"id": "doc_002", "title": "Doc 2", "content": "...", "category": "reference"},
+        {"id": "doc_003", "title": "Doc 3", "content": "...", "category": "tutorial"}
+    ]
+)
+```
+
+### Method 4: Workflow Blocks
+
+Save data from workflows using the **Save Document to Table** block:
+
+1. Add the block to your workflow
+2. Select your Collection and Table
+3. Map workflow outputs to table columns
+4. Run the workflow
+
+[Learn more about querying data →](/collections/querying-data)
+
+## Document Structure
+
+Each document has:
+
+```json
+{
+  "id": "unique_document_id",    // Required: Unique identifier
+  "content": "Main searchable text...",  // Indexed for semantic search
+  "title": "Document Title",     // Custom metadata field
+  "category": "tutorial",        // Custom metadata field
+  "url": "https://...",          // Custom metadata field
+  "created_at": 1704067200       // Custom metadata field
+}
+```
+
+### Content Field
+
+The `content` field (or any field designated as the vector index field):
+
+- Gets automatically chunked into smaller pieces
+- Each chunk receives its own vector embedding
+- Enables semantic search on the document
+
+### Metadata Fields
+
+All other columns store structured data:
+
+- Used for filtering search results
+- Displayed in the UI
+- Can be modified anytime
+
+## Managing Tables
+
+### View Table Schema
+
+```bash
+curl https://api.scoutos.com/v2/collections/{collection_id}/tables/{table_id}/schema \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+### Update Table
+
+```bash
+curl -X PATCH https://api.scoutos.com/v2/collections/{collection_id}/tables/{table_id} \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Updated Table Name"
+  }'
+```
+
+### Delete Table
+
+```bash
+curl -X DELETE https://api.scoutos.com/v2/collections/{collection_id}/tables/{table_id} \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+## Best Practices
+
+### Naming Conventions
+
+- Use descriptive, consistent names for collections and tables
+- Use snake_case for column names (`created_at`, `user_id`)
+- Keep column names concise but clear
+
+### Schema Design
+
+- Store searchable text in a `content` column
+- Use metadata columns for filtering (categories, dates, tags)
+- Include an `id` field for easy document updates
+- Add timestamps (`created_at`, `updated_at`) for tracking
+
+### Content Optimization
+
+For better semantic search:
+
+- Write comprehensive, descriptive content
+- Include context and details
+- Avoid heavy abbreviations
+- Consider including synonyms
+- Structure content with clear headings
+
+## Next Steps
+
+- [Querying Data](/collections/querying-data) — Learn how to search your collections
+- [Sources](/collections/sources) — Automate data syncs from external sources
+- [Workflows](/agents) — Use collections in your AI workflows
+
+---
+
+*Built with ❤️ by Scout OS*

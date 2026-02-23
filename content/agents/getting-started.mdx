@@ -1,0 +1,241 @@
+# Getting Started with Agents
+
+Get your first AI agent running in under 2 minutes with pre-built templates, or build from scratch in 5 minutes.
+
+## The Fastest Way: Start with a Template
+
+The Agent Marketplace is the easiest way to get started. Choose from pre-built templates designed for common use cases—they come with everything pre-configured: instructions, tools, and integrations.
+
+### Step 1: Browse the Marketplace
+
+Navigate to [studio.scoutos.com/agents/marketplace](https://studio.scoutos.com/agents/marketplace) to see available templates.
+
+You'll find templates for:
+
+- **Meeting Prep** - Prepare for calls with company research, recent news, and key insights
+- **Competitor Intel** - Monitor competitors, track changes, and deliver intelligence reports
+- **Deal Monitor** - Watch your pipeline for at-risk deals and recommend next actions
+- **Seller Guidance** - Get real-time coaching and deal strategy recommendations
+- **CRM Hygiene** - Keep your CRM clean with automated data validation and updates
+
+### Step 2: Install a Template
+
+Click on any template to see details, then click **Install**. Scout will:
+
+1. Create the agent with pre-written instructions
+2. Connect required tools (you'll authorize integrations)
+3. Set up suggested schedules if applicable
+
+A guided setup walks you through connecting your accounts—Salesforce, HubSpot, email, etc.—so your agent can start working immediately.
+
+### Step 3: Start Chatting
+
+Once installed, click **Chat** to start working with your new agent. Try one of the suggested prompts to see it in action.
+
+That's it! Your agent is ready to help.
+
+---
+
+## Building from Scratch
+
+Want full control? Build a custom agent from the ground up.
+
+Navigate to [studio.scoutos.com/agents/new](https://studio.scoutos.com/agents/new) to start building.
+
+### Step 1: Name Your Agent
+
+Choose a clear, descriptive name:
+
+- ✅ "Research Assistant"
+- ✅ "Customer Support Agent"
+- ❌ "Agent 1" or "Test"
+
+### Step 2: Add a Description
+
+Write a brief description of what your agent does:
+
+```
+Helps research topics, find information across the web, and answer questions 
+using our internal knowledge base.
+```
+
+### Step 3: Write Instructions (System Prompt)
+
+Define your agent's behavior and personality. Be specific about:
+
+- Its role and expertise
+- How it should communicate
+- What it should and shouldn't do
+
+**Example Instructions:**
+
+```
+You are a helpful research assistant for our team. Your role is to:
+- Find accurate, up-to-date information from web searches
+- Check our internal knowledge base first for company-specific information
+- Provide clear, concise summaries with sources
+- Ask clarifying questions when requests are ambiguous
+- Maintain a professional but friendly tone
+
+Always cite your sources and indicate whether information comes from 
+web search or our knowledge base.
+```
+
+### Step 4: Add Tools
+
+Click on the **Tools** tab to give your agent capabilities.
+
+#### Native Tools (Available Immediately)
+
+- **Web Search**: Search the internet for current information
+- **Scout Knowledge Base Search**: Search your internal documents
+
+Toggle these on to start with basic capabilities.
+
+#### Connect More Tools
+
+1. Go to [studio.scoutos.com/integrations](https://studio.scoutos.com/integrations)
+2. Connect your accounts: Google Workspace, Slack, GitHub, Salesforce, HubSpot, and more
+3. Return to your agent's Tools tab—connected integrations appear as available tools
+4. Toggle on the ones this agent should use
+
+#### Create Custom Tools
+
+Need something specific? Build custom tools using Scout workflows:
+
+- Create any logic in the visual workflow builder
+- Enable as a tool by toggling the option in the workflow builder
+- Your agent can now use it like any other tool
+
+**Pro tip**: Start with 2-3 tools and add more as you learn what your agent needs.
+
+### Step 5: Configure Settings
+
+Click the **Settings** tab to fine-tune behavior.
+
+#### Select LLM Model
+
+Choose the model that powers your agent. Each has different strengths for speed, accuracy, or task complexity.
+
+#### Set Response Style
+
+- **Precise**: Focused, reliable answers (best for data/research tasks)
+- **Balanced**: Structure and creativity for everyday tasks (recommended)
+- **Creative**: Expressive, open-ended responses for writing and ideation
+- **Experimental**: Unexpected, freeform outputs
+
+#### Configure Max Steps
+
+Set the maximum actions your agent takes per request. Each tool use counts as one step.
+
+- **5-10 steps**: Simple tasks, quick responses
+- **15-20 steps**: Research tasks with multiple searches
+- **25+ steps**: Complex workflows with multiple tools
+
+**Note**: Higher limits allow more thorough work but increase response time and costs.
+
+#### Add Conversation Starters
+
+Help users understand your agent's capabilities:
+
+```
+- "What's the latest news about AI agents?"
+- "Search our knowledge base for onboarding procedures"
+- "Find competitor pricing information"
+```
+
+#### Set Visibility
+
+- **Private**: Only you can use it
+- **Team**: Anyone in your workspace
+
+### Step 6: Test Your Agent
+
+Click **Save** to create your agent, then click **New Chat** to test it.
+
+**Try these prompts:**
+
+```
+"What is Scout?" (Should use knowledge base)
+"What's the weather in San Francisco?" (Should use web search)
+"Find information about AI agents in our docs and on the web" (Should use both)
+```
+
+**What to check:**
+
+- Is the agent using the right tools?
+- Are responses in your configured style?
+- Does it follow instructions properly?
+
+Refine instructions or settings if needed.
+
+## Schedule Your Agent
+
+Agents can run automatically on a schedule—no workflow required.
+
+1. Go to your agent's **Triggers** tab
+2. Click **Add Schedule**
+3. Set frequency (daily, weekly, or custom cron)
+4. Define what the agent should do
+
+**Example**: Your Deal Monitor can check your pipeline every morning at 8 AM and send you a summary of at-risk deals.
+
+For complete scheduling documentation, see [Agent Scheduling](/agents/scheduling).
+
+---
+
+## Planning Tools for Complex Tasks
+
+If your agent handles complex, multi-step tasks, enable planning tools in the Tools tab:
+
+- **CreatePlan** - Map out the approach before starting
+- **GetNextStep** - Track progress step by step
+- **UpdatePlan** - Adjust when new information emerges
+
+Planning tools help agents work systematically through complex workflows, reducing errors and staying focused on the goal. They're especially valuable for research tasks, data gathering from multiple sources, and any task with dependencies between steps.
+
+For the complete guide, see [Planning Tools](/agents/planning).
+
+## Access Your Agent
+
+### Scout Dashboard
+
+Chat directly in the Scout Studio dashboard—the primary way to interact with your agent.
+
+### Scout Copilot (Beta)
+
+Embed an agent chat widget in your app or website. *Email [info@scoutos.com](mailto:info@scoutos.com) for access*
+
+### Slack Integration (Beta)
+
+Add your agent to Slack channels. *Email [info@scoutos.com](mailto:info@scoutos.com) for access*
+
+### API Access (Beta)
+
+Use your agent programmatically. *Email [info@scoutos.com](mailto:info@scoutos.com) for access*
+
+## Common Questions
+
+**My agent isn't using the right tool**
+
+Adjust instructions to be more specific: "Always check the knowledge base first before searching the web."
+
+**Responses are too long/short**
+
+Add length preferences: "Provide concise summaries of 2-3 sentences unless asked for more detail."
+
+**Can I edit my agent after creating it?**
+
+Yes! All settings can be changed anytime. Remember to save changes.
+
+**How do I see what my agent is doing?**
+
+Check the Logs tab for tool usage, decision-making, and execution traces.
+
+**What's the difference between templates and custom agents?**
+
+Templates are pre-configured for specific use cases—install and go. Custom agents give you full control but require more setup. Both approaches can be modified after creation.
+
+---
+
+*Built with ❤️ by Scout OS*

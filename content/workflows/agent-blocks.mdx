@@ -1,0 +1,199 @@
+# Agent Blocks in Workflows
+
+Bring AI intelligence to your automated workflows by using agents as workflow blocks.
+
+## What are Agent Blocks?
+
+Agent Blocks let you run AI agents as steps within a workflow. This combines the reliability of predefined workflows with the adaptability of AI agents - giving you the best of both worlds.
+
+Instead of rigid if/then logic, an Agent Block can:
+
+- Analyze data and make intelligent decisions
+- Handle variations and unexpected inputs
+- Extract information from unstructured text
+- Generate personalized content
+- Route work to the right destination
+
+## When to Use Agent Blocks
+
+### Processing Unstructured Data
+
+When a webhook receives data that doesn't follow a predictable format:
+
+```
+Trigger: New email arrives
+   ↓
+Agent Block: Analyze email, extract sender intent, urgency, and key information
+   ↓
+Condition: Route based on agent's analysis
+   ├─ Urgent → Create high-priority ticket
+   ├─ Sales inquiry → Forward to CRM
+   └─ General → Auto-respond and archive
+```
+
+### Intelligent Routing
+
+Let an agent decide where data should go:
+
+- Categorize support tickets by topic and assign to the right team
+- Evaluate leads and route to appropriate sales rep
+- Analyze feedback and tag for product, engineering, or marketing
+
+### Content Generation
+
+Create personalized content as part of an automation:
+
+- Generate custom email responses
+- Create meeting summaries from transcripts
+- Draft reports based on collected data
+
+### Research and Enrichment
+
+Have an agent research and add context:
+
+- Webhook receives a new contact → Agent researches company and enriches record
+- Lead comes in → Agent finds relevant news and adds talking points
+- Customer mentioned → Agent pulls recent activity for context
+
+## How Agent Blocks Work
+
+### Input Configuration
+
+Agent Blocks receive data from:
+
+- **Workflow trigger** - The initial event (webhook payload, schedule, etc.)
+- **Previous blocks** - Output from earlier workflow steps
+- **Static values** - Fixed parameters you define
+
+### Agent Selection
+
+Choose any agent you've built in Scout:
+
+- Select from your agent library
+- Pass context and instructions specific to this workflow
+- Configure response format (text, JSON, structured data)
+
+### Output Handling
+
+The agent's response becomes available for subsequent blocks:
+
+```javascript
+// Access agent output in later blocks
+{
+  "agent_result": {
+    "category": "technical-support",
+    "urgency": "high",
+    "suggested_response": "Based on the error...",
+    "assign_to": "engineering-team"
+  }
+}
+```
+
+## Example: Meeting Follow-up Workflow
+
+This workflow demonstrates how Agent Blocks create intelligent automation:
+
+```
+Trigger: Fireflies meeting ends (meeting transcript available)
+   ↓
+Agent Block: Analyze Transcript
+   Input: meeting_transcript
+   Instructions: "Extract action items, decisions made, and follow-ups. 
+                  Identify owners and deadlines."
+   ↓
+Action Block: Create Tasks
+   For each action item → Create task in project management tool
+   ↓
+Agent Block: Draft Follow-up Email
+   Input: meeting_summary, attendees, action_items
+   Instructions: "Write a professional follow-up email summarizing 
+                  the meeting and highlighting action items."
+   ↓
+Action Block: Send Email
+   Send draft via Gmail to all attendees
+```
+
+The workflow is reliable and repeatable, but the agents handle the nuance of understanding each unique meeting.
+
+## Example: Lead Intelligence Workflow
+
+```
+Trigger: Webhook (new lead from website form)
+   ↓
+Agent Block: Research Company
+   Input: lead_company_name
+   Instructions: "Research this company. Find their industry, 
+                  size, recent news, and potential pain points 
+                  our product could address."
+   ↓
+Action Block: Create CRM Record
+   Create contact with enriched data
+   ↓
+Agent Block: Generate Outreach
+   Input: research_findings, lead_info
+   Instructions: "Write a personalized outreach email addressing 
+                  their likely needs based on the research."
+   ↓
+Condition: Check Lead Score
+   If high-value → Notify sales rep immediately
+   Otherwise → Add to nurture sequence
+```
+
+## Best Practices
+
+### Keep Agents Focused
+
+Each Agent Block should do one thing well:
+
+- ✅ "Extract the purchase intent from this message"
+- ❌ "Analyze everything about this customer and decide what to do"
+
+Chain multiple focused Agent Blocks instead of one complex agent.
+
+### Define Clear Outputs
+
+Structure your agent instructions to return predictable formats:
+
+```
+Instructions: "Analyze this support ticket. Return JSON with:
+- category: one of [technical, billing, feature-request, other]
+- urgency: one of [low, medium, high, critical]
+- summary: 1-2 sentence summary
+- suggested_action: what should happen next"
+```
+
+This makes the output easy to use in subsequent workflow blocks.
+
+### Handle Edge Cases
+
+Agents are powerful but not infallible. Add fallback logic:
+
+```
+Agent Block → Condition Block (was output valid?)
+   ├─ Yes → Continue workflow
+   └─ No → Route to human review queue
+```
+
+### Use Agent Instructions as Configuration
+
+Treat agent instructions like workflow configuration. Be specific about:
+
+- What input the agent receives
+- What format the output should be
+- Any constraints or preferences
+
+## Limitations
+
+- Agent Blocks have the same timeout limits as chat interactions
+- Large or complex tasks should be broken into smaller Agent Blocks
+- For purely deterministic logic, use Condition Blocks instead
+
+## Next Steps
+
+- [Workflows Overview](/workflows) - Learn more about workflow fundamentals
+- [Agents](/agents) - Build agents to use in your workflows
+- [Getting Started](/getting-started) - Start building your first workflow
+
+---
+
+*Built with ❤️ by Scout OS*

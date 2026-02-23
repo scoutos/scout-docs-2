@@ -1,0 +1,286 @@
+# Agent Scheduling
+
+Run your agents automatically on a schedule without building workflows.
+
+## What is Agent Scheduling?
+
+Agent scheduling lets you configure your agents to run automatically at specified times. Instead of manually triggering an agent or building a complex workflow, you can simply set a schedule and let the agent do its work on autopilot.
+
+Common use cases:
+
+- **Daily standup prep** - Have an agent summarize yesterday's activity each morning
+- **Weekly reports** - Generate competitor intel or pipeline reports every Monday
+- **CRM hygiene** - Clean up stale contacts and dedupe records nightly
+- **Monitoring** - Check for important changes or anomalies on a regular cadence
+
+## How It Works
+
+When you set up a schedule:
+
+1. The agent receives any inputs you've configured
+2. It runs through its instructions and uses its tools
+3. Results are saved and can be delivered to Slack, email, or another destination
+
+No workflow required - scheduling is built directly into agent settings.
+
+## Setting Up a Schedule
+
+### Step 1: Open Agent Settings
+
+Navigate to your agent and click the **Settings** tab.
+
+### Step 2: Find the Schedule Section
+
+Look for the **Schedule** section where you can configure when and how often your agent runs.
+
+### Step 3: Choose Your Schedule Type
+
+#### Daily Schedule
+
+Run your agent once per day at a specific time:
+
+- Select "Daily"
+- Choose the time (e.g., 9:00 AM)
+- Select the timezone
+
+Use for: Daily summaries, morning prep, overnight tasks
+
+#### Weekly Schedule
+
+Run your agent on specific days:
+
+- Select "Weekly"
+- Choose the day(s) - Monday, Wednesday, Friday, etc.
+- Choose the time
+- Select the timezone
+
+Use for: Weekly reports, end-of-week wrap-ups, periodic reviews
+
+#### Custom Cron Schedule
+
+For advanced scheduling needs, use cron syntax:
+
+- Select "Custom"
+- Enter a cron expression
+- Example: `0 */4 * * *` runs every 4 hours
+
+Common cron patterns:
+
+| Pattern | Meaning |
+|---------|---------|
+| `0 9 * * *` | Every day at 9:00 AM |
+| `0 9 * * 1` | Every Monday at 9:00 AM |
+| `0 9 * * 1-5` | Weekdays at 9:00 AM |
+| `0 */2 * * *` | Every 2 hours |
+| `0 0 1 * *` | First day of every month |
+
+### Step 4: Configure Inputs
+
+Provide any inputs the agent needs to run:
+
+```json
+{
+  "report_type": "weekly_summary",
+  "date_range": "last_7_days",
+  "recipient": "team@company.com"
+}
+```
+
+These inputs are passed to your agent every time it runs on schedule.
+
+### Step 5: Save and Enable
+
+Save your settings and enable the schedule. Your agent will now run automatically at the times you specified.
+
+## Scheduled Agent Outputs
+
+When a scheduled agent runs, its output can be:
+
+- **Saved to Drive** - Store reports, summaries, or data files
+- **Posted to Slack** - Send results to a channel
+- **Sent via Email** - Deliver reports directly to inboxes
+- **Written to a Table** - Log results for tracking and analysis
+
+Configure output destinations in your agent's settings under the **Output** or **Delivery** section.
+
+## Example Use Cases
+
+### Morning Briefing Agent
+
+**Schedule:** Daily at 8:00 AM
+
+**Instructions:**
+```
+Every morning, prepare a briefing for the sales team that includes:
+- Today's calendar events from Google Calendar
+- New leads added yesterday (from Salesforce)
+- Any mentions of our company on social media
+- Summary of overnight support tickets
+
+Format as a concise, scannable summary.
+```
+
+**Tools:** Google Calendar, Salesforce, Web Search, Help Desk
+
+**Output:** Post to #sales-team Slack channel
+
+---
+
+### Weekly Competitor Monitor
+
+**Schedule:** Every Monday at 7:00 AM
+
+**Instructions:**
+```
+Research our top 5 competitors and identify:
+- Any pricing changes
+- New product announcements
+- Press coverage or news mentions
+- Job postings that might indicate strategic shifts
+
+Create a summary report with links to sources.
+```
+
+**Tools:** Web Search, Exa
+
+**Output:** Save to Drive as `/reports/competitors/YYYY-MM-DD.md` and email to leadership
+
+---
+
+### CRM Hygiene Agent
+
+**Schedule:** Nightly at 2:00 AM
+
+**Instructions:**
+```
+Review contacts in Salesforce and:
+- Flag duplicate records for manual review
+- Mark contacts with outdated information (no activity 90+ days)
+- Update company information for any contacts where data is stale
+- Generate a summary of changes made
+```
+
+**Tools:** Salesforce
+
+**Output:** Log to a "Hygiene Results" table
+
+---
+
+### Hourly System Check
+
+**Schedule:** Custom cron `0 */1 * * *` (every hour)
+
+**Instructions:**
+```
+Check the status of our key systems:
+- API response times
+- Database connection health
+- Error rates in the last hour
+
+Alert immediately if any metrics exceed thresholds.
+```
+
+**Tools:** Custom monitoring tools, Slack
+
+**Output:** Post alerts to #ops-alerts only if issues detected
+
+## Managing Schedules
+
+### Editing a Schedule
+
+You can modify schedule settings anytime:
+
+1. Open your agent
+2. Go to Settings → Schedule
+3. Update time, frequency, or inputs
+4. Save changes
+
+The new schedule takes effect immediately.
+
+### Pausing a Schedule
+
+To temporarily stop a scheduled run:
+
+1. Open Settings → Schedule
+2. Toggle the schedule off
+3. Save
+
+Your configuration is preserved for easy reactivation.
+
+### Deleting a Schedule
+
+To permanently remove a schedule:
+
+1. Open Settings → Schedule
+2. Click "Remove Schedule" or clear the configuration
+3. Save
+
+The agent can still be run manually or triggered by other means.
+
+## Viewing Schedule History
+
+Check the **Logs** tab of your agent to see:
+
+- When scheduled runs occurred
+- What inputs were used
+- Tool usage and execution trace
+- Outputs and results
+
+This helps you monitor whether scheduled agents are working as expected.
+
+## Best Practices
+
+### Start Simple
+
+Begin with daily or weekly schedules before attempting complex cron patterns. You can always increase frequency later.
+
+### Test Before Scheduling
+
+Run your agent manually with the same inputs you plan to use for scheduled runs. Make sure it produces the expected output before automating.
+
+### Monitor Early Runs
+
+After setting up a schedule, check the logs for the first few runs to ensure everything works as expected.
+
+### Use Time Zones Wisely
+
+Set schedules in the time zone where your team works, not UTC, to avoid confusion about when agents run.
+
+### Handle Failures Gracefully
+
+Include instructions for what to do when things go wrong:
+
+```
+If the CRM is unavailable, retry after 30 minutes and send an alert 
+if still failing. Continue with other data gathering even if one source fails.
+```
+
+### Consider Rate Limits
+
+If your agent calls APIs with rate limits, account for this in your schedule. Running every 5 minutes might exceed limits; every hour is usually safer.
+
+## Common Questions
+
+**Do I need a workflow to schedule an agent?**
+
+No. Scheduling is built directly into agent settings. You can schedule any agent without creating a workflow.
+
+**Can I have multiple schedules for one agent?**
+
+Yes. Set up different schedules for different purposes, each with its own inputs and timing.
+
+**What happens if a scheduled run is still in progress when the next one starts?**
+
+Scout queues scheduled runs. If a previous run hasn't completed, the next one will wait or be skipped depending on your configuration.
+
+**Can I trigger an agent manually if it's scheduled?**
+
+Absolutely. Scheduled agents can also be triggered manually anytime. Scheduling just adds automatic triggers.
+
+**How do I see if a scheduled run failed?**
+
+Check the Logs tab for your agent. Failed runs are marked with error details showing what went wrong.
+
+---
+
+*Built with ❤️ by Scout OS*

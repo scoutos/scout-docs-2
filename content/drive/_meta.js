@@ -1,4 +1,4 @@
 export default {
   'overview': 'Overview',
-  'agent-blocks': 'Agent Blocks'
+  'api-reference': 'API Reference'
 }

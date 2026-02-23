@@ -25,25 +25,34 @@ pages/
 │   ├── what-is-scout.md
 │   ├── quick-start.md
 │   └── core-concepts.md
-├── workflows/
+├── agents/              # DONE: Agents documentation
 │   ├── _meta.json
 │   ├── overview.md
-│   ├── creating-workflows.md
-│   └── templates.md
-├── blocks/
+│   └── getting-started.md
+├── drive/               # DONE: Drive documentation
 │   ├── _meta.json
-│   ├── input-output.md
-│   ├── ai-processing.md
-│   ├── control-flow.md
-│   └── communication.md
-├── collections/
+│   ├── overview.md
+│   └── api-reference.md
+├── collections/         # NEW: Collections & Tables documentation
 │   ├── _meta.json
-│   └── tables.md
+│   ├── overview.md
+│   ├── creating-collections.md
+│   └── querying-data.md
 └── api/
     ├── _meta.json
     └── reference.md
 ```
 
+- [x] Remove blocks/ and workflows/ directories (not current features)
+- [x] Update _meta.js navigation
+- [x] Review Scout OS changelog for Agents & Drive features
+- [x] Document Agents functionality
+- [x] Document Drive functionality
+- [x] Document Collections & Tables functionality (create detailed guides)
+- [ ] **Redefine "What is Scout" page** - Position Scout as an "agentic workforce studio" that enables technical and non-technical users to create and run autonomous agents
+- [ ] **Research Scout blog for documentation insights** - Review https://www.scoutos.com/blog for topics, examples, and use cases to improve docs
+- [ ] **Review Scout changelog for feature updates** - Analyze https://www.scoutos.com/changelog and create plan to update docs with new features
+- [ ] **Document Scout Skills** - Create documentation for https://github.com/scoutos/scout-skills (skill system, available skills, creating custom skills)
 - [ ] Migrate content from docs.scoutos.com
 - [ ] Audit for outdated/missing info
 - [ ] Add code examples and screenshots

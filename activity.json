@@ -41,11 +41,58 @@
     {
       "id": 6,
       "name": "Publish to GitHub",
-      "command": "cd scout-docs2 && git init && git remote add origin git@github.com:scoutos/scout-docs-2.git && git push -u origin main",
+      "command": "gh repo create scoutos/scout-docs-2 --public --push",
+      "status": "completed",
+      "result": "Published to https://github.com/scoutos/scout-docs-2 (32 files)"
+    },
+    {
+      "id": 7,
+      "name": "Fix routing issue on onhyper.io",
+      "description": "Investigate why routing/content not working on onhyper.io - possible pushState/client-side routing issue with static export",
+      "investigation": [
+        "Check if Next.js static export uses pushState for navigation",
+        "Verify if onhyper.io supports SPA routing or needs trailingSlash config",
+        "Check if 404.html fallback is needed for client-side routes",
+        "Test direct URL access vs navigation from index",
+        "Consider adding trailingSlash: true to next.config.mjs for static hosts"
+      ],
+      "status": "completed",
+      "result": "Added trailingSlash: true to next.config.mjs. Needs rebuild and redeploy."
+    },
+    {
+      "id": 8,
+      "name": "Document Agents & Drive functionality",
+      "description": "Review Scout OS changelog and plan documentation for new Agents and Drive features",
+      "subtasks": [
+        "Review Scout OS changelog for recent agents/drive updates",
+        "Research how Agents work in Scout OS",
+        "Research how Drive functionality works",
+        "Plan documentation structure for Agents section",
+        "Plan documentation structure for Drive section",
+        "Identify key concepts, APIs, and examples to document"
+      ],
+      "sources": [
+        "https://docs.scoutos.com (existing docs)",
+        "Scout OS changelog/release notes",
+        "Scout OS product/app for hands-on testing"
+      ],
+      "status": "pending",
+      "result": null
+    },
+    {
+      "id": 9,
+      "name": "Remove blocks and workflows from docs",
+      "description": "Remove blocks/ and workflows/ content directories from the documentation - focus on current Scout OS features",
+      "subtasks": [
+        "Delete content/blocks/ directory",
+        "Delete content/workflows/ directory",
+        "Update content/_meta.js to remove navigation entries",
+        "Rebuild and redeploy"
+      ],
       "status": "pending",
       "result": null
     }
   ],
-  "currentStep": 6,
+  "currentStep": 7,
   "overallStatus": "in-progress"
 }

@@ -1,0 +1,146 @@
+# Available Skills
+
+Explore the built-in skills that extend your agents with Scout's data platform capabilities.
+
+## Scout API Skill
+
+The primary skill for interacting with Scout's data platform — collections, tables, documents, agents, drive storage, syncs, and usage monitoring.
+
+### Capabilities
+
+| Feature | Description |
+|---------|-------------|
+| **Collections** | Create, list, update, delete top-level data containers |
+| **Tables** | Manage structured data with custom schemas |
+| **Documents** | CRUD operations on table records with bulk insert support |
+| **Agents** | Manage AI assistants that interact with your Scout data |
+| **Drive** | Upload and download files to Scout storage |
+| **Syncs** | Sync data from external sources (websites, Notion, Google Drive, etc.) |
+| **Usage** | Monitor API usage and costs |
+
+### Installation
+
+```bash
+npx skills add scoutos/scout-skills
+```
+
+### Authentication
+
+Set your Scout API key as an environment variable:
+
+```bash
+export SCOUT_API_KEY="your-api-key-here"
+```
+
+Get your API key from [Scout Dashboard](https://scoutos.com) → Settings → API Keys.
+
+---
+
+## Sync Sources
+
+The Scout skill supports syncing data from various external sources:
+
+| Source | Archetype ID | Description |
+|--------|-------------|-------------|
+| **Website Crawler** | `com.scoutos.website` | Intelligent website crawling with configurable depth |
+| **Sitemap** | `com.scoutos.sitemap` | Parse and crawl from sitemap.xml files |
+| **Page Crawl** | `com.scoutos.page_crawl` | Single page content extraction |
+| **Notion** | `com.notion.notion` | Sync Notion pages and databases |
+| **Google Drive** | `com.google.drive` | Sync files from Google Drive |
+| **Microsoft 365** | `com.microsoft.365` | SharePoint and OneDrive integration |
+| **Laserfiche** | `com.laserfiche.repository` | Laserfiche document sync |
+| **Guided Crawl** | `com.scoutos.guided_crawl` | AI-guided browser automation for complex sites |
+
+### When to Use Each Source
+
+**Website Crawler** — Best for general documentation sites and public content
+
+**Sitemap** — When you have a comprehensive sitemap.xml and want predictable crawling
+
+**Notion** — For syncing internal documentation, wikis, or knowledge bases
+
+**Google Drive** — When your content lives in Google Docs or Drive folders
+
+**Guided Crawl** — For sites requiring login, complex navigation, or JavaScript-heavy pages
+
+---
+
+## Example Usage
+
+### Querying Collections
+
+```bash
+curl -H "Authorization: Bearer $SCOUT_API_KEY" \
+  "https://api.scoutos.com/v2/collections"
+```
+
+### Creating Documents
+
+```bash
+curl -X POST \
+  -H "Authorization: Bearer $SCOUT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '[
+    {"title": "Task 1", "completed": false},
+    {"title": "Task 2", "completed": true}
+  ]' \
+  "https://api.scoutos.com/v2/collections/{col_id}/tables/{tbl_id}/documents"
+```
+
+### Setting Up a Website Sync
+
+```bash
+curl -X POST \
+  -H "Authorization: Bearer $SCOUT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "sync_config": {
+      "source_settings": {
+        "source_archetype_id": "com.scoutos.website",
+        "start_urls": ["https://docs.example.com"],
+        "max_depth": 3,
+        "max_page_count": 100
+      },
+      "destination": {
+        "destination_type": "collections.v2",
+        "collection_id": "col_abc123",
+        "table_id": "tbl_xyz789"
+      }
+    }
+  }' \
+  "https://api.scoutos.com/v2/syncs"
+```
+
+### Uploading Files to Drive
+
+```bash
+curl -X POST \
+  -H "Authorization: Bearer $SCOUT_API_KEY" \
+  -F "files=@report.pdf" \
+  "https://api.scoutos.com/drive/upload"
+```
+
+---
+
+## Using Skills with Agents
+
+When an agent has the Scout skill enabled, you can ask it to:
+
+- "List all my collections and their tables"
+- "Search the knowledge base for documents about API design"
+- "Upload this PDF to Drive and make it searchable"
+- "Create a new table called Tasks with columns for title, status, and due date"
+- "Set up a sync from our Notion docs to the knowledge base"
+
+The agent will automatically use the appropriate API endpoints based on your request.
+
+## Additional Resources
+
+- **Official Docs**: [https://docs.scoutos.com](https://docs.scoutos.com)
+- **API Reference**: [https://docs.scoutos.com/api-sdk](https://docs.scoutos.com/api-sdk)
+- **Status Page**: [https://status.scoutos.com](https://status.scoutos.com)
+- **Support**: [support@scoutos.com](mailto:support@scoutos.com)
+
+---
+
+*Built with ❤️ by Scout OS*

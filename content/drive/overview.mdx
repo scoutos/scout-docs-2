@@ -1,0 +1,223 @@
+# Scout Drive
+
+Store, manage, and access files for your AI workflows and agents.
+
+## What is Scout Drive?
+
+Scout Drive is a file storage system built into Scout that allows you to upload, store, and retrieve files for use in your workflows and agents. It provides a simple, secure way to manage documents, images, and other assets that your AI applications need.
+
+## Key Features
+
+- **Simple File Upload** - Upload files programmatically via API or SDK
+- **Folder Organization** - Create and organize folders to structure your files
+- **Fast Retrieval** - Quick access to files by path or name
+- **Agent File Access** - Agents can read and write files directly from Drive
+- **Skills & Memory** - Enables persistent skills and long-term memory for agents
+- **Workflow Integration** - Use files in your automation workflows
+
+## Drive vs. Databases
+
+Scout offers two storage solutions:
+
+| Feature | Drive | Databases |
+|---------|-------|-----------|
+| **Purpose** | File storage (PDFs, images, documents) | Structured data & vector search |
+| **Search** | By path/name | Semantic/vector search |
+| **Use Case** | Assets, attachments, media | RAG, knowledge bases, tables |
+| **AI Access** | Agents can read files | Agents can search semantically |
+
+### When to Use Drive
+
+Use Drive for:
+
+- Storing PDF documents for agents to read
+- Uploading images for processing workflows
+- Storing CSV exports or reports
+- Managing assets for Copilot integrations
+
+### When to Use Databases
+
+Use Databases for:
+
+- Building RAG applications with semantic search
+- Storing structured data in tables
+- Knowledge bases that need vector search
+- Syncing data from Notion, Google Sheets, or web sources
+
+## Quick Start
+
+### Upload a File
+
+**Using the API:**
+
+```bash
+curl -X POST https://api.scoutos.com/drive/upload \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -F "files=@report.pdf"
+```
+
+**Using Python:**
+
+```python
+from scoutos import Scout
+
+client = Scout(api_key="YOUR_API_KEY")
+
+result = client.drive.upload(
+    files=["report.pdf"]
+)
+
+print(result)
+# {'data': [{'url': 'https://...', 'name': 'report.pdf', 'id': '...'}]}
+```
+
+**Using TypeScript:**
+
+```typescript
+import { ScoutClient } from "scoutos";
+import * as fs from "fs";
+
+const client = new ScoutClient({ apiKey: "YOUR_API_KEY" });
+
+const result = await client.drive.upload({
+  files: [fs.createReadStream("report.pdf")]
+});
+
+console.log(result);
+```
+
+### Download a File
+
+**Using the API:**
+
+```bash
+curl -X GET "https://api.scoutos.com/drive/download?path=/report.pdf" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  --output report.pdf
+```
+
+**Using Python:**
+
+```python
+content = client.drive.download(path="/report.pdf")
+```
+
+**Using TypeScript:**
+
+```typescript
+const content = await client.drive.download({ path: "/report.pdf" });
+```
+
+## Organizing Files
+
+### Creating and Managing Folders
+
+Folders help you organize files into logical structures. You can create folders for different projects, agents, or use cases.
+
+**Create a Folder:**
+
+```python
+from scoutos import Scout
+
+client = Scout(api_key="YOUR_API_KEY")
+
+# Create a new folder
+result = client.drive.create_folder(path="/projects/research")
+```
+
+**List Folder Contents:**
+
+```python
+# List all files in a folder
+files = client.drive.list(folder="/projects/research")
+
+for file in files:
+    print(f"{file['name']} - {file['path']}")
+```
+
+**Delete a Folder:**
+
+```python
+# Delete a folder and all its contents
+client.drive.delete_folder(path="/projects/archived")
+```
+
+### Folder Structure
+
+Organize your files using folder hierarchies:
+
+```python
+# Upload to a specific folder
+client.drive.upload(
+    files=["q1_report.pdf"],
+    metadata=[{"folder": "/reports/2024", "name": "q1_report.pdf"}]
+)
+```
+
+### Path Resolution
+
+When uploading, you can specify file destinations in several ways:
+
+| Option | Example | Result |
+|--------|---------|--------|
+| `path` | `/docs/report.pdf` | Exact path (highest priority) |
+| `folder` + `name` | folder=`/docs`, name=`report.pdf` | `/docs/report.pdf` |
+| `folder` only | folder=`/docs` | `/docs/{original_filename}` |
+| `name` only | name=`report.pdf` | `/report.pdf` (root) |
+
+## Agent File Access
+
+Agents can read and write files directly from Drive, enabling powerful capabilities:
+
+### Reading Files
+
+Agents with Drive access can read any file stored in Drive:
+
+1. **Configure Agent** - Give your agent the Drive tool access
+2. **Natural Language** - Ask your agent to read or process files
+
+Example agent prompts:
+
+- "Read the Q1 report from Drive and summarize key findings"
+- "Find all PDF files in /reports and extract the metrics"
+- "Download the latest data export and analyze trends"
+
+### Writing Files
+
+Agents can also create and write files to Drive:
+
+- "Save the research summary as a PDF to /research folder"
+- "Export the contact list to a CSV file in Drive"
+- "Write a daily status report to /reports/daily/"
+
+### Skills and Long-Term Memory
+
+Drive enables two powerful agent capabilities:
+
+**Skills** - Agents can store and retrieve "skills" (saved prompts, templates, or knowledge) from Drive. This allows agents to learn and improve over time.
+
+**Long-Term Memory** - Agents can write important information to Drive for later recall. Unlike session memory, files in Drive persist across conversations and agent restarts.
+
+```
+User: "Remember that our Q1 target is $500K"
+Agent: "I've saved that to Drive. I'll remember it for future conversations."
+```
+
+This makes agents more useful over time as they accumulate knowledge and capabilities specific to your needs.
+
+## Best Practices
+
+- **Use Descriptive Names** - Name files clearly for easy identification
+- **Organize with Folders** - Group related files in folder hierarchies
+- **Clean Up** - Remove outdated files to stay organized
+- **Metadata** - Consider using Databases for files that need rich metadata
+
+## Next Steps
+
+- [Drive API Reference](/api-sdk/endpoints/drive/upload) - Full API documentation
+- [Databases](/databases) - Learn about structured data storage
+- [Agents](/agents) - Build agents that use Drive files
+
+---
+
+*Built with ❤️ by Scout OS*

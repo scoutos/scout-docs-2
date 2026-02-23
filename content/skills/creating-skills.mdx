@@ -1,0 +1,253 @@
+# Creating Custom Skills
+
+Build your own skills to extend agents with custom capabilities, specialized knowledge, or proprietary integrations.
+
+## Skill Structure
+
+A skill consists of a directory containing at minimum:
+
+```
+my-skill/
+├── SKILL.md       # Instructions for the agent
+└── skill.json     # Metadata and tool definitions (optional)
+```
+
+### SKILL.md
+
+The instruction file is the heart of a skill. It's written in Markdown and loaded into the agent's context when the skill is active.
+
+```markdown
+---
+name: my-custom-skill
+description: Brief description of what this skill does and when to use it
+---
+
+# My Custom Skill
+
+Detailed instructions for the agent on how to use this skill.
+
+## Available Tools
+
+Describe the tools/endpoints available:
+
+- **Tool Name** — What it does
+- **Another Tool** — Another capability
+
+## When to Use
+
+Explain scenarios when the agent should use this skill:
+- "Use this when the user asks about..."
+- "Invoke this tool to..."
+
+## Authentication
+
+Document any required credentials or setup.
+
+## Examples
+
+Provide example prompts and expected behavior.
+
+## Error Handling
+
+Guidance for handling common errors or edge cases.
+```
+
+## Creating a Basic Skill
+
+### Step 1: Create the Directory
+
+```bash
+mkdir -p skills/my-custom-skill
+```
+
+### Step 2: Write SKILL.md
+
+Create `skills/my-custom-skill/SKILL.md`:
+
+```markdown
+---
+name: weather-skill
+description: Check weather conditions for any location. Use when the user asks about weather, forecasts, or climate conditions.
+---
+
+# Weather Skill
+
+Check current weather and forecasts for locations worldwide.
+
+## Capabilities
+
+- Get current weather for any city
+- Retrieve 7-day forecasts
+- Check weather alerts
+
+## Usage
+
+When the user asks about weather:
+
+1. Extract the location from their request
+2. Call the weather API
+3. Present the results clearly
+
+## API Endpoint
+
+GET https://api.weather.example.com/current
+
+Parameters:
+- `location` — City name or coordinates
+
+## Example Prompts
+
+- "What's the weather in San Francisco?"
+- "Should I bring an umbrella in Seattle tomorrow?"
+- "Check the forecast for my trip to New York next week"
+```
+
+### Step 3: Install the Skill
+
+```bash
+# If using OpenClaw
+npx skills add ./skills/my-custom-skill
+```
+
+## Best Practices
+
+### Write Clear Descriptions
+
+The description in the frontmatter is crucial — agents use it to decide when to activate your skill:
+
+```markdown
+---
+description: Use when working with Scout collections, tables, documents, agents, drive storage, syncs, or usage.
+---
+```
+
+### Be Specific About Triggers
+
+Tell the agent exactly when to use each capability:
+
+```markdown
+## When to Use This Skill
+
+Use this skill when the user:
+- Mentions collections, tables, or documents
+- Wants to search or query data
+- Asks to upload or download files
+- Needs to set up data syncs
+```
+
+### Document Authentication
+
+If your skill requires credentials, document how to set them up:
+
+```markdown
+## Authentication
+
+This skill requires an API key:
+
+1. Sign up at https://service.example.com
+2. Generate an API key in Settings
+3. Set the environment variable: `SERVICE_API_KEY=your-key`
+```
+
+### Provide Examples
+
+Concrete examples help agents understand expected behavior:
+
+```markdown
+## Examples
+
+**User**: "List all my collections"
+
+**Action**: Call GET /v2/collections, then present the list with names and IDs.
+
+**User**: "Create a table called Users with email and name fields"
+
+**Action**: Call POST /v2/collections/{collection_id}/tables with the schema.
+```
+
+### Handle Errors Gracefully
+
+Include guidance for error scenarios:
+
+```markdown
+## Error Handling
+
+- If authentication fails, remind the user to set their API key
+- If a resource isn't found, suggest listing available resources
+- If rate limits are hit, wait and retry with exponential backoff
+```
+
+## Advanced Configuration
+
+### Tool Definitions
+
+For complex skills with HTTP endpoints, define tools explicitly:
+
+```json
+{
+  "name": "my-skill",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "get_data",
+      "description": "Retrieve data from the API",
+      "type": "http",
+      "method": "GET",
+      "url": "https://api.example.com/data",
+      "headers": {
+        "Authorization": "Bearer ${API_KEY}"
+      }
+    }
+  ]
+}
+```
+
+### Environment Variables
+
+Reference environment variables in your skill:
+
+```markdown
+The API key should be set as: `MY_SERVICE_API_KEY`
+```
+
+Or in tool definitions:
+
+```json
+{
+  "headers": {
+    "Authorization": "Bearer ${MY_SERVICE_API_KEY}"
+  }
+}
+```
+
+## Sharing Skills
+
+Skills can be shared via:
+
+- **GitHub repositories** — The standard way to distribute skills
+- **NPM packages** — For more formal distribution
+- **Direct sharing** — Copy the skill directory to share with teammates
+
+### Publishing to GitHub
+
+1. Create a repository with your skill files
+2. Add a README.md with usage instructions
+3. Users can install with: `npx skills add org/skill-name`
+
+## Troubleshooting
+
+### Agent Not Using the Skill
+
+- Check that the description matches your use case
+- Make sure the skill is properly installed
+- Verify authentication is set up
+
+### Unexpected Behavior
+
+- Review the SKILL.md instructions for clarity
+- Add more specific examples
+- Document edge cases explicitly
+
+---
+
+*Built with ❤️ by Scout OS*

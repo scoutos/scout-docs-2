@@ -1,0 +1,468 @@
+# Drive API Reference
+
+Complete reference for Scout Drive API endpoints.
+
+## Upload Files
+
+Upload one or more files to Drive.
+
+### Endpoint
+
+```
+POST https://api.scoutos.com/drive/upload
+Content-Type: multipart/form-data
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `files` | file[] | Yes | The file uploads (multipart) |
+| `metadata` | JSON string | No | Per-file metadata (path, folder, name) |
+
+### Metadata Fields
+
+Each metadata object can contain:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `path` | string | Fully qualified destination path (highest priority) |
+| `folder` | string | Destination folder |
+| `name` | string | Destination filename |
+
+### Path Resolution Logic
+
+For each file at index `i`:
+
+1. If `path` is provided → use it as the fully qualified path
+2. Else if `folder` and `name` are provided → combine as `{folder}/{name}`
+3. Else if `folder` is provided → combine as `{folder}/{upload_filename}`
+4. Else if `name` is provided → use `/{name}` (root)
+5. Else → fall back to default behavior
+
+### Response
+
+```json
+{
+  "data": [
+    {
+      "url": "https://...",
+      "name": "report.pdf",
+      "id": "file_abc123",
+      "path": "/reports/report.pdf"
+    }
+  ]
+}
+```
+
+### Examples
+
+**Python:**
+
+```python
+from scoutos import Scout
+
+client = Scout(api_key="YOUR_API_KEY")
+
+# Simple upload
+result = client.drive.upload(files=["report.pdf"])
+
+# Upload to a folder
+result = client.drive.upload(
+    files=["report.pdf"],
+    metadata=[{"folder": "/reports/2024"}]
+)
+
+# Upload with specific path (folder + name)
+result = client.drive.upload(
+    files=["report.pdf"],
+    metadata=[{"path": "/reports/2024/q1-summary.pdf"}]
+)
+
+# Upload multiple files to different folders
+result = client.drive.upload(
+    files=["report.pdf", "data.csv", "notes.txt"],
+    metadata=[
+        {"path": "/reports/2024/q1-report.pdf"},
+        {"folder": "/data/exports", "name": "sales-data.csv"},
+        {"folder": "/notes"}
+    ]
+)
+```
+
+**TypeScript:**
+
+```typescript
+import { ScoutClient } from "scoutos";
+import * as fs from "fs";
+
+const client = new ScoutClient({ apiKey: "YOUR_API_KEY" });
+
+// Simple upload
+const result = await client.drive.upload({
+  files: [fs.createReadStream("report.pdf")]
+});
+
+// Upload to a folder
+const result = await client.drive.upload({
+  files: [fs.createReadStream("report.pdf")],
+  metadata: [{ folder: "/reports/2024" }]
+});
+
+// Upload with specific path
+const result = await client.drive.upload({
+  files: [fs.createReadStream("report.pdf")],
+  metadata: [{ path: "/reports/2024/q1-summary.pdf" }]
+});
+```
+
+**cURL:**
+
+```bash
+# Simple upload
+curl -X POST https://api.scoutos.com/drive/upload \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -F "files=@report.pdf"
+
+# Upload with folder path
+curl -X POST https://api.scoutos.com/drive/upload \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -F "files=@report.pdf" \
+  -F 'metadata=[{"folder": "/reports/2024"}]'
+
+# Upload with full path
+curl -X POST https://api.scoutos.com/drive/upload \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -F "files=@report.pdf" \
+  -F 'metadata=[{"path": "/reports/2024/q1-summary.pdf"}]'
+```
+
+---
+
+## Download File
+
+Download a single file from Drive.
+
+### Endpoint
+
+```
+GET https://api.scoutos.com/drive/download
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `path` | string | No | Fully qualified path (e.g., `/reports/report.pdf`) |
+| `name` | string | No | Filename to search for |
+| `folder` | string | No | Folder to search within |
+
+You must provide either:
+- `path` alone, OR
+- `name` + `folder`
+
+### Response
+
+Returns the file content as a streaming binary response.
+
+### Examples
+
+**Python:**
+
+```python
+from scoutos import Scout
+
+client = Scout(api_key="YOUR_API_KEY")
+
+# Download by path
+content = client.drive.download(path="/reports/report.pdf")
+
+# Download by name and folder
+content = client.drive.download(name="report.pdf", folder="/reports")
+```
+
+**TypeScript:**
+
+```typescript
+import { ScoutClient } from "scoutos";
+
+const client = new ScoutClient({ apiKey: "YOUR_API_KEY" });
+
+// Download by path
+const content = await client.drive.download({ path: "/reports/report.pdf" });
+```
+
+**cURL:**
+
+```bash
+# Download by path
+curl -X GET "https://api.scoutos.com/drive/download?path=/reports/report.pdf" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  --output report.pdf
+
+# Download by name and folder
+curl -X GET "https://api.scoutos.com/drive/download?name=report.pdf&folder=/reports" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  --output report.pdf
+```
+
+---
+
+## Create Folder
+
+Create a new folder in Drive.
+
+### Endpoint
+
+```
+POST https://api.scoutos.com/drive/folders
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `path` | string | Yes | Full path for the new folder (e.g., `/reports/2024`) |
+
+### Response
+
+```json
+{
+  "data": {
+    "id": "folder_abc123",
+    "path": "/reports/2024",
+    "created_at": "2024-01-15T10:30:00Z"
+  }
+}
+```
+
+### Examples
+
+**Python:**
+
+```python
+from scoutos import Scout
+
+client = Scout(api_key="YOUR_API_KEY")
+
+# Create a single folder
+result = client.drive.create_folder(path="/reports/2024")
+
+# Create nested folders (creates parent folders if needed)
+result = client.drive.create_folder(path="/projects/research/analysis")
+```
+
+**TypeScript:**
+
+```typescript
+import { ScoutClient } from "scoutos";
+
+const client = new ScoutClient({ apiKey: "YOUR_API_KEY" });
+
+// Create a folder
+const result = await client.drive.createFolder({
+  path: "/reports/2024"
+});
+```
+
+**cURL:**
+
+```bash
+curl -X POST https://api.scoutos.com/drive/folders \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"path": "/reports/2024"}'
+```
+
+---
+
+## List Folder Contents
+
+List all files and subfolders within a folder.
+
+### Endpoint
+
+```
+GET https://api.scoutos.com/drive/list
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `folder` | string | No | Folder path to list (defaults to root `/`) |
+| `recursive` | boolean | No | Include all nested files (default: false) |
+
+### Response
+
+```json
+{
+  "data": {
+    "folder": "/reports",
+    "files": [
+      {
+        "id": "file_abc123",
+        "name": "q1-report.pdf",
+        "path": "/reports/q1-report.pdf",
+        "size": 102400,
+        "created_at": "2024-01-15T10:30:00Z"
+      }
+    ],
+    "folders": [
+      {
+        "id": "folder_xyz789",
+        "path": "/reports/2024",
+        "name": "2024"
+      }
+    ]
+  }
+}
+```
+
+### Examples
+
+**Python:**
+
+```python
+from scoutos import Scout
+
+client = Scout(api_key="YOUR_API_KEY")
+
+# List root folder
+files = client.drive.list()
+
+# List specific folder
+files = client.drive.list(folder="/reports")
+
+# List with nested files
+files = client.drive.list(folder="/reports", recursive=True)
+```
+
+**TypeScript:**
+
+```typescript
+import { ScoutClient } from "scoutos";
+
+const client = new ScoutClient({ apiKey: "YOUR_API_KEY" });
+
+// List specific folder
+const contents = await client.drive.list({
+  folder: "/reports"
+});
+```
+
+**cURL:**
+
+```bash
+# List root folder
+curl -X GET "https://api.scoutos.com/drive/list" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+
+# List specific folder
+curl -X GET "https://api.scoutos.com/drive/list?folder=/reports" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+
+# List recursively
+curl -X GET "https://api.scoutos.com/drive/list?folder=/reports&recursive=true" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+---
+
+## Delete Folder
+
+Delete a folder and optionally its contents.
+
+### Endpoint
+
+```
+DELETE https://api.scoutos.com/drive/folders
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `path` | string | Yes | Path of the folder to delete |
+| `recursive` | boolean | No | Delete contents if folder is not empty (default: false) |
+
+### Response
+
+```json
+{
+  "data": {
+    "deleted": true,
+    "path": "/reports/archived",
+    "files_deleted": 5
+  }
+}
+```
+
+### Examples
+
+**Python:**
+
+```python
+from scoutos import Scout
+
+client = Scout(api_key="YOUR_API_KEY")
+
+# Delete empty folder
+result = client.drive.delete_folder(path="/reports/archived")
+
+# Delete folder and all contents
+result = client.drive.delete_folder(path="/reports/old", recursive=True)
+```
+
+**TypeScript:**
+
+```typescript
+import { ScoutClient } from "scoutos";
+
+const client = new ScoutClient({ apiKey: "YOUR_API_KEY" });
+
+// Delete folder with contents
+const result = await client.drive.deleteFolder({
+  path: "/reports/archived",
+  recursive: true
+});
+```
+
+**cURL:**
+
+```bash
+# Delete empty folder
+curl -X DELETE "https://api.scoutos.com/drive/folders?path=/reports/archived" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+
+# Delete folder and contents
+curl -X DELETE "https://api.scoutos.com/drive/folders?path=/reports/old&recursive=true" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+---
+
+## Error Handling
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Success |
+| 401 | Unauthorized - Invalid or missing API key |
+| 404 | File not found |
+| 422 | Validation error - Check parameters |
+
+## Rate Limits
+
+Drive API has the following rate limits:
+
+- **Upload**: 100 requests per minute
+- **Download**: 500 requests per minute
+
+## Next Steps
+
+- [Drive Overview](/drive/overview) - Introduction to Scout Drive
+- [API Keys](/settings/api-keys) - Manage your API authentication
+
+---
+
+*Built with ❤️ by Scout OS*
