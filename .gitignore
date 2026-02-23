@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Build output
+.next/
+out/
+
+# Archives
+*.zip
+
+# OS files
+.DS_Store

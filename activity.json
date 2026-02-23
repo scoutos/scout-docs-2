@@ -1,0 +1,51 @@
+{
+  "project": "scout-docs2",
+  "goal": "Build and publish Scout docs to onhyper.io",
+  "created": "2026-02-23T09:08:00-05:00",
+  "steps": [
+    {
+      "id": 1,
+      "name": "Install Dependencies",
+      "command": "cd scout-docs2 && pnpm install",
+      "status": "completed",
+      "result": "Dependencies installed successfully"
+    },
+    {
+      "id": 2,
+      "name": "Verify Dev Server",
+      "command": "cd scout-docs2 && pnpm dev",
+      "status": "completed",
+      "result": "Dev server started successfully (port 3001)"
+    },
+    {
+      "id": 3,
+      "name": "Build Static Export",
+      "command": "cd scout-docs2 && pnpm build",
+      "status": "completed",
+      "result": "Build completed successfully. 17 static pages generated in out/"
+    },
+    {
+      "id": 4,
+      "name": "Create ZIP Archive",
+      "command": "cd scout-docs2 && zip -r scout-docs2.zip out/",
+      "status": "completed",
+      "result": "ZIP created: scout-docs2.zip (548KB)"
+    },
+    {
+      "id": 5,
+      "name": "Publish to onhyper.io",
+      "command": "API: POST /api/apps, POST /api/apps/:id/zip, POST /api/apps/:id/publish",
+      "status": "completed",
+      "result": "Deployed to https://scout-docs.onhyper.io (47 files)"
+    },
+    {
+      "id": 6,
+      "name": "Publish to GitHub",
+      "command": "cd scout-docs2 && git init && git remote add origin git@github.com:scoutos/scout-docs-2.git && git push -u origin main",
+      "status": "pending",
+      "result": null
+    }
+  ],
+  "currentStep": 6,
+  "overallStatus": "in-progress"
+}
