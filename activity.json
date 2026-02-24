@@ -95,6 +95,27 @@
   ],
   "currentStep": 10,
   "overallStatus": "in-progress",
+  "contentCreation": {
+    "created": "2026-02-24T16:05:00-05:00",
+    "tasks": [
+      {
+        "id": "content-1",
+        "name": "Rewrite Quick Start - Personal Agent Setup",
+        "description": "Rewrite the Quick Start page to walk users through creating their first personal agent. Steps should include: 1) Create a personal agent, 2) Connect calendar integration, 3) Connect email integration, 4) Connect Slack or Telegram. Focus on practical setup that gets users running quickly.",
+        "status": "completed",
+        "agent": "agent:main:subagent:eccb1d2c-b906-4092-b726-a8d39b90db42",
+        "result": "Rewrote quick-start.mdx with personal agent setup flow: Introduction, Step 1 (Create Agent), Step 2 (Connect Calendar), Step 3 (Connect Email), Step 4 (Connect Slack/Telegram), and Next Steps. Includes practical test prompts, clear headings, bullet points, and links to related docs."
+      },
+      {
+        "id": "content-2",
+        "name": "Rewrite Core Concepts - Agents & Autonomy",
+        "description": "Rewrite Core Concepts to focus on agents and autonomous operation. Main pillars: 1) Observing agent behavior (logs, traces, monitoring), 2) Using agents day-to-day (chat, scheduling, delegation). Should explain how to run agents autonomously and trust them with tasks.",
+        "status": "completed",
+        "agent": "agent:main:subagent:6fe82935-8ced-4173-a5db-9685a1804d02",
+        "result": "Rewrote Core Concepts with 5 main pillars: 1) What Makes an Agent Autonomous (goal-directed behavior, tool use, memory, self-correction), 2) Observing Agent Behavior (activity logs, execution traces, tool usage, error handling, transparency), 3) Using Agents Day-to-Day (chat interface, scheduled runs, triggers, delegation, human-in-the-loop), 4) Building Trust (start small, review logs, set boundaries, iterate instructions, escalation rules), 5) Key Concepts Summary (instructions, tools/integrations, context, scheduling, observability). ~9.8KB document with practical examples, analogies, and clear navigation to related docs."
+      }
+    ]
+  },
   "docReview": {
     "created": "2026-02-24T10:30:00-05:00",
     "tasks": [

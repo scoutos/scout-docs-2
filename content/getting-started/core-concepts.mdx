@@ -1,17 +1,283 @@
 # Core Concepts
 
-Learn the fundamental concepts behind Scout.
+Understand how autonomous agents work and learn to trust them with your most important tasks.
 
-## Workflows
+## What Makes an Agent Autonomous?
 
-Workflows are sequences of blocks that process data and perform actions.
+Think of an autonomous agent like a highly capable assistant who doesn't need constant supervision. You give them a goal, and they figure out how to achieve it.
 
-## Blocks
+### Agents vs. Simple Chatbots
 
-Blocks are the building blocks of workflows. Each block performs a specific function.
+A regular chatbot answers questions. An autonomous agent *does things*.
 
-## Collections
+**Chatbot:** "What's on my calendar today?" → Lists your meetings
 
-Collections store and organize your data.
+**Agent:** "Prepare me for my day" → Checks calendar, pulls relevant documents, summarizes overnight emails, drafts responses to urgent items, and briefs you on key priorities
 
-(TODO: Migrate content from docs.scoutos.com)
+The difference isn't just capability—it's initiative. Agents don't wait for step-by-step instructions. They understand your objective and chart their own path.
+
+### Goal-Directed Behavior
+
+Give an agent an objective, and it breaks it down into steps automatically.
+
+**You say:** "Research our top five competitors and summarize their pricing."
+
+**The agent figures out:**
+1. Which competitors to research (or asks for clarification)
+2. Where to find pricing information
+3. How to handle incomplete or hidden pricing
+4. What format would be most useful for you
+5. When to flag something unusual
+
+You focus on the *what*. The agent handles the *how*.
+
+### Tool Use
+
+Agents can take real actions in the world through integrations:
+
+- **Read and write** to your Google Drive, Notion, or CRM
+- **Send messages** through Slack or email
+- **Search the web** for current information
+- **Query databases** and APIs
+- **Create documents** and reports
+
+An agent without tools is just a conversationalist. An agent *with* tools is a productivity multiplier.
+
+### Memory
+
+Effective agents remember what matters. They maintain context across conversations, recall your preferences, and learn from past interactions.
+
+**Short-term memory:** "You asked about the Acme deal yesterday—here's an update."
+
+**Long-term memory:** "Based on your past preferences, I'll format this as a bullet list and email it to your team."
+
+This continuity makes agents feel less like software and more like a colleague who knows how you work.
+
+### Self-Correction
+
+When something doesn't work, agents adapt.
+
+**A rigid automation:** API returns unexpected data → workflow fails → you debug
+
+**An autonomous agent:** API returns unexpected data → agent tries alternative approach → if still stuck, asks for help or works around it
+
+This resilience is what lets you trust agents with complex tasks. They don't break at the first surprise.
+
+---
+
+## Observing Agent Behavior
+
+Autonomy without visibility is just a black box. Scout gives you full transparency into what your agents are doing and why.
+
+### Activity Logs
+
+Every action your agent takes is logged. See at a glance:
+
+- When the agent ran
+- What tasks it completed
+- How long each step took
+- Whether it succeeded or encountered issues
+
+This isn't just debugging—it's accountability. You should never wonder "what did my agent do all day?"
+
+### Execution Traces
+
+Follow the reasoning path:
+
+- **Which tools were called** and in what order
+- **What decisions were made** at each step
+- **Why** the agent chose one approach over another
+
+Think of it like a thought transcript. When an agent says "I couldn't find pricing for Competitor X," you can see exactly where it looked and what it found instead.
+
+### Tool Usage
+
+Know exactly what data your agent accessed:
+
+- **Reads:** Which documents, databases, or APIs were queried
+- **Writes:** What was created, updated, or sent
+- **External calls:** Which third-party services were contacted
+
+This visibility is essential for security and compliance—but also for understanding your agent's work.
+
+### Error Handling
+
+When things go wrong, observe how your agent responds:
+
+- Did it retry? How many times?
+- Did it try an alternative approach?
+- Did it escalate to you or continue with partial information?
+
+Healthy agents fail gracefully. They don't hide errors or pretend everything worked.
+
+### Transparency
+
+The ultimate question: *Why did my agent do that?*
+
+With Scout, you can always find out. Every decision is traceable. Every action is logged. You're not trusting a mystery—you're trusting a system you can inspect.
+
+---
+
+## Using Agents Day-to-Day
+
+Autonomy doesn't mean "set and forget." It means productive partnership. Here's how to work effectively with autonomous agents.
+
+### Chat Interface
+
+The simplest pattern: just talk to your agent.
+
+**Conversational tasks:**
+- "What did the product team decide yesterday?"
+- "Draft a response to this customer complaint"
+- "Find me all contracts expiring this quarter"
+
+Chat is ideal for ad-hoc questions, one-off tasks, and collaborative problem-solving. You iterate together, refining until you get what you need.
+
+### Scheduled Runs
+
+Let your agent work while you sleep. Schedule it to run automatically:
+
+- **Daily briefing** every morning at 8 AM
+- **Weekly report** every Monday
+- **Hourly monitoring** for critical systems
+
+The agent wakes up, does its job, and delivers results—without you lifting a finger. [Learn more about scheduling](/agents/scheduling).
+
+### Triggers
+
+Agents can respond to events automatically:
+
+- **New email** from a key client → agent drafts a response
+- **Calendar event** created → agent prepares briefing materials
+- **Slack mention** → agent jumps in to help
+- **Form submission** → agent processes and routes
+
+Triggers make agents proactive, not just reactive. They're working even when you're not asking.
+
+### Delegation
+
+Specialized agents can work together:
+
+**You:** "Research Acme Corp and prepare for my sales call"
+
+**Main agent delegates to:**
+- Research Agent → Gathers company info and news
+- CRM Agent → Pulls interaction history
+- Writing Agent → Drafts the briefing document
+
+Each agent focuses on what it does best. The result is higher quality than any single agent could produce alone. [Learn more about delegation](/agents/delegation).
+
+### Human-in-the-Loop
+
+Not every decision should be autonomous. Configure when your agent should:
+
+**Act immediately:**
+- Routine information gathering
+- Low-risk operations
+- Time-sensitive tasks
+
+**Ask for approval:**
+- Sending external communications
+- Modifying important records
+- Spending money or committing resources
+
+The right balance depends on your comfort level. Start conservative, then expand autonomy as trust builds.
+
+---
+
+## Building Trust with Your Agent
+
+Trust isn't automatic—it's earned. Here's how to develop confidence in your autonomous agents.
+
+### Start Small
+
+Begin with low-stakes tasks:
+
+- Summarizing documents
+- Researching public information
+- Organizing data you already have
+
+These tasks prove the agent's capability without risk. As you see consistent results, gradually increase complexity.
+
+### Review Logs Regularly
+
+In the beginning, check what your agent did after every run:
+
+- Did it complete the task?
+- Were there any surprising choices?
+- Did it access only what it needed?
+
+Over time, you'll develop intuition for when something needs attention versus when you can trust the agent handled it.
+
+### Set Clear Boundaries
+
+Limit sensitive operations until you're confident:
+
+- Start with read-only access to critical systems
+- Require approval for external communications
+- Exclude sensitive folders or databases from agent access
+
+You can always expand access later. It's harder to undo a mistake.
+
+### Iterate on Instructions
+
+Your agent's instructions are like onboarding a new employee. The first draft won't be perfect.
+
+**Initial instruction:** "Research competitors and send me a report"
+
+**After observing output:** "Research our top 5 competitors by market share. Focus on pricing changes in the last quarter. Format as a summary table with links to sources. Send to my email, don't post to Slack."
+
+Each iteration makes the agent more effective at delivering what you actually want.
+
+### Define Escalation Rules
+
+Make the implicit explicit:
+
+- "If you can't find information after 10 minutes, ask me for direction"
+- "If a task would modify production data, require my approval"
+- "If you detect anything unusual, notify me immediately rather than proceeding"
+
+Clear rules prevent agents from getting stuck or making assumptions you wouldn't want.
+
+---
+
+## Key Concepts Summary
+
+### Instructions
+
+The natural language "programming" of your agent. Write instructions like you're briefing a smart colleague: clear goals, relevant context, and any constraints. [Learn more](/agents/getting-started).
+
+### Tools & Integrations
+
+What your agent can access and do. Connect your existing tools—Slack, Google Workspace, CRM, databases—and your agent gains the ability to read, write, search, and act. [Browse integrations](https://scoutos.com/integrations).
+
+### Context
+
+The information your agent works with. This includes:
+
+- **Drive:** Files and documents the agent can access
+- **Collections:** Structured data for search and retrieval
+- **Conversations:** Previous interactions for continuity
+
+Good context makes for good outputs.
+
+### Scheduling
+
+When your agent runs automatically. Daily check-ins, weekly reports, or custom timing—the choice is yours. The agent wakes up, executes, and delivers results on your schedule. [Learn more](/agents/scheduling).
+
+### Observability
+
+How you monitor and understand agent behavior. Logs, traces, and tool usage give you complete visibility into what your agent did and why. Essential for trust, debugging, and compliance.
+
+---
+
+## Next Steps
+
+- [Quick Start](/getting-started/quick-start) — Create your first agent in minutes
+- [Agent Templates](/agents/templates) — Start with a pre-built template
+- [Scheduling](/agents/scheduling) — Automate your agent's work
+- [Delegation](/agents/delegation) — Build multi-agent systems
+
+---
+
+Built with ❤️ by Scout OS
