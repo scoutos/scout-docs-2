@@ -1,0 +1,244 @@
+# Agent Delegation
+
+Build sophisticated multi-agent systems where specialized agents collaborate to accomplish complex tasks.
+
+## What is Agent Delegation?
+
+Agent delegation allows one agent to delegate tasks to other specialized agents. Instead of building one agent that does everything, you can build a team of focused specialists that work together.
+
+This enables patterns like:
+
+- **Specialization** - Each agent excels at a specific type of task
+- **Quality control** - Multiple agents review and validate outputs
+- **Complex workflows** - Agents coordinate multi-step processes
+- **Expertise layering** - Combine research, analysis, and writing agents
+
+## Why Delegate?
+
+### Specialized Agents Perform Better
+
+A general-purpose agent making decisions across many domains is less effective than specialized agents:
+
+```
+❌ One agent does everything:
+   "Analyze this sales call, update the CRM, draft follow-up, 
+    research competitor alternatives, and create a deal strategy"
+
+✅ Specialized agents collaborate:
+   Research Agent → Analyzes call and competitor landscape
+   CRM Agent → Updates records with structured data
+   Writing Agent → Drafts personalized follow-up
+   Sales Strategist Agent → Creates deal strategy
+```
+
+### Panel of Judges Pattern
+
+Use multiple agents to review and validate important decisions:
+
+1. Agent A makes an initial decision
+2. Agents B, C, and D review from different perspectives
+3. Final action based on consensus or majority vote
+
+This dramatically improves accuracy for high-stakes decisions.
+
+### Scalable Architecture
+
+As your needs grow, add more specialized agents instead of overloading one agent:
+
+```
+Month 1: 1 research agent
+Month 3: +1 writing agent, +1 analyst agent
+Month 6: +1 reviewer agent, +1 CRM specialist agent
+```
+
+## How Delegation Works
+
+### Agent-to-Agent Communication
+
+When an agent delegates to another agent:
+
+1. **Task handoff** - Agent A identifies a subtask for Agent B
+2. **Context passing** - Relevant information is passed to Agent B
+3. **Execution** - Agent B handles its specialized work
+4. **Return results** - Agent B sends results back to Agent A
+5. **Integration** - Agent A incorporates Agent B's work
+
+### Example Flow
+
+```
+User: "Research Acme Corp and prepare for my sales call tomorrow"
+
+Main Agent:
+├─ Delegates to Research Agent: "Research Acme Corp company info, 
+│  recent news, and key decision makers"
+│  └─ Returns: Company profile, news summary, org chart
+│
+├─ Delegates to CRM Agent: "Check our interaction history with Acme"
+│  └─ Returns: Past calls, emails, deal stage, notes
+│
+├─ Delegates to Writing Agent: "Draft a call prep brief using 
+│  research and CRM data"
+│  └─ Returns: Structured briefing document
+│
+└─ Returns to user: Complete call preparation package
+```
+
+## Common Delegation Patterns
+
+### Research → Analysis → Output
+
+A pipeline pattern where each agent handles one phase:
+
+```
+Research Agent → Gathers raw information
+    ↓
+Analyst Agent → Processes and synthesizes
+    ↓
+Writer Agent → Creates final deliverable
+```
+
+**Use when:** Tasks have clear phases that each need different skills.
+
+### Primary + Specialists
+
+One agent acts as coordinator, delegating to specialists:
+
+```
+Coordinator Agent
+├─ Delegates to Salesforce Agent for CRM tasks
+├─ Delegates to Gmail Agent for email tasks
+├─ Delegates to Calendar Agent for scheduling
+└─ Delegates to Research Agent for web research
+```
+
+**Use when:** You have a primary workflow that occasionally needs specialized help.
+
+### Review Chain
+
+Output passes through multiple review agents:
+
+```
+Draft Agent → Creates initial content
+    ↓
+Fact-Check Agent → Verifies accuracy
+    ↓
+Brand Voice Agent → Ensures tone consistency
+    ↓
+Final Output
+```
+
+**Use when:** Quality is critical and review from multiple angles adds value.
+
+### Parallel Processing
+
+Multiple agents work simultaneously and combine results:
+
+```
+           ┌→ Pricing Agent → price analysis
+Input ─────┼→ Tech Agent → technical assessment
+           └→ Support Agent → support requirements
+                      ↓
+              Combine results → Final recommendation
+```
+
+**Use when:** Multiple independent analyses can run in parallel.
+
+## Building Delegating Agents
+
+### Configure Delegation in Agent Settings
+
+1. Open your agent in Scout Studio
+2. Navigate to **Settings → Delegation**
+3. Add agents that this agent can delegate to
+4. Configure how delegation is triggered
+
+### Delegation Triggers
+
+Agents can delegate based on:
+
+- **Explicit instruction** - "Ask the Research Agent to look into this"
+- **Automatic detection** - Agent recognizes a task type and delegates accordingly
+- **Rule-based** - When certain conditions are met, delegate to specific agent
+
+### Passing Context
+
+When delegating, specify what context to share:
+
+```yaml
+Delegation:
+  to: research-agent
+  task: "Research the company mentioned in the user's question"
+  context:
+    - user_question
+    - previous_conversation (last 5 messages)
+    - known_entities
+```
+
+### Handling Results
+
+Define how the delegating agent should use results:
+
+```yaml
+On Result:
+  action: incorporate
+  format: "The Research Agent found: {result}. Based on this, ..."
+```
+
+## Best Practices
+
+### Define Clear Specializations
+
+Each agent should have a narrow, well-defined scope:
+
+- ✅ "I analyze financial statements and extract key metrics"
+- ❌ "I help with finance stuff"
+
+### Establish Communication Protocols
+
+Standardize how agents communicate:
+
+- What format should results be in?
+- What context should always be passed?
+- How should errors be handled?
+
+### Avoid Delegation Loops
+
+Ensure delegation flows in one direction:
+
+```
+✅ Agent A → Agent B → Agent C
+❌ Agent A → Agent B → Agent A (loop)
+```
+
+Add cycle detection if agents can delegate to each other.
+
+### Monitor Performance
+
+Track:
+- Which delegations are most common
+- Success rates for different agent combinations
+- Time added by delegation vs. value gained
+
+### Fallback Behavior
+
+Plan for when delegated agents fail:
+
+- Timeout handling
+- Alternative agents to try
+- Graceful degradation to original agent
+
+## Limitations
+
+- Each delegation adds latency (agent must wait for response)
+- Complex delegation chains can be harder to debug
+- Not all tasks benefit from delegation - some are faster done directly
+
+## Next Steps
+
+- [Agents Overview](/agents) - Learn about building individual agents
+- [Getting Started](/agents/getting-started) - Create your first agents
+- [Workflows](/workflows) - Alternative orchestration with workflows
+
+---
+
+*Built with ❤️ by Scout OS*

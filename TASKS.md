@@ -53,6 +53,11 @@ pages/
 - [ ] **Research Scout blog for documentation insights** - Review https://www.scoutos.com/blog for topics, examples, and use cases to improve docs
 - [ ] **Review Scout changelog for feature updates** - Analyze https://www.scoutos.com/changelog and create plan to update docs with new features
 - [ ] **Document Scout Skills** - Create documentation for https://github.com/scoutos/scout-skills (skill system, available skills, creating custom skills)
+- [ ] **Update Introduction page** - Rewrite index.mdx to reflect Scout's agentic vibe and workforce studio positioning
+- [ ] **Fix hamburger menu** - Investigate mobile hamburger menu display issue on scout-docs.onhyper.io using agent-browser; identify and fix the CSS/layout problem
+- [ ] **Fix mobile responsiveness** - Audit and improve overall mobile responsiveness of scout-docs site
+- [ ] **Fix mobile navigation panel** - Improve readability and usability of navigation panel in mobile view
+- [ ] **Add GitHub URL to navbar** - Update projectLink in layout.jsx to point to https://github.com/scoutos/scout-docs-2
 - [ ] Migrate content from docs.scoutos.com
 - [ ] Audit for outdated/missing info
 - [ ] Add code examples and screenshots

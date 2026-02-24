@@ -2,6 +2,7 @@ import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Banner, Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import 'nextra-theme-docs/style.css'
+import './custom.css'
 
 export const metadata = {
   title: {
@@ -19,7 +20,7 @@ const banner = (
 const navbar = (
   <Navbar
     logo={<b>Scout Docs</b>}
-    projectLink="https://github.com/scoutos/scout"
+    projectLink="https://github.com/scoutos/scout-docs-2"
   />
 )
 

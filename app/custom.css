@@ -1,0 +1,774 @@
+/* Fix for max-md:hidden not being generated properly in Tailwind v4 */
+@media (max-width: 47.999rem) {
+  .x\:max-md\:hidden {
+    display: none !important;
+  }
+}
+
+/* Fix for md:hidden - hide mobile elements on desktop */
+@media (min-width: 48rem) {
+  .x\:md\:hidden {
+    display: none !important;
+  }
+}
+
+/* Fix for max-md:flex - show flex on mobile only */
+@media (max-width: 47.999rem) {
+  .x\:max-md\:flex {
+    display: flex !important;
+  }
+}
+
+/* ========================================
+   MOBILE NAVIGATION IMPROVEMENTS
+   ======================================== */
+
+/* Mobile Navigation Panel - Better overall styling */
+@media (max-width: 47.999rem) {
+  .nextra-mobile-nav {
+    /* Smooth background with better contrast */
+    background: rgb(var(--nextra-bg)) !important;
+  }
+  
+  .dark .nextra-mobile-nav {
+    background: rgb(var(--nextra-bg)) !important;
+  }
+  
+  /* Mobile nav list - improved spacing */
+  .nextra-mobile-nav > ul,
+  .nextra-mobile-nav ul ul {
+    gap: 0.375rem !important; /* 6px - slightly more spacing */
+  }
+  
+  /* Mobile navigation links - improved touch targets and readability */
+  .nextra-mobile-nav a {
+    font-size: 1rem !important; /* 16px - better readability than 14px */
+    padding: 0.75rem 1rem !important; /* 12px 16px - better touch target (min 44px height) */
+    line-height: 1.5 !important;
+    min-height: 44px !important; /* WCAG touch target minimum */
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 0.5rem !important; /* 8px - matching parent container */
+    transition: background-color 0.15s ease, color 0.15s ease !important;
+  }
+  
+  /* Mobile navigation folder/category buttons (expandable sections) */
+  .nextra-mobile-nav button[data-href] {
+    font-size: 1rem !important; /* 16px - match link size */
+    padding: 0.75rem 1rem !important; /* Match link padding */
+    min-height: 44px !important; /* WCAG touch target minimum */
+    line-height: 1.5 !important;
+    border-radius: 0.5rem !important;
+    font-weight: 600 !important; /* Semi-bold for section headers */
+    letter-spacing: -0.01em !important; /* Slightly tighter for better readability */
+  }
+  
+  /* Section header visual distinction */
+  .nextra-mobile-nav button[data-href] {
+    color: rgb(31, 41, 55) !important; /* gray-800 - darker for emphasis */
+  }
+  
+  .dark .nextra-mobile-nav button[data-href] {
+    color: rgb(229, 231, 235) !important; /* gray-200 for dark mode */
+  }
+  
+  /* Nested items (sub-pages) - subtle indent and style */
+  .nextra-mobile-nav ul ul a {
+    font-size: 0.9375rem !important; /* 15px - slightly smaller for hierarchy */
+    padding-left: 1.5rem !important; /* Indent for nested items */
+    padding-top: 0.625rem !important; /* 10px */
+    padding-bottom: 0.625rem !important; /* 10px */
+    min-height: 40px !important; /* Slightly smaller but still touch-friendly */
+  }
+  
+  /* Further nested items (3rd level) */
+  .nextra-mobile-nav ul ul ul a {
+    padding-left: 2rem !important;
+    font-size: 0.875rem !important; /* 14px */
+  }
+  
+  /* Active link styling - more prominent */
+  .nextra-mobile-nav a.x\:bg-primary-100,
+  .nextra-mobile-nav li.active > a {
+    background-color: hsla(var(--nextra-primary-hue), var(--nextra-primary-saturation), calc(var(--nextra-primary-lightness) + 45%), 0.95) !important;
+    font-weight: 600 !important;
+    box-shadow: inset 3px 0 0 hsl(var(--nextra-primary-hue), var(--nextra-primary-saturation), var(--nextra-primary-lightness)) !important;
+  }
+  
+  .dark .nextra-mobile-nav a.x\:bg-primary-100,
+  .dark .nextra-mobile-nav li.active > a {
+    background-color: hsla(var(--nextra-primary-hue), var(--nextra-primary-saturation), var(--nextra-primary-lightness), 0.15) !important;
+    box-shadow: inset 3px 0 0 hsl(var(--nextra-primary-hue), var(--nextra-primary-saturation), calc(var(--nextra-primary-lightness) + 20%)) !important;
+  }
+  
+  /* Hover states for mobile - better visual feedback */
+  .nextra-mobile-nav a:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+  }
+  
+  .dark .nextra-mobile-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  /* Expand arrow sizing for easier touch */
+  .nextra-mobile-nav button[data-href] svg {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+  }
+  
+  /* Search box in mobile nav - improved sizing */
+  .nextra-mobile-nav .nextra-search input {
+    font-size: 1rem !important; /* 16px for readability */
+    padding: 0.75rem 1rem !important;
+    height: auto !important;
+    min-height: 44px !important;
+    border-radius: 0.5rem !important;
+  }
+  
+  /* Sidebar footer (theme switcher) - better touch targets */
+  .nextra-mobile-nav .nextra-sidebar-footer button {
+    min-height: 44px !important;
+    font-size: 0.875rem !important; /* 14px */
+    padding: 0.625rem 0.75rem !important;
+  }
+  
+  /* Visual separator between sections */
+  .nextra-mobile-nav li.open > button {
+    margin-bottom: 0.25rem !important;
+  }
+  
+  /* Add subtle separator line between sections */
+  .nextra-mobile-nav li.open::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+    margin: 0.5rem 0;
+  }
+  
+  .dark .nextra-mobile-nav li.open::after {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  }
+  
+  /* Improve visual hierarchy for section labels */
+  .nextra-mobile-nav > ul > li > button[data-href],
+  .nextra-mobile-nav > ul > li.active > a {
+    text-transform: none !important;
+    position: relative !important;
+  }
+  
+  /* Add section indicator dots for visual hierarchy */
+  .nextra-mobile-nav > ul > li:not(.active) > a::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: transparent;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+  }
+  
+  /* Better color contrast for links */
+  .nextra-mobile-nav a {
+    color: rgb(55, 65, 81) !important; /* gray-700 - better than gray-600 */
+  }
+  
+  .dark .nextra-mobile-nav a {
+    color: rgb(209, 213, 219) !important; /* gray-300 - better than gray-400 */
+  }
+  
+  /* Hamburger menu button - ensure good touch target */
+  .nextra-hamburger {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    padding: 0.625rem !important;
+    border-radius: 0.5rem !important;
+  }
+  
+  /* Scrollable area improvements */
+  .nextra-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  }
+  
+  .dark .nextra-scrollbar {
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+  
+  /* Section open/close animation improvements */
+  .nextra-mobile-nav ul ul {
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
+  }
+  
+  /* Group label styling (if present) */
+  .nextra-mobile-nav [class*="group"] {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: rgb(107, 114, 128) !important; /* gray-500 */
+  }
+  
+  .dark .nextra-mobile-nav [class*="group"] {
+    color: rgb(156, 163, 175) !important; /* gray-400 */
+  }
+}
+
+/* ========================================
+   ADDITIONAL MOBILE IMPROVEMENTS
+   ======================================== */
+
+/* Better focus states for mobile */
+@media (max-width: 47.999rem) {
+  .nextra-mobile-nav a:focus-visible,
+  .nextra-mobile-nav button:focus-visible {
+    outline: 2px solid hsl(var(--nextra-primary-hue), var(--nextra-primary-saturation), var(--nextra-primary-lightness)) !important;
+    outline-offset: 2px !important;
+  }
+}
+
+/* Active/selected link indicator bar animation */
+@media (max-width: 47.999rem) {
+  .nextra-mobile-nav li.active > a {
+    position: relative !important;
+  }
+}
+
+/* Mask fade effect for scroll */
+.nextra-mask {
+  mask-image: linear-gradient(to bottom, transparent, black 8px, black calc(100% - 8px), transparent) !important;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 8px, black calc(100% - 8px), transparent) !important;
+}
+
+/* ========================================
+   TABLE RESPONSIVE FIXES
+   ======================================== */
+
+/* Make tables horizontally scrollable on mobile */
+.nextra-content table,
+article table,
+main table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Table wrapper for better mobile handling */
+@media (max-width: 47.999rem) {
+  .nextra-content,
+  article,
+  main {
+    overflow-x: hidden;
+  }
+  
+  .nextra-content table,
+  article table,
+  main table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0;
+  }
+  
+  .dark .nextra-content table,
+  .dark article table,
+  .dark main table {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Ensure table cells don't shrink too small */
+  .nextra-content table th,
+  .nextra-content table td,
+  article table th,
+  article table td,
+  main table th,
+  main table td {
+    min-width: 100px;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+  
+  /* First column can be narrower for labels */
+  .nextra-content table th:first-child,
+  .nextra-content table td:first-child,
+  article table th:first-child,
+  article table td:first-child {
+    min-width: 80px;
+  }
+  
+  /* Table header styling */
+  .nextra-content table th,
+  article table th,
+  main table th {
+    font-weight: 600;
+    font-size: 0.8125rem;
+  }
+}
+
+/* ========================================
+   CODE BLOCK RESPONSIVE FIXES
+   ======================================== */
+
+/* Make code blocks scrollable on mobile */
+pre,
+.nextra-content pre,
+article pre {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+@media (max-width: 47.999rem) {
+  pre,
+  .nextra-content pre,
+  article pre {
+    border-radius: 0.5rem;
+    font-size: 0.8125rem;
+    padding: 1rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    margin: 1rem -1rem;
+    width: calc(100% + 2rem);
+  }
+  
+  /* Inline code - ensure it wraps properly */
+  code:not(pre code),
+  .nextra-content code:not(pre code),
+  article code:not(pre code) {
+    font-size: 0.875em;
+    word-break: break-word;
+    padding: 0.125rem 0.375rem;
+  }
+  
+  /* Code block title/filename */
+  .nextra-code-block-title {
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Copy button touch target */
+  .nextra-copy-button,
+  button[aria-label*="Copy"],
+  pre button {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    padding: 0.625rem !important;
+  }
+}
+
+/* ========================================
+   BANNER RESPONSIVE FIXES
+   ======================================== */
+
+@media (max-width: 47.999rem) {
+  /* Banner - ensure readable on mobile */
+  .nextra-banner,
+  [data-banner],
+  [class*="banner"] {
+    font-size: 0.875rem !important;
+    padding: 0.625rem 1rem !important;
+    text-align: center !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* Banner dismiss button touch target */
+  .nextra-banner button,
+  [data-banner] button {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+  
+  /* Sticky banner behavior */
+  .nextra-banner {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+}
+
+/* ========================================
+   NAVBAR RESPONSIVE FIXES
+   ======================================== */
+
+@media (max-width: 47.999rem) {
+  /* Navbar improvements */
+  .nextra-nav-container,
+  nav.nextra-nav-container {
+    padding: 0.5rem 1rem !important;
+  }
+  
+  /* Logo area */
+  .nextra-nav-container a[href="/"],
+  .nextra-nav-container [class*="logo"] {
+    font-size: 1.125rem !important;
+  }
+  
+  /* Navbar links touch targets */
+  .nextra-nav-container a {
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 0.375rem !important;
+  }
+  
+  /* Search button in navbar */
+  .nextra-nav-container button[aria-label*="Search"],
+  .nextra-nav-container [class*="search-button"] {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+  
+  /* Theme toggle button */
+  .nextra-nav-container button[aria-label*="theme"],
+  .nextra-nav-container button[aria-label*="Theme"] {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+}
+
+/* ========================================
+   GENERAL CONTENT RESPONSIVE FIXES
+   ======================================== */
+
+@media (max-width: 47.999rem) {
+  /* Main content area padding */
+  .nextra-content,
+  article,
+  main article,
+  main {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Headings - better scaling */
+  h1 {
+    font-size: 1.875rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  h3 {
+    font-size: 1.25rem !important;
+    line-height: 1.4 !important;
+    margin-top: 1.25rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  h4 {
+    font-size: 1.125rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* Paragraph text */
+  p {
+    font-size: 1rem !important;
+    line-height: 1.7 !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Lists */
+  ul, ol {
+    padding-left: 1.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  li {
+    margin-bottom: 0.5rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  /* Links in content */
+  .nextra-content a,
+  article a {
+    /* Slightly larger touch target area via padding */
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+  
+  /* Blockquotes */
+  blockquote {
+    margin: 1rem 0 !important;
+    padding: 1rem !important;
+    font-size: 0.9375rem !important;
+    border-left-width: 4px !important;
+  }
+  
+  /* Horizontal rules */
+  hr {
+    margin: 2rem 0 !important;
+  }
+  
+  /* Cards and callouts */
+  .nextra-callout,
+  [class*="callout"],
+  [class*="card"] {
+    margin: 1rem 0 !important;
+    padding: 1rem !important;
+    font-size: 0.9375rem !important;
+  }
+}
+
+/* ========================================
+   TOUCH TARGET FIXES
+   ======================================== */
+
+@media (max-width: 47.999rem) {
+  /* General buttons */
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Small text links - expand touch area */
+  .nextra-content a,
+  article a {
+    position: relative;
+  }
+  
+  /* Footer links */
+  footer a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  /* Pagination links */
+  .nextra-pagination a,
+  [class*="pagination"] a {
+    min-height: 44px !important;
+    padding: 0.75rem 1rem !important;
+  }
+  
+  /* TOC (Table of Contents) links */
+  .nextra-toc a,
+  [class*="toc"] a {
+    padding: 0.5rem 0.75rem !important;
+    min-height: 36px !important;
+    display: block;
+  }
+}
+
+/* ========================================
+   FONT SCALING FOR READABILITY
+   ======================================== */
+
+@media (max-width: 359px) {
+  /* Extra small screens */
+  html {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.25rem !important;
+  }
+  
+  h3 {
+    font-size: 1.125rem !important;
+  }
+}
+
+/* ========================================
+   SIDEBAR/TOC RESPONSIVE FIXES
+   ======================================== */
+
+@media (max-width: 47.999rem) {
+  /* Hide desktop sidebar on mobile */
+  .nextra-sidebar-container:not(.nextra-mobile-nav) {
+    display: none !important;
+  }
+  
+  /* Table of contents - if visible */
+  .nextra-toc {
+    display: none !important;
+  }
+  
+  /* Breadcrumbs */
+  .nextra-breadcrumb {
+    font-size: 0.8125rem !important;
+    padding: 0.5rem 0 !important;
+  }
+  
+  /* Breadcrumb links */
+  .nextra-breadcrumb a {
+    padding: 0.25rem 0.5rem !important;
+  }
+}
+
+/* ========================================
+   FOOTER RESPONSIVE FIXES
+   ======================================== */
+
+@media (max-width: 47.999rem) {
+  footer {
+    padding: 1.5rem 1rem !important;
+  }
+  
+  footer nav {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  footer a {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* ========================================
+   SEARCH MODAL MOBILE FIXES
+   ======================================== */
+
+@media (max-width: 47.999rem) {
+  /* Search modal/dialog */
+  [role="dialog"],
+  [class*="search-dialog"],
+  [class*="search-modal"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+  
+  /* Search input */
+  [role="dialog"] input[type="search"],
+  [class*="search"] input {
+    font-size: 1rem !important;
+    padding: 0.875rem 1rem !important;
+    min-height: 44px !important;
+  }
+  
+  /* Search results */
+  [role="dialog"] li,
+  [class*="search-results"] li {
+    padding: 0.75rem 1rem !important;
+    min-height: 44px !important;
+  }
+  
+  /* Close button */
+  [role="dialog"] button[aria-label*="Close"],
+  [class*="close"] {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+}
+
+/* ========================================
+   IMAGES AND MEDIA
+   ======================================== */
+
+@media (max-width: 47.999rem) {
+  /* Images - responsive */
+  .nextra-content img,
+  article img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+  }
+  
+  /* Iframes - responsive */
+  iframe {
+    max-width: 100%;
+    border-radius: 0.5rem;
+  }
+  
+  /* Videos */
+  video {
+    max-width: 100%;
+    border-radius: 0.5rem;
+  }
+}
+
+/* ========================================
+   DARK MODE SPECIFIC ADJUSTMENTS
+   ======================================== */
+
+.dark {
+  /* Ensure good contrast in dark mode */
+  --nextra-content-bg: rgb(17, 17, 17);
+}
+
+@media (max-width: 47.999rem) {
+  .dark {
+    /* Slightly adjust background for mobile dark mode */
+    background: rgb(17, 17, 17);
+  }
+  
+  /* Table dark mode */
+  .dark table {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Code block dark mode */
+  .dark pre {
+    background: rgb(30, 30, 30) !important;
+  }
+}
+
+/* ========================================
+   LANDSCAPE ORIENTATION FIXES
+   ======================================== */
+
+@media (max-width: 47.999rem) and (orientation: landscape) {
+  /* Reduce vertical padding in landscape */
+  .nextra-banner {
+    padding-top: 0.375rem !important;
+    padding-bottom: 0.375rem !important;
+  }
+  
+  .nextra-nav-container {
+    min-height: 44px !important;
+  }
+}
+
+/* ========================================
+   PRINT STYLES (bonus)
+   ======================================== */
+
+@media print {
+  /* Hide navigation for printing */
+  .nextra-nav-container,
+  .nextra-sidebar-container,
+  .nextra-mobile-nav,
+  .nextra-toc,
+  .nextra-banner,
+  .nextra-hamburger {
+    display: none !important;
+  }
+  
+  /* Ensure content is full width */
+  .nextra-content,
+  article,
+  main {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  
+  /* Page breaks */
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+  
+  pre, blockquote, table {
+    page-break-inside: avoid;
+  }
+}
