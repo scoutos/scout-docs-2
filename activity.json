@@ -93,6 +93,208 @@
       "result": null
     }
   ],
-  "currentStep": 7,
-  "overallStatus": "in-progress"
+  "currentStep": 10,
+  "overallStatus": "in-progress",
+  "docReview": {
+    "created": "2026-02-24T10:30:00-05:00",
+    "tasks": [
+      {
+        "id": "doc-1",
+        "name": "Reorganize navigation - move workflows to bottom",
+        "description": "Move the workflows section to the bottom of navigation or merge /workflows/agent-blocks into /agents/. Create _meta.json files to control navigation order.",
+        "status": "completed",
+        "agent": "agent:main:subagent:12840faa-2f73-429f-83c5-46af3c561d24",
+        "result": "Reordered navigation in content/_meta.js (Getting Started, Agents, Collections, Drive, Skills, Workflows, About). Moved agent-blocks.mdx from workflows/ to agents/ and updated both _meta.js files. Removed old file. Dev server tested successfully, build completed with 25 pages."
+      },
+      {
+        "id": "doc-2",
+        "name": "Audit all URLs in documentation",
+        "description": "Verify studio.scoutos.com and api.scoutos.com endpoints are correct. Check all example URLs and API endpoints throughout the docs.",
+        "status": "completed",
+        "agent": "agent:main:subagent:b3973871-3d63-470d-8efb-27ceb4771a27",
+        "result": {
+          "summary": "CRITICAL ISSUES FOUND: 2 major domains returning 404 errors",
+          "urlsFound": {
+            "total": 48,
+            "uniqueDomains": ["studio.scoutos.com", "api.scoutos.com", "scoutos.com", "docs.scoutos.com", "status.scoutos.com"]
+          },
+          "domainStatus": {
+            "www.scoutos.com": {"status": "HTTP 200", "working": true, "note": "Main website - working"},
+            "scoutos.com": {"status": "HTTP 308", "working": true, "note": "Redirects to www.scoutos.com"},
+            "docs.scoutos.com": {"status": "HTTP 307", "working": true, "note": "Redirects to /docs/getting-started/what-is-scout"},
+            "status.scoutos.com": {"status": "HTTP 200", "working": true, "note": "Status page - working"},
+            "studio.scoutos.com": {"status": "HTTP 404", "working": false, "note": "BROKEN - Returns 404, hosted on Vercel with Clerk auth"},
+            "api.scoutos.com": {"status": "HTTP 404", "working": false, "note": "BROKEN - Returns 404, hosted on Cloudflare"}
+          },
+          "brokenUrlsInDocs": {
+            "studio.scoutos.com": [
+              "content/agents/overview.mdx:61 - studio.scoutos.com/agents/marketplace",
+              "content/agents/templates.mdx:123 - studio.scoutos.com/agents/marketplace",
+              "content/agents/getting-started.mdx:11 - studio.scoutos.com/agents/marketplace",
+              "content/agents/getting-started.mdx:43 - studio.scoutos.com/agents/new",
+              "content/agents/getting-started.mdx:97 - studio.scoutos.com/integrations"
+            ],
+            "api.scoutos.com": [
+              "content/drive/overview.mdx:54 - api.scoutos.com/drive/upload",
+              "content/drive/overview.mdx:94 - api.scoutos.com/drive/download",
+              "content/drive/api-reference.mdx - multiple endpoints (upload, download, folders, list)",
+              "content/collections/creating-collections.mdx - api.scoutos.com/v2/collections endpoints",
+              "content/collections/overview.mdx - api.scoutos.com/v2/collections/.../documents and query",
+              "content/collections/querying-data.mdx - api.scoutos.com/v2/collections/.../query",
+              "content/skills/available-skills.mdx - api.scoutos.com/v2/collections, v2/syncs, drive/upload"
+            ]
+          },
+          "emailAddresses": [
+            "info@scoutos.com (content/agents/getting-started.mdx:207,211,215)",
+            "support@scoutos.com (content/skills/available-skills.mdx:142)"
+          ],
+          "recommendations": [
+            "URGENT: Verify if studio.scoutos.com domain is correctly configured - currently returns 404",
+            "URGENT: Verify if api.scoutos.com domain is correctly configured - currently returns 404",
+            "Consider using working domains (e.g., app.scoutos.com?) or fixing DNS/routing for these subdomains",
+            "Update all API examples once correct API domain is confirmed",
+            "Email addresses (info@, support@) should be verified as working"
+          ],
+          "filesAffected": [
+            "content/agents/overview.mdx",
+            "content/agents/templates.mdx",
+            "content/agents/getting-started.mdx",
+            "content/drive/overview.mdx",
+            "content/drive/api-reference.mdx",
+            "content/collections/creating-collections.mdx",
+            "content/collections/overview.mdx",
+            "content/collections/querying-data.mdx",
+            "content/skills/available-skills.mdx",
+            "content/getting-started/quick-start.mdx",
+            "content/getting-started/core-concepts.mdx"
+          ]
+        }
+      },
+      {
+        "id": "doc-3",
+        "name": "Audit integration references",
+        "description": "Verify all mentioned integrations exist: Fireflies, Slack, Google Workspace, Notion, CRMs, databases. Remove or update references to unavailable integrations.",
+        "status": "completed",
+        "agent": "agent:main:subagent:75656f54-3518-4694-93bb-0d497656dd2b",
+        "result": {
+          "summary": "Integration audit completed. Most integrations are verified as available, with one notable exception.",
+          "integrations": [
+            {
+              "name": "Fireflies",
+              "status": "NOT FOUND",
+              "files": ["content/workflows/overview.mdx", "content/workflows/agent-blocks.mdx"],
+              "context": "Mentioned as workflow trigger: 'Fireflies meeting ends'",
+              "recommendation": "REMOVE or mark as 'coming soon'. No official Scout integration exists. This appears aspirational or planned but not implemented."
+            },
+            {
+              "name": "Slack",
+              "status": "AVAILABLE",
+              "files": ["content/agents/getting-started.mdx", "content/agents/scheduling.mdx", "content/agents/templates.mdx"],
+              "context": "Used for alerts, notifications, and AI chatbot integration",
+              "notes": "Beta status correctly noted in docs. Integration confirmed at scoutos.com/integrations/slack",
+            },
+            {
+              "name": "Google Workspace/Drive/Calendar/Sheets",
+              "status": "AVAILABLE",
+              "files": ["content/skills/available-skills.mdx", "content/collections/creating-collections.mdx", "content/agents/getting-started.mdx"],
+              "context": "Sync source with archetype ID: com.google.drive",
+              "notes": "Multiple Google services integrated. Well documented."
+            },
+            {
+              "name": "Notion",
+              "status": "AVAILABLE",
+              "files": ["content/skills/available-skills.mdx", "content/collections/overview.mdx", "content/getting-started/what-is-scout.mdx"],
+              "context": "Sync source with archetype ID: com.notion.notion. MCP now available.",
+              "notes": "Strong integration confirmed with official docs"
+            },
+            {
+              "name": "Salesforce",
+              "status": "AVAILABLE",
+              "files": ["content/agents/templates.mdx", "content/agents/planning.mdx", "content/agents/scheduling.mdx"],
+              "context": "CRM integration for sales workflows",
+              "notes": "Official docs: docs.scoutos.com/docs/integrations/salesforce"
+            },
+            {
+              "name": "HubSpot",
+              "status": "AVAILABLE",
+              "files": ["content/agents/templates.mdx", "content/agents/planning.mdx", "content/agents/getting-started.mdx"],
+              "context": "CRM integration mentioned throughout templates",
+              "notes": "Confirmed on scoutos.com/integrations page"
+            },
+            {
+              "name": "Pipedrive",
+              "status": "AVAILABLE",
+              "files": ["content/agents/templates.mdx"],
+              "context": "CRM alternative mentioned in templates",
+              "notes": "Confirmed on scoutos.com/integrations page"
+            },
+            {
+              "name": "GitHub",
+              "status": "AVAILABLE",
+              "files": ["content/agents/getting-started.mdx"],
+              "context": "Code repository access",
+              "notes": "Confirmed at scoutos.com/integrations/github"
+            },
+            {
+              "name": "Discord",
+              "status": "AVAILABLE",
+              "files": ["content/getting-started/what-is-scout.mdx"],
+              "context": "Community/chat platform",
+              "notes": "Confirmed at scoutos.com/integrations/discord"
+            },
+            {
+              "name": "Microsoft 365",
+              "status": "AVAILABLE",
+              "files": ["content/skills/available-skills.mdx"],
+              "context": "SharePoint and OneDrive sync",
+              "notes": "Archetype ID: com.microsoft.365"
+            },
+            {
+              "name": "Laserfiche",
+              "status": "AVAILABLE",
+              "files": ["content/skills/available-skills.mdx"],
+              "context": "Document management sync",
+              "notes": "Archetype ID: com.laserfiche.repository - enterprise focused"
+            },
+            {
+              "name": "LinkedIn",
+              "status": "OPTIONAL/CUSTOM",
+              "files": ["content/agents/templates.mdx"],
+              "context": "Listed as '(optional)' in Sales Research Agent template",
+              "recommendation": "Clarify if this requires custom OAuth setup or custom skill"
+            },
+            {
+              "name": "Exa.ai",
+              "status": "OPTIONAL/CUSTOM",
+              "files": ["content/agents/templates.mdx"],
+              "context": "Third-party web search API, listed as optional",
+              "notes": "Not a native integration - custom skill/api connection"
+            }
+          ],
+          "recommendations": [
+            "CRITICAL: Remove or qualify Fireflies references - integration does not exist",
+            "Clarify LinkedIn and Exa.ai as optional custom integrations rather than built-in",
+            "Consider adding 'Available Integrations' reference table to agents/getting-started.mdx",
+            "Sync sources (Notion, Google Drive, Microsoft 365) are well documented in skills/available-skills.mdx"
+          ]
+        }
+      },
+      {
+        "id": "doc-4",
+        "name": "Clarify Skills documentation",
+        "description": "Determine if Skills is a Scout feature or OpenClaw-specific. Decide whether it should be public docs or internal. Update branding consistency.",
+        "status": "completed",
+        "agent": "agent:main:subagent:d4f2237c-d51f-49ab-9bec-a9b6335079d0",
+        "result": "**Determination: Skills is a SCOUT feature, not OpenClaw-specific.**\n\n**Issues Found (2 locations with incorrect branding):**\n\n1. `/content/skills/overview.mdx` line ~56: \"Skills can be installed using the OpenClaw CLI\"\n2. `/content/skills/creating-skills.mdx` line ~84: \"# If using OpenClaw\" section header\n\n**Evidence that Skills is a Scout feature:**\n- Package name is \"scout-docs2\" for Scout documentation\n- Deployed to scout-docs.onhyper.io\n- All other branding says \"Scout Skills\", \"Scout OS\", \"Scout API\"\n- Available skills reference scoutos.com and Scout Dashboard\n- Installation command in available-skills.mdx is `npx skills add scoutos/scout-skills` (no mention of OpenClaw)\n\n**Recommended Changes:**\n1. In `overview.mdx`: Change \"Skills can be installed using the OpenClaw CLI\" to \"Skills can be installed using the Scout CLI\" or \"Skills can be installed using npx skills add\"\n2. In `creating-skills.mdx`: Change section header \"# If using OpenClaw\" to \"# Installing Skills\" or similar generic header\n3. The skills documentation is correctly placed in public Scout docs - no relocation needed"
+      },
+      {
+        "id": "doc-5",
+        "name": "Update SDK examples and package names",
+        "description": "Verify 'scoutos' Python package name is correct. Update all code examples to use current SDK names and import paths.",
+        "status": "completed",
+        "agent": "agent:main:subagent:360c730b-17a6-4ee0-ab14-a6938fbd67e2",
+        "result": "✅ ALL SDK PACKAGE NAMES ARE CORRECT. No changes needed.\n\n**Python SDK (PyPI):**\n- Package: scoutos ✓\n- Install: pip install scoutos\n- Import: from scoutos import Scout ✓\n\n**TypeScript SDK (npm):**\n- Package: scoutos ✓\n- Install: npm i scoutos\n- Import: import { ScoutClient } from \"scoutos\" ✓\n\n**Files verified (18 SDK imports found):**\n- content/drive/overview.mdx\n- content/drive/api-reference.mdx\n- content/collections/creating-collections.mdx\n- content/collections/overview.mdx\n- content/collections/querying-data.mdx\n\nAll imports match the official SDK documentation on PyPI and npm."
+      }
+    ]
+  }
 }

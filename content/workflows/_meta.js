@@ -1,4 +1,3 @@
 export default {
-  'overview': 'Overview',
-  'agent-blocks': 'Agent Blocks'
+  'overview': 'Overview'
 }
