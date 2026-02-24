@@ -4,11 +4,11 @@ Help your agents tackle complex, multi-step tasks without getting lost.
 
 ## What Are Planning Tools?
 
-Planning tools give your agents the ability to map out their approach before diving into execution. Instead of figuring out what to do step-by-step in real-time (which can lead to blind alleys and wasted effort), an agent with planning tools can:
+Planning tools give your agents the ability to map out their approach before diving into execution. Instead of figuring out what to do step-by-step in real-time (which can lead to dead ends and wasted effort), an agent with planning tools can:
 
-1. **Create a plan** - Break down the task into logical steps
-2. **Get the next step** - Track progress and know exactly what to do next
-3. **Update the plan** - Adjust the approach as new information emerges
+1. **Create a plan** — Break down the task into logical steps
+2. **Get the next step** — Track progress and know exactly what to do next
+3. **Update the plan** — Adjust the approach as new information emerges
 
 This leads to more reliable execution, especially for complex tasks involving multiple tools and data sources.
 
@@ -62,7 +62,7 @@ Creates a structured plan for accomplishing a task.
   "steps": [
     {
       "id": 1,
-      "description": "Search web for current pricing of top 5 competitors",
+      "description": "Search web for current pricing of top five competitors",
       "tools": ["web_search"],
       "status": "pending"
     },
@@ -118,7 +118,7 @@ After completing step 1 (web search), the agent calls GetNextStep and receives:
   "tools": ["web_scrape"],
   "status": "ready",
   "context": {
-    "previous_step": "Found pricing pages for 4 of 5 competitors",
+    "previous_step": "Found pricing pages for four of five competitors",
     "urls_to_scrape": ["https://...", "https://..."]
   }
 }
@@ -132,7 +132,7 @@ Modifies the plan based on new information or changing requirements.
 
 **What it does:**
 
-- Adds, removes, or reorders steps
+- Adds, removes or reorders steps
 - Updates step descriptions or status
 - Marks steps as complete or skipped
 - Handles unexpected discoveries or blockers
@@ -146,7 +146,7 @@ Modifies the plan based on new information or changing requirements.
 
 **Example scenarios:**
 
-1. **Adding a step:** Web search reveals a 6th competitor that should be included
+1. **Adding a step:** Web search reveals a sixth competitor that should be included
 
 ```json
 {
@@ -165,7 +165,7 @@ Modifies the plan based on new information or changing requirements.
 {
   "action": "complete_step",
   "step_id": 2,
-  "result": "Successfully scraped pricing from all 5 competitors"
+  "result": "Successfully scraped pricing from all five competitors"
 }
 ```
 
@@ -195,17 +195,17 @@ Find the Tools section where you enable capabilities.
 
 Toggle on the planning tools:
 
-- **CreatePlan** - Let the agent create execution plans
-- **GetNextStep** - Let the agent track progress through plans
-- **UpdatePlan** - Let the agent adjust plans as needed
+- **CreatePlan** — Let the agent create execution plans
+- **GetNextStep** — Let the agent track progress through plans
+- **UpdatePlan** — Let the agent adjust plans as needed
 
 ### Step 4: Update Instructions (Optional)
 
 You can guide how your agent uses planning in its instructions:
 
 ```
-For complex tasks involving more than 3 steps, always start by creating a plan.
-Break the task into logical phases, update the plan when you learn new information,
+For complex tasks involving more than three steps, always start by creating a plan.
+Break the task into logical phases, update the plan when you learn new information
 and check your progress with GetNextStep between major actions.
 ```
 
@@ -218,7 +218,7 @@ and check your progress with GetNextStep between major actions.
 - Planning helps sequence: search → scrape → analyze → format
 
 **Data gathering and synthesis**
-- "Pull data from Salesforce, HubSpot, and our internal database, then create a unified report"
+- "Pull data from Salesforce, HubSpot and our internal database, then create a unified report"
 - Planning helps coordinate multiple data sources
 
 **Open-ended problem solving**
@@ -226,7 +226,7 @@ and check your progress with GetNextStep between major actions.
 - Planning helps structure investigation and track hypotheses
 
 **Tasks with dependencies**
-- "Onboard a new customer by setting up their account, configuring integrations, and sending a welcome email"
+- "Onboard a new customer by setting up their account, configuring integrations and sending a welcome email"
 - Planning ensures each step completes before the next begins
 
 ### When Planning Isn't Needed
@@ -287,7 +287,7 @@ Agent executes systematically:
 
 **Step 3: UpdatePlan as needed**
 
-If the agent discovers that 3 leads have already been contacted, it updates the plan to skip those and find 3 more cold leads instead.
+If the agent discovers that three leads have already been contacted, it updates the plan to skip those and find three more cold leads instead.
 
 **Result:** All 10 emails completed, properly personalized, saved for review, with a summary of strategy.
 
@@ -339,7 +339,7 @@ No. Planning tools are most valuable for agents that handle complex, multi-step 
 
 **Will planning slow down my agent?**
 
-Planning adds a small overhead at the start of complex tasks, but typically results in faster overall completion because the agent wastes less time on unproductive paths.
+Planning adds a small overhead at the start of complex tasks but typically results in faster overall completion because the agent wastes less time on unproductive paths.
 
 **Can I see the plan my agent created?**
 
@@ -360,4 +360,4 @@ until a plan is in place.
 
 ---
 
-*Built with ❤️ by Scout OS*
+Built with ❤️ by Scout OS

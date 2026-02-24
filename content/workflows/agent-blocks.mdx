@@ -4,7 +4,7 @@ Bring AI intelligence to your automated workflows by using agents as workflow bl
 
 ## What are Agent Blocks?
 
-Agent Blocks let you run AI agents as steps within a workflow. This combines the reliability of predefined workflows with the adaptability of AI agents - giving you the best of both worlds.
+Agent Blocks let you run AI agents as steps within a workflow. This combines the reliability of predefined workflows with the adaptability of AI agents, giving you the best of both worlds.
 
 Instead of rigid if/then logic, an Agent Block can:
 
@@ -23,7 +23,7 @@ When a webhook receives data that doesn't follow a predictable format:
 ```
 Trigger: New email arrives
    ↓
-Agent Block: Analyze email, extract sender intent, urgency, and key information
+Agent Block: Analyze email, extract sender intent, urgency and key information
    ↓
 Condition: Route based on agent's analysis
    ├─ Urgent → Create high-priority ticket
@@ -37,7 +37,7 @@ Let an agent decide where data should go:
 
 - Categorize support tickets by topic and assign to the right team
 - Evaluate leads and route to appropriate sales rep
-- Analyze feedback and tag for product, engineering, or marketing
+- Analyze feedback and tag for product, engineering or marketing
 
 ### Content Generation
 
@@ -61,9 +61,9 @@ Have an agent research and add context:
 
 Agent Blocks receive data from:
 
-- **Workflow trigger** - The initial event (webhook payload, schedule, etc.)
-- **Previous blocks** - Output from earlier workflow steps
-- **Static values** - Fixed parameters you define
+- **Workflow trigger** — The initial event (webhook payload, schedule, etc.)
+- **Previous blocks** — Output from earlier workflow steps
+- **Static values** — Fixed parameters you define
 
 ### Agent Selection
 
@@ -98,7 +98,7 @@ Trigger: Fireflies meeting ends (meeting transcript available)
    ↓
 Agent Block: Analyze Transcript
    Input: meeting_transcript
-   Instructions: "Extract action items, decisions made, and follow-ups. 
+   Instructions: "Extract action items, decisions made and follow-ups. 
                   Identify owners and deadlines."
    ↓
 Action Block: Create Tasks
@@ -123,7 +123,7 @@ Trigger: Webhook (new lead from website form)
 Agent Block: Research Company
    Input: lead_company_name
    Instructions: "Research this company. Find their industry, 
-                  size, recent news, and potential pain points 
+                  size, recent news and potential pain points 
                   our product could address."
    ↓
 Action Block: Create CRM Record
@@ -190,10 +190,10 @@ Treat agent instructions like workflow configuration. Be specific about:
 
 ## Next Steps
 
-- [Workflows Overview](/workflows) - Learn more about workflow fundamentals
-- [Agents](/agents) - Build agents to use in your workflows
-- [Getting Started](/getting-started) - Start building your first workflow
+- [Workflows Overview](/workflows) — Learn more about workflow fundamentals
+- [Agents](/agents) — Build agents to use in your workflows
+- [Getting Started](/getting-started) — Start building your first workflow
 
 ---
 
-*Built with ❤️ by Scout OS*
+Built with ❤️ by Scout OS

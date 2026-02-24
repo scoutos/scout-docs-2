@@ -1,19 +1,19 @@
 # Scout Drive
 
-Store, manage, and access files for your AI workflows and agents.
+Store, manage and access files for your AI workflows and agents.
 
 ## What is Scout Drive?
 
-Scout Drive is a file storage system built into Scout that allows you to upload, store, and retrieve files for use in your workflows and agents. It provides a simple, secure way to manage documents, images, and other assets that your AI applications need.
+Scout Drive is a file storage system built into Scout that allows you to upload, store and retrieve files for use in your workflows and agents. It provides a simple, secure way to manage documents, images and other assets that your AI applications need.
 
 ## Key Features
 
-- **Simple File Upload** - Upload files programmatically via API or SDK
-- **Folder Organization** - Create and organize folders to structure your files
-- **Fast Retrieval** - Quick access to files by path or name
-- **Agent File Access** - Agents can read and write files directly from Drive
-- **Skills & Memory** - Enables persistent skills and long-term memory for agents
-- **Workflow Integration** - Use files in your automation workflows
+- **Simple File Upload** — Upload files programmatically via API or SDK
+- **Folder Organization** — Create and organize folders to structure your files
+- **Fast Retrieval** — Quick access to files by path or name
+- **Agent File Access** — Agents can read and write files directly from Drive
+- **Skills & Memory** — Enables persistent skills and long-term memory for agents
+- **Workflow Integration** — Use files in your automation workflows
 
 ## Drive vs. Databases
 
@@ -42,7 +42,7 @@ Use Databases for:
 - Building RAG applications with semantic search
 - Storing structured data in tables
 - Knowledge bases that need vector search
-- Syncing data from Notion, Google Sheets, or web sources
+- Syncing data from Notion, Google Sheets or web sources
 
 ## Quick Start
 
@@ -112,7 +112,7 @@ const content = await client.drive.download({ path: "/report.pdf" });
 
 ### Creating and Managing Folders
 
-Folders help you organize files into logical structures. You can create folders for different projects, agents, or use cases.
+Folders help you organize files into logical structures. You can create folders for different projects, agents or use cases.
 
 **Create a Folder:**
 
@@ -173,8 +173,8 @@ Agents can read and write files directly from Drive, enabling powerful capabilit
 
 Agents with Drive access can read any file stored in Drive:
 
-1. **Configure Agent** - Give your agent the Drive tool access
-2. **Natural Language** - Ask your agent to read or process files
+1. **Configure Agent** — Give your agent the Drive tool access
+2. **Natural Language** — Ask your agent to read or process files
 
 Example agent prompts:
 
@@ -194,9 +194,9 @@ Agents can also create and write files to Drive:
 
 Drive enables two powerful agent capabilities:
 
-**Skills** - Agents can store and retrieve "skills" (saved prompts, templates, or knowledge) from Drive. This allows agents to learn and improve over time.
+**Skills** — Agents can store and retrieve "skills" (saved prompts, templates or knowledge) from Drive. This allows agents to learn and improve over time.
 
-**Long-Term Memory** - Agents can write important information to Drive for later recall. Unlike session memory, files in Drive persist across conversations and agent restarts.
+**Long-Term Memory** — Agents can write meaningful information to Drive for later recall. Unlike session memory, files in Drive persist across conversations and agent restarts.
 
 ```
 User: "Remember that our Q1 target is $500K"
@@ -207,17 +207,17 @@ This makes agents more useful over time as they accumulate knowledge and capabil
 
 ## Best Practices
 
-- **Use Descriptive Names** - Name files clearly for easy identification
-- **Organize with Folders** - Group related files in folder hierarchies
-- **Clean Up** - Remove outdated files to stay organized
-- **Metadata** - Consider using Databases for files that need rich metadata
+- **Use Descriptive Names** — Name files clearly for easy identification
+- **Organize with Folders** — Group related files in folder hierarchies
+- **Clean Up** — Remove outdated files to stay organized
+- **Metadata** — Consider using Databases for files that need rich metadata
 
 ## Next Steps
 
-- [Drive API Reference](/api-sdk/endpoints/drive/upload) - Full API documentation
-- [Databases](/databases) - Learn about structured data storage
-- [Agents](/agents) - Build agents that use Drive files
+- [Drive API Reference](/api-sdk/endpoints/drive/upload) — Full API documentation
+- [Databases](/databases) — Learn about structured data storage
+- [Agents](/agents) — Build agents that use Drive files
 
 ---
 
-*Built with ❤️ by Scout OS*
+Built with ❤️ by Scout OS

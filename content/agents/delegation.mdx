@@ -8,10 +8,10 @@ Agent delegation allows one agent to delegate tasks to other specialized agents.
 
 This enables patterns like:
 
-- **Specialization** - Each agent excels at a specific type of task
-- **Quality control** - Multiple agents review and validate outputs
-- **Complex workflows** - Agents coordinate multi-step processes
-- **Expertise layering** - Combine research, analysis, and writing agents
+- **Specialization** — Each agent excels at a specific type of task
+- **Quality control** — Multiple agents review and validate outputs
+- **Complex workflows** — Agents coordinate multi-step processes
+- **Expertise layering** — Combine research, analysis and writing agents
 
 ## Why Delegate?
 
@@ -22,7 +22,7 @@ A general-purpose agent making decisions across many domains is less effective t
 ```
 ❌ One agent does everything:
    "Analyze this sales call, update the CRM, draft follow-up, 
-    research competitor alternatives, and create a deal strategy"
+    research competitor alternatives and create a deal strategy"
 
 ✅ Specialized agents collaborate:
    Research Agent → Analyzes call and competitor landscape
@@ -36,7 +36,7 @@ A general-purpose agent making decisions across many domains is less effective t
 Use multiple agents to review and validate important decisions:
 
 1. Agent A makes an initial decision
-2. Agents B, C, and D review from different perspectives
+2. Agents B, C and D review from different perspectives
 3. Final action based on consensus or majority vote
 
 This dramatically improves accuracy for high-stakes decisions.
@@ -57,11 +57,11 @@ Month 6: +1 reviewer agent, +1 CRM specialist agent
 
 When an agent delegates to another agent:
 
-1. **Task handoff** - Agent A identifies a subtask for Agent B
-2. **Context passing** - Relevant information is passed to Agent B
-3. **Execution** - Agent B handles its specialized work
-4. **Return results** - Agent B sends results back to Agent A
-5. **Integration** - Agent A incorporates Agent B's work
+1. **Task handoff** — Agent A identifies a subtask for Agent B
+2. **Context passing** — Relevant information is passed to Agent B
+3. **Execution** — Agent B handles its specialized work
+4. **Return results** — Agent B sends results back to Agent A
+5. **Integration** — Agent A incorporates Agent B's work
 
 ### Example Flow
 
@@ -70,7 +70,7 @@ User: "Research Acme Corp and prepare for my sales call tomorrow"
 
 Main Agent:
 ├─ Delegates to Research Agent: "Research Acme Corp company info, 
-│  recent news, and key decision makers"
+│  recent news and key decision makers"
 │  └─ Returns: Company profile, news summary, org chart
 │
 ├─ Delegates to CRM Agent: "Check our interaction history with Acme"
@@ -156,9 +156,9 @@ Input ─────┼→ Tech Agent → technical assessment
 
 Agents can delegate based on:
 
-- **Explicit instruction** - "Ask the Research Agent to look into this"
-- **Automatic detection** - Agent recognizes a task type and delegates accordingly
-- **Rule-based** - When certain conditions are met, delegate to specific agent
+- **Explicit instruction** — "Ask the Research Agent to look into this"
+- **Automatic detection** — Agent recognizes a task type and delegates accordingly
+- **Rule-based** — When certain conditions are met, delegate to specific agent
 
 ### Passing Context
 
@@ -231,14 +231,14 @@ Plan for when delegated agents fail:
 
 - Each delegation adds latency (agent must wait for response)
 - Complex delegation chains can be harder to debug
-- Not all tasks benefit from delegation - some are faster done directly
+- Not all tasks benefit from delegation. Some are faster done directly.
 
 ## Next Steps
 
-- [Agents Overview](/agents) - Learn about building individual agents
-- [Getting Started](/agents/getting-started) - Create your first agents
-- [Workflows](/workflows) - Alternative orchestration with workflows
+- [Agents Overview](/agents) — Learn about building individual agents
+- [Getting Started](/agents/getting-started) — Create your first agents
+- [Workflows](/workflows) — Alternative orchestration with workflows
 
 ---
 
-*Built with ❤️ by Scout OS*
+Built with ❤️ by Scout OS

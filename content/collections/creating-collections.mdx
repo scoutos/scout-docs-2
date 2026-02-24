@@ -1,6 +1,6 @@
 # Creating Collections & Tables
 
-Learn how to create collections, configure tables with the right schema, and populate them with data.
+Learn how to create collections, configure tables with the right schema and populate them with data.
 
 ## Creating a Collection
 
@@ -9,12 +9,12 @@ Learn how to create collections, configure tables with the right schema, and pop
 1. Navigate to **Collections** in the Scout dashboard
 2. Click **+ New** at the top
 3. Fill in the details:
-   - **Name** (required) — A descriptive name for your collection
-   - **Description** (optional) — What this collection contains
-   - **Icon** (optional) — Visual identifier
+   - **Name** (required): A descriptive name for your collection
+   - **Description** (optional): What this collection contains
+   - **Icon** (optional): Visual identifier
 4. Click **Create**
 
-The collection will be provisioned with its underlying vector database. This typically takes about 30 seconds — the status will be displayed in the UI.
+The collection will be provisioned with its underlying vector database. This typically takes about 30 seconds. The status will be displayed in the UI.
 
 ### Via the API
 
@@ -96,7 +96,7 @@ For a documentation knowledge base, create these columns:
 
 The `content` column is special when vector indexing is enabled:
 
-- **Automatic Chunking** — Long content is split into ~2,500 character chunks
+- **Automatic Chunking** — Long content is split into chunks of about 2,500 characters
 - **Vector Embeddings** — Each chunk gets its own embedding for semantic search
 - **Search Results** — Results link back to the parent document
 
@@ -262,4 +262,4 @@ For better semantic search:
 
 ---
 
-*Built with ❤️ by Scout OS*
+Built with ❤️ by Scout OS

@@ -8,10 +8,10 @@ Agent scheduling lets you configure your agents to run automatically at specifie
 
 Common use cases:
 
-- **Daily standup prep** - Have an agent summarize yesterday's activity each morning
-- **Weekly reports** - Generate competitor intel or pipeline reports every Monday
-- **CRM hygiene** - Clean up stale contacts and dedupe records nightly
-- **Monitoring** - Check for important changes or anomalies on a regular cadence
+- **Daily standup prep** — Have an agent summarize yesterday's activity each morning
+- **Weekly reports** — Generate competitor intel or pipeline reports every Monday
+- **CRM hygiene** — Clean up stale contacts and dedupe records nightly
+- **Monitoring** — Check for important changes or anomalies on a regular cadence
 
 ## How It Works
 
@@ -19,9 +19,9 @@ When you set up a schedule:
 
 1. The agent receives any inputs you've configured
 2. It runs through its instructions and uses its tools
-3. Results are saved and can be delivered to Slack, email, or another destination
+3. Results are saved and can be delivered to Slack, email or another destination
 
-No workflow required - scheduling is built directly into agent settings.
+No workflow required. Scheduling is built directly into agent settings.
 
 ## Setting Up a Schedule
 
@@ -40,7 +40,7 @@ Look for the **Schedule** section where you can configure when and how often you
 Run your agent once per day at a specific time:
 
 - Select "Daily"
-- Choose the time (e.g., 9:00 AM)
+- Choose the time (e.g., 9 a.m.)
 - Select the timezone
 
 Use for: Daily summaries, morning prep, overnight tasks
@@ -50,7 +50,7 @@ Use for: Daily summaries, morning prep, overnight tasks
 Run your agent on specific days:
 
 - Select "Weekly"
-- Choose the day(s) - Monday, Wednesday, Friday, etc.
+- Choose the day(s): Monday, Wednesday, Friday, etc.
 - Choose the time
 - Select the timezone
 
@@ -62,16 +62,16 @@ For advanced scheduling needs, use cron syntax:
 
 - Select "Custom"
 - Enter a cron expression
-- Example: `0 */4 * * *` runs every 4 hours
+- Example: `0 */4 * * *` runs every four hours
 
 Common cron patterns:
 
 | Pattern | Meaning |
 |---------|---------|
-| `0 9 * * *` | Every day at 9:00 AM |
-| `0 9 * * 1` | Every Monday at 9:00 AM |
-| `0 9 * * 1-5` | Weekdays at 9:00 AM |
-| `0 */2 * * *` | Every 2 hours |
+| `0 9 * * *` | Every day at 9 a.m. |
+| `0 9 * * 1` | Every Monday at 9 a.m. |
+| `0 9 * * 1-5` | Weekdays at 9 a.m. |
+| `0 */2 * * *` | Every two hours |
 | `0 0 1 * *` | First day of every month |
 
 ### Step 4: Configure Inputs
@@ -96,10 +96,10 @@ Save your settings and enable the schedule. Your agent will now run automaticall
 
 When a scheduled agent runs, its output can be:
 
-- **Saved to Drive** - Store reports, summaries, or data files
-- **Posted to Slack** - Send results to a channel
-- **Sent via Email** - Deliver reports directly to inboxes
-- **Written to a Table** - Log results for tracking and analysis
+- **Saved to Drive** — Store reports, summaries or data files
+- **Posted to Slack** — Send results to a channel
+- **Sent via Email** — Deliver reports directly to inboxes
+- **Written to a Table** — Log results for tracking and analysis
 
 Configure output destinations in your agent's settings under the **Output** or **Delivery** section.
 
@@ -107,7 +107,7 @@ Configure output destinations in your agent's settings under the **Output** or *
 
 ### Morning Briefing Agent
 
-**Schedule:** Daily at 8:00 AM
+**Schedule:** Daily at 8 a.m.
 
 **Instructions:**
 ```
@@ -128,11 +128,11 @@ Format as a concise, scannable summary.
 
 ### Weekly Competitor Monitor
 
-**Schedule:** Every Monday at 7:00 AM
+**Schedule:** Every Monday at 7 a.m.
 
 **Instructions:**
 ```
-Research our top 5 competitors and identify:
+Research our top five competitors and identify:
 - Any pricing changes
 - New product announcements
 - Press coverage or news mentions
@@ -149,7 +149,7 @@ Create a summary report with links to sources.
 
 ### CRM Hygiene Agent
 
-**Schedule:** Nightly at 2:00 AM
+**Schedule:** Nightly at 2 a.m.
 
 **Instructions:**
 ```
@@ -192,7 +192,7 @@ You can modify schedule settings anytime:
 
 1. Open your agent
 2. Go to Settings → Schedule
-3. Update time, frequency, or inputs
+3. Update time, frequency or inputs
 4. Save changes
 
 The new schedule takes effect immediately.
@@ -257,7 +257,7 @@ if still failing. Continue with other data gathering even if one source fails.
 
 ### Consider Rate Limits
 
-If your agent calls APIs with rate limits, account for this in your schedule. Running every 5 minutes might exceed limits; every hour is usually safer.
+If your agent calls APIs with rate limits, account for this in your schedule. Running every five minutes might exceed limits. Every hour is usually safer.
 
 ## Common Questions
 
@@ -283,4 +283,4 @@ Check the Logs tab for your agent. Failed runs are marked with error details sho
 
 ---
 
-*Built with ❤️ by Scout OS*
+Built with ❤️ by Scout OS

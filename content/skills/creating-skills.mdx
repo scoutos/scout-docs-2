@@ -1,6 +1,6 @@
 # Creating Custom Skills
 
-Build your own skills to extend agents with custom capabilities, specialized knowledge, or proprietary integrations.
+Build your own skills to extend agents with custom capabilities, specialized knowledge or proprietary integrations.
 
 ## Skill Structure
 
@@ -67,7 +67,7 @@ Create `skills/my-custom-skill/SKILL.md`:
 ```markdown
 ---
 name: weather-skill
-description: Check weather conditions for any location. Use when the user asks about weather, forecasts, or climate conditions.
+description: Check weather conditions for any location. Use when the user asks about weather, forecasts or climate conditions.
 ---
 
 # Weather Skill
@@ -113,11 +113,11 @@ npx skills add ./skills/my-custom-skill
 
 ### Write Clear Descriptions
 
-The description in the frontmatter is crucial — agents use it to decide when to activate your skill:
+The description in the frontmatter is what agents use to decide when to activate your skill:
 
 ```markdown
 ---
-description: Use when working with Scout collections, tables, documents, agents, drive storage, syncs, or usage.
+description: Use when working with Scout collections, tables, documents, agents, drive storage, syncs or usage.
 ---
 ```
 
@@ -129,7 +129,7 @@ Tell the agent exactly when to use each capability:
 ## When to Use This Skill
 
 Use this skill when the user:
-- Mentions collections, tables, or documents
+- Mentions collections, tables or documents
 - Wants to search or query data
 - Asks to upload or download files
 - Needs to set up data syncs
@@ -250,4 +250,4 @@ Skills can be shared via:
 
 ---
 
-*Built with ❤️ by Scout OS*
+Built with ❤️ by Scout OS
