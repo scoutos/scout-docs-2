@@ -143,14 +143,26 @@ Input ─────┼→ Tech Agent → technical assessment
 
 **Use when:** Multiple independent analyses can run in parallel.
 
-## Building Delegating Agents
+## Setting Up Delegation
 
-### Configure Delegation in Agent Settings
+### Part 1: Enabling Your Agent to Delegate to Other Agents
 
-1. Open your agent in Scout Studio
-2. Navigate to **Settings → Delegation**
-3. Add agents that this agent can delegate to
-4. Configure how delegation is triggered
+1. Navigate to your agent in Scout Studio
+2. Click on the **Add tool** button
+3. Scroll the panel to find the **delegate to agent** tool
+4. Select the tool to add it to your agent
+5. Once added, your agent can now delegate tasks to other agents
+6. Update your agent's instructions to let it know it has delegation capabilities
+
+### Part 2: Enabling Your Agent to Receive Delegations
+
+For an agent to receive delegated tasks from other agents, it needs to be discoverable and accessible within your workspace. Here's how to make an agent "delegatable":
+
+1. **Share within workspace** — Ensure your agent is visible to team members (not private-only)
+2. **Clear specialization** — Give your agent a descriptive name and description so other agents know when to delegate to it
+3. **Well-defined instructions** — Your agent's instructions should clearly state its specialty so delegating agents understand its capabilities
+
+When another agent uses the "delegate to agent" tool, it can see and select from available agents in your workspace. The more clearly defined your agent's purpose, the more likely it will receive appropriate delegations.
 
 ### Delegation Triggers
 
