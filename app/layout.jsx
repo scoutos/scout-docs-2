@@ -43,7 +43,7 @@ export default async function RootLayout({ children }) {
           banner={banner}
           navbar={navbar}
           pageMap={await getPageMap()}
-          docsRepositoryBase="https://github.com/scoutos/scout-docs2"
+          docsRepositoryBase="https://github.com/scoutos/scout-docs-2"
           footer={footer}
         >
           {children}
