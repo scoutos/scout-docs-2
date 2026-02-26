@@ -1,0 +1,219 @@
+# Web Scraping
+
+Import content from websites directly into your Collections with Scout's built-in web scraping capabilities. Automatically extract and index web content for semantic search and RAG applications.
+
+## Overview
+
+Scout provides the ability to set up custom web scraping sources to populate your Collections' tables with documents. Before getting started, ensure you've created a [Collection](/collections/creating-collections).
+
+There are three different web scraping options:
+- **Single Page** — Scrape a single web page by URL
+- **Website Crawl** — Crawl an entire site, following links across multiple pages
+- **Sitemap** — Use a sitemap to discover and scrape specific pages
+
+## Types of Web Scrapes
+
+### Single Web Page
+
+Enter the URL of a single web page you wish to scrape. This option extracts content from one specific page, perfect for importing individual articles, documentation pages, or landing pages.
+
+**Best for:** One-off pages, specific articles, documentation pages
+
+**Example use cases:**
+- Import a single blog post
+- Extract content from a product page
+- Archive a specific documentation article
+
+### Website Crawl (Multiple Pages)
+
+Initiate a full crawl of a website, automatically following links to discover and scrape content from multiple pages. The crawler respects `robots.txt` and follows links within the configured depth and domain limits.
+
+**Best for:** Complete sites, documentation portals, knowledge bases
+
+**Example use cases:**
+- Import an entire documentation site
+- Crawl a knowledge base
+- Archive a company blog
+
+### Sitemap
+
+Provide a sitemap URL (e.g., `https://example.com/sitemap.xml`). Scout will parse the sitemap and scrape all listed pages, giving you precise control over which pages are included.
+
+**Best for:** Large sites with organized sitemaps, targeting specific sections
+
+**Example use cases:**
+- Import all blog posts via `/blog/sitemap.xml`
+- Scrape product pages from a sitemap
+- Target specific content categories
+
+## Configuration Options
+
+Configure your web scrape with these settings for full control over the scraping process:
+
+### Basic Settings
+
+| Setting | Required | Default | Description |
+|---------|----------|---------|-------------|
+| **URL** | Yes | — | The full URL of the page, domain, or sitemap to scrape |
+| **Scraper** | No | Http | Scraper technology (Http or Playwright) |
+| **Text Extractor** | No | Readability | Text extraction method |
+
+### Scraper Options
+
+- **Http** — Faster and more efficient, ideal for statically rendered pages. May not work well with heavily client-side rendered sites (SPAs).
+- **Playwright** — Renders JavaScript and dynamic content. Slower but handles modern web applications, SPAs, and sites requiring JavaScript execution.
+
+### Text Extractor Options
+
+- **Readability** — Scout's smart extraction logic that identifies and extracts relevant content while removing navigation, ads, and clutter.
+- **Trafilatura** — A Python-based extractor focused on main content extraction from web pages.
+
+### Advanced Settings
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| **Allow** | — | Comma-separated list of URL patterns to include. Only matching URLs will be crawled. |
+| **Deny** | — | Comma-separated list of URL patterns to exclude. Matching URLs will be skipped. |
+| **Exclude Patterns** | — | Regex patterns to exclude. Example: `/private/, login.html$` skips URLs containing '/private/' or ending with 'login.html' |
+| **Strip** | — | Comma-separated list of HTML tags to remove from content. |
+| **Strip URLs** | true | Normalizes URLs by removing query parameters, fragments, and trailing slashes. |
+| **Allowed Domains** | Source domain | Limits crawling to specific domains. Defaults to the starting URL's domain. |
+| **Max Depth** | 5 | Maximum crawl depth from the starting page. Higher values crawl more links. |
+| **Max Page Count** | 3000 | Maximum number of pages to scrape. Prevents runaway crawls. |
+
+## Setting Up a Web Scrape
+
+### Step 1: Create a Collection
+
+First, create a Collection and Table to store the scraped content. See [Creating Collections](/collections/creating-collections) for detailed instructions.
+
+### Step 2: Add a Web Scraping Source
+
+1. Navigate to your Collection in the Scout dashboard
+2. Click **Sources** → **Add Source**
+3. Select **Web Scrape** from the source options
+
+### Step 3: Configure the Scrape
+
+Enter your URL and choose your scraping options:
+
+**For a single page:**
+```
+URL: https://docs.scoutos.com/docs/overview
+Scraper: Http
+Text Extractor: Readability
+```
+
+**For a full site crawl:**
+```
+URL: https://docs.scoutos.com
+Scraper: Http
+Max Depth: 3
+Max Page Count: 500
+Exclude Patterns: /api/, /changelog/
+```
+
+**For a sitemap:**
+```
+URL: https://docs.scoutos.com/sitemap.xml
+Scraper: Http
+Text Extractor: Readability
+```
+
+### Step 4: Run the Scrape
+
+Click **Run** to start the scraping process. You'll see real-time progress on the dashboard showing:
+- Pages discovered
+- Pages scraped
+- Errors encountered
+- Estimated completion
+
+## Monitoring Web Scrapes
+
+Monitor your web scrapes in real-time from the Scout dashboard:
+
+- **Status** — Running, completed, or failed
+- **Progress** — Pages scraped vs. total discovered
+- **Errors** — Any failed pages with error details
+- **Duration** — Time elapsed
+
+Click on any scrape to see detailed logs and individual page results.
+
+## Results
+
+Once scraping is complete:
+
+1. **Documents Created** — Each web page becomes a separate document in your table
+2. **Text Indexed** — Page content is automatically embedded and indexed for semantic search
+3. **Metadata Preserved** — URL, title, and other metadata are stored with each document
+
+### Sample Document Structure
+
+```json
+{
+  "id": "doc_abc123",
+  "text": "Extracted content from the web page...",
+  "metadata": {
+    "url": "https://example.com/page",
+    "title": "Page Title",
+    "scraped_at": "2025-02-26T10:00:00Z"
+  }
+}
+```
+
+## Best Practices
+
+### Optimize Crawl Scope
+
+- **Start small** — Begin with a low Max Depth (2-3) to test your configuration
+- **Use patterns** — Exclude `/admin/`, `/login/`, and other unnecessary paths
+- **Set limits** — Always set Max Page Count to prevent unexpected large crawls
+
+### Choose the Right Scraper
+
+- Use **Http** for static sites, blogs, documentation
+- Use **Playwright** for SPAs, React/Vue apps, sites with dynamic content
+
+### Content Quality
+
+- **Readability** usually produces cleaner results for articles and documentation
+- **Trafilatura** may work better for news articles and blog posts
+- Use **Strip** to remove unwanted HTML elements like `<nav>`, `<footer>`, `<aside>`
+
+### Performance Tips
+
+1. **Batch large sites** — Use sitemaps to break up large crawls into smaller batches
+2. **Exclude media** — Add image/video URLs to exclude patterns
+3. **Respect rate limits** — Scout handles rate limiting automatically, but be mindful of target site resources
+
+## Troubleshooting
+
+### Content Not Extracted
+
+If pages show empty content:
+- Try switching to **Playwright** (may be a client-side rendered page)
+- Check if the page requires authentication
+- Verify the page is publicly accessible
+
+### Too Many Pages Discovered
+
+If Max Page Count is hit unexpectedly:
+- Add URL patterns to **Deny** or **Exclude Patterns**
+- Lower **Max Depth**
+- Use a sitemap for precise control
+
+### Slow Crawls
+
+If crawling is slower than expected:
+- **Http** is faster than **Playwright** — switch if possible
+- Reduce **Max Depth** to limit scope
+- Check your target site's response times
+
+## Next Steps
+
+- [Creating Collections](/collections/creating-collections) — Set up tables for your scraped data
+- [Querying Data](/collections/querying-data) — Search your scraped content with semantic search
+
+---
+
+Built with ❤️ by Scout OS
