@@ -331,41 +331,7 @@
 
 /* Navbar cleanup for custom search placement */
 @media (min-width: 48rem) {
-  /* Hide desktop navbar horizontal scrollbar artifact */
-  .nextra-navbar [class*="overflow-x-auto"].nextra-scrollbar {
-    overflow-x: visible !important;
-    scrollbar-width: none;
-  }
-
-  .nextra-navbar [class*="overflow-x-auto"].nextra-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Remove any separator pseudo-content around custom search slot */
-  .nextra-navbar .docs-search::before,
-  .nextra-navbar .docs-search::after,
-  .nextra-navbar .docs-search *::before,
-  .nextra-navbar .docs-search *::after {
-    content: none !important;
-  }
-
-  /* Remove stray separator pseudo-content in desktop navbar */
-  .nextra-navbar a::before,
-  .nextra-navbar a::after,
-  .nextra-navbar button::before,
-  .nextra-navbar button::after {
-    content: none !important;
-  }
-
-  /* Nextra wraps custom search in .x:max-md:hidden and adds a separator pseudo-element */
-  .nextra-navbar .x\:max-md\:hidden:has(.docs-search)::before,
-  .nextra-navbar .x\:max-md\:hidden:has(.docs-search)::after {
-    content: none !important;
-    display: none !important;
-  }
-
-  /* Fallback for browsers without :has support */
-  .nextra-navbar .x\:max-md\:hidden::after {
+  .nextra-navbar .docs-search-host::after {
     content: none !important;
     display: none !important;
   }

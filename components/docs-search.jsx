@@ -91,6 +91,14 @@ export function DocsSearch() {
   }, [])
 
   useEffect(() => {
+    const host = rootRef.current?.parentElement
+    if (!host) return
+
+    host.classList.add('docs-search-host')
+    return () => host.classList.remove('docs-search-host')
+  }, [])
+
+  useEffect(() => {
     function onGlobalKeyDown(event) {
       const active = document.activeElement
       const targetIsInput =
