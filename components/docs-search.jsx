@@ -39,19 +39,25 @@ function createExcerpt(content, query) {
 function scoreDocument(doc, query, tokens) {
   const title = normalize(doc.title)
   const content = normalize(doc.content)
+  const url = normalize(doc.url)
 
   let score = 0
-  if (title.includes(query)) score += 80
-  if (content.includes(query)) score += 30
+  if (title === query) score += 240
+  if (title.startsWith(query)) score += 120
+  if (title.includes(query)) score += 90
+  if (url.includes(query)) score += 55
+  if (content.includes(query)) score += 26
 
   let matchedTokens = 0
   for (const token of tokens) {
     const inTitle = title.includes(token)
     const inContent = content.includes(token)
-    if (inTitle || inContent) {
+    const inUrl = url.includes(token)
+    if (inTitle || inContent || inUrl) {
       matchedTokens += 1
-      if (inTitle) score += 20
-      if (inContent) score += 6
+      if (inTitle) score += 24
+      if (inUrl) score += 12
+      if (inContent) score += 5
     }
   }
 
@@ -70,6 +76,7 @@ export function DocsSearch() {
   const [open, setOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
   const rootRef = useRef(null)
+  const inputRef = useRef(null)
   const searchRunRef = useRef(0)
 
   useEffect(() => {
@@ -81,6 +88,37 @@ export function DocsSearch() {
 
     document.addEventListener('click', onDocumentClick)
     return () => document.removeEventListener('click', onDocumentClick)
+  }, [])
+
+  useEffect(() => {
+    function onGlobalKeyDown(event) {
+      const active = document.activeElement
+      const targetIsInput =
+        active instanceof HTMLInputElement ||
+        active instanceof HTMLTextAreaElement ||
+        active?.isContentEditable
+
+      if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !targetIsInput) {
+        event.preventDefault()
+        inputRef.current?.focus()
+        setOpen(true)
+      }
+
+      const isShortcut =
+        (event.metaKey || event.ctrlKey) &&
+        !event.shiftKey &&
+        !event.altKey &&
+        event.key.toLowerCase() === 'k'
+
+      if (isShortcut) {
+        event.preventDefault()
+        inputRef.current?.focus()
+        setOpen(true)
+      }
+    }
+
+    window.addEventListener('keydown', onGlobalKeyDown)
+    return () => window.removeEventListener('keydown', onGlobalKeyDown)
   }, [])
 
   useEffect(() => {
@@ -162,6 +200,7 @@ export function DocsSearch() {
   return (
     <div className="docs-search" ref={rootRef}>
       <input
+        ref={inputRef}
         type="search"
         className="docs-search-input"
         placeholder="Search documentation..."

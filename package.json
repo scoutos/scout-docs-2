@@ -8,6 +8,7 @@
     "start": "next start",
     "deploy": "node deploy.mjs",
     "search:index": "node scripts/build-search-index.mjs",
+    "search:smoke": "node scripts/search-smoke-test.mjs",
     "sync:openapi": "node scripts/update-openapi.mjs",
     "validate:openapi": "node scripts/validate-openapi.mjs"
   },
