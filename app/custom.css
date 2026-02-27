@@ -363,6 +363,12 @@
     content: none !important;
     display: none !important;
   }
+
+  /* Fallback for browsers without :has support */
+  .nextra-navbar .x\:max-md\:hidden::after {
+    content: none !important;
+    display: none !important;
+  }
 }
 
 /* ========================================
