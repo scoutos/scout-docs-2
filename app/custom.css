@@ -772,3 +772,141 @@ article pre {
     page-break-inside: avoid;
   }
 }
+
+/* ========================================
+   PRD-002 + PRD-004 TARGETED BASELINE FIXES
+   ======================================== */
+
+@media (max-width: 47.999rem) {
+  /* Keep navbar blur layer inside viewport bounds. */
+  .nextra-navbar-blur {
+    left: 0 !important;
+    right: 0 !important;
+    width: auto !important;
+  }
+
+  /* Prevent floated copy controls from shrinking the main reading column. */
+  article > .x\:float-end {
+    float: none !important;
+    display: inline-flex;
+    margin: 0.5rem 0 0 !important;
+  }
+
+  article > main {
+    clear: both;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  /* Keep code blocks inside content width while preserving horizontal scroll. */
+  pre,
+  .nextra-content pre,
+  article pre {
+    margin: 1rem 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto;
+  }
+
+  /* Normalize table behavior to component-level horizontal scrolling only. */
+  .nextra-content table,
+  article table,
+  main table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .nextra-content table th,
+  .nextra-content table td,
+  article table th,
+  article table td,
+  main table th,
+  main table td {
+    min-width: max-content;
+  }
+}
+
+/* ========================================
+   PRD-003 + PRD-005 REFINEMENT PASS
+   ======================================== */
+
+@media (max-width: 47.999rem) {
+  /* Keep phone typography readable and consistent in docs content only. */
+  article > main {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  article > main > h1 {
+    font-size: clamp(1.9rem, 6vw, 2.2rem) !important;
+    line-height: 1.2 !important;
+    margin-top: 0.75rem !important;
+  }
+
+  article > main > h2 {
+    font-size: clamp(1.4rem, 4.8vw, 1.75rem) !important;
+    line-height: 1.25 !important;
+    margin-top: 2rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  article > main > :where(p, ul, ol, blockquote, pre, table, .nextra-callout) {
+    margin-top: 0.9rem !important;
+    margin-bottom: 0.9rem !important;
+  }
+
+  article > main :where(ul, ol) {
+    padding-left: 1.25rem !important;
+  }
+
+  article > main li {
+    margin-bottom: 0.45rem !important;
+  }
+
+  /* Secondary components: callouts/cards and footer ergonomics. */
+  article .nextra-callout,
+  article [class*="card"] {
+    border-radius: 0.75rem;
+    padding: 0.875rem !important;
+  }
+
+  footer {
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)) !important;
+  }
+
+  footer a {
+    min-height: 44px !important;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Search field sizing for mobile nav/overlay contexts. */
+  .nextra-search input,
+  .nextra-mobile-nav .nextra-search input {
+    min-height: 44px !important;
+    font-size: 1rem !important;
+  }
+}
+
+@media (min-width: 48rem) and (max-width: 63.999rem) {
+  /* Tablet portrait/landscape reading rhythm without desktop regression. */
+  article > main {
+    max-width: 72ch;
+  }
+
+  article > main > h1 {
+    font-size: 2.25rem !important;
+    line-height: 1.2 !important;
+  }
+
+  article > main > h2 {
+    font-size: 1.75rem !important;
+    line-height: 1.25 !important;
+  }
+
+  article > main > :where(p, ul, ol) {
+    line-height: 1.65;
+  }
+}
