@@ -1,0 +1,69 @@
+# Creating Workflows
+
+Build workflows when you need reliable automation with clear inputs, clear outputs and repeatable logic.
+
+## Before You Build
+
+Define three things first:
+
+1. **Objective**: What outcome should this workflow produce?
+2. **Input**: What data starts the run?
+3. **Output**: What should be saved, sent or returned?
+
+If you skip this step, workflows become hard to debug and hard to maintain.
+
+## Build Flow
+
+1. Open **Workflows** in Scout
+2. Click **New Workflow**
+3. Add an **Input** block and define fields
+4. Add blocks for processing, decisions and outputs
+5. Connect block outputs into downstream block inputs
+6. Run in Console and validate results
+
+## Practical Build Pattern
+
+Use this order for most production workflows:
+
+1. **Validate input**
+2. **Fetch context** (Collections, APIs, integrations)
+3. **Transform and decide** (conditions, templates, AI)
+4. **Take action** (write data, send messages, call systems)
+5. **Return structured output**
+
+## Use with Agents
+
+If your workflow is exposed as an agent tool:
+
+- Keep input schema explicit and small
+- Return predictable output keys
+- Include clear failure messages in output
+- Avoid side effects before validation steps
+
+Instruction snippet for agent tools:
+
+```markdown
+When calling this workflow tool:
+
+1. Confirm required inputs before execution.
+2. Prefer the smallest valid payload.
+3. On failure, return the error reason and next action.
+4. On success, return concise output with IDs and paths.
+```
+
+## Common Mistakes
+
+- Overloading one workflow with too many unrelated jobs
+- Writing to external systems before validation
+- Returning free-form text instead of structured outputs
+- Skipping test runs with realistic input payloads
+
+## Next Steps
+
+- [Blocks](/workflows/blocks): Choose the right building blocks
+- [Logic and State](/workflows/logic-state): Pass data safely between blocks
+- [Console](/workflows/console): Test and debug runs faster
+
+---
+
+Built with ❤️ by Scout OS

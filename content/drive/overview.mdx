@@ -1,19 +1,20 @@
 # Scout Drive
 
-Store, manage and access files for your AI workflows and agents.
+Store, organize and serve files to your agents and workflows.
 
 ## What is Scout Drive?
 
-Scout Drive is a file storage system built into Scout that allows you to upload, store and retrieve files for use in your workflows and agents. It provides a simple, secure way to manage documents, images and other assets that your AI applications need.
+Scout Drive is Scout's built-in file system. Use it when your AI apps need file I/O, not semantic retrieval.
+
+Drive is great for PDFs, exports, generated reports, images and attachments. Agents can read files, create new files and organize folders as part of normal task execution.
 
 ## Key Features
 
-- **Simple File Upload** — Upload files programmatically via API or SDK
-- **Folder Organization** — Create and organize folders to structure your files
-- **Fast Retrieval** — Quick access to files by path or name
-- **Agent File Access** — Agents can read and write files directly from Drive
-- **Skills & Memory** — Enables persistent skills and long-term memory for agents
-- **Workflow Integration** — Use files in your automation workflows
+- **File upload and download**: Move files in and out with API and SDK
+- **Folder management**: Create, list and remove folder trees
+- **Deterministic paths**: Control destination with `path`, `folder` and `name`
+- **Agent tool support**: Let agents read and write files directly
+- **Workflow compatibility**: Use Drive files in recurring automations
 
 ## Drive vs. Databases
 
@@ -43,6 +44,60 @@ Use Databases for:
 - Storing structured data in tables
 - Knowledge bases that need vector search
 - Syncing data from Notion, Google Sheets or web sources
+
+## Give Agents Drive Access
+
+### 1) Enable Tools
+
+If you want agents to manage files, enable Drive in the agent's **Tools** tab.
+
+Once enabled, agents can:
+
+- Read files and summarize content
+- Write outputs like CSVs, markdown reports and exports
+- Create folders and organize file destinations
+- List folder contents before taking action
+
+Example prompts:
+
+- "Read `/reports/q1-summary.pdf` and extract topline metrics."
+- "Create `/reports/weekly`, then save this summary as `2026-02-27.md`."
+- "List files in `/handoff` and tell me which ones are missing metadata."
+
+### 2) Add Instruction Snippet
+
+```markdown
+When handling file tasks:
+
+1. List the destination folder before writing new files.
+2. Use explicit paths for outputs, avoid implicit root writes.
+3. For relocation requests, copy content to the new path, then confirm archive or cleanup behavior.
+4. Confirm written file path and name in the final response.
+5. Never delete folders unless the user explicitly asks for cleanup.
+```
+
+### 3) Prompt Examples
+
+- "Read all files in `/contracts/incoming` and create summaries in `/contracts/summaries`."
+- "Create `/reports/monthly/2026`, then write this report to `/reports/monthly/2026/feb.md`."
+- "Move files from `/handoff` to `/archive/handoff/2026-02` and list what moved."
+
+### 4) Expected Behavior
+
+- The agent checks folder contents before writes
+- The agent uses deterministic paths when creating files
+- The agent confirms output location after each write
+- The agent avoids destructive cleanup unless explicitly requested
+
+## Agent Operations Playbook
+
+Use this pattern when building production agents that touch Drive.
+
+1. **Plan destination paths**: Use predictable folders like `/reports/daily` or `/exports/crm`.
+2. **Check before write**: List the target folder to avoid accidental collisions.
+3. **Write with explicit metadata**: Prefer `path` for deterministic output locations.
+4. **Read and verify**: For critical outputs, read back and validate file content.
+5. **Archive in batches**: Clean old folders on a schedule.
 
 ## Quick Start
 
@@ -142,6 +197,16 @@ for file in files:
 client.drive.delete_folder(path="/projects/archived")
 ```
 
+### Moving Files Between Folders
+
+Drive pathing gives you strong control for new writes. For existing files, a common pattern is:
+
+1. Download from the source path
+2. Upload to the new destination path
+3. Archive or clean up old folders when appropriate
+
+This keeps relocation explicit and auditable in workflow logs.
+
 ### Folder Structure
 
 Organize your files using folder hierarchies:
@@ -167,14 +232,14 @@ When uploading, you can specify file destinations in several ways:
 
 ## Agent File Access
 
-Agents can read and write files directly from Drive, enabling powerful capabilities:
+Agents can read and write files directly from Drive.
 
 ### Reading Files
 
 Agents with Drive access can read any file stored in Drive:
 
-1. **Configure Agent** — Give your agent the Drive tool access
-2. **Natural Language** — Ask your agent to read or process files
+1. **Configure Agent**: Give your agent the Drive tool access
+2. **Natural Language**: Ask your agent to read or process files
 
 Example agent prompts:
 
@@ -192,31 +257,31 @@ Agents can also create and write files to Drive:
 
 ### Skills and Long-Term Memory
 
-Drive enables two powerful agent capabilities:
+Drive can support:
 
-**Skills** — Agents can store and retrieve "skills" (saved prompts, templates or knowledge) from Drive. This allows agents to learn and improve over time.
-
-**Long-Term Memory** — Agents can write meaningful information to Drive for later recall. Unlike session memory, files in Drive persist across conversations and agent restarts.
+- **Reusable assets**: Prompt templates, checklists or static reference files
+- **Long-term artifacts**: Summaries, logs and generated deliverables that persist across sessions
 
 ```
 User: "Remember that our Q1 target is $500K"
 Agent: "I've saved that to Drive. I'll remember it for future conversations."
 ```
 
-This makes agents more useful over time as they accumulate knowledge and capabilities specific to your needs.
+This is useful when memory should be visible and inspectable as files, not hidden in transient context.
 
 ## Best Practices
 
-- **Use Descriptive Names** — Name files clearly for easy identification
-- **Organize with Folders** — Group related files in folder hierarchies
-- **Clean Up** — Remove outdated files to stay organized
-- **Metadata** — Consider using Databases for files that need rich metadata
+- **Use descriptive names**: Include date or version in generated outputs
+- **Keep folder conventions stable**: Agents perform better with predictable paths
+- **Separate input and output paths**: Example `/inbox` vs `/reports`
+- **Schedule cleanup**: Archive old folders to control sprawl
+- **Use Databases for retrieval-heavy use cases**: Keep Drive for file ops
 
 ## Next Steps
 
-- [Drive API Reference](/api-sdk/endpoints/drive/upload) — Full API documentation
-- [Databases](/databases) — Learn about structured data storage
-- [Agents](/agents) — Build agents that use Drive files
+- [Drive API Reference](/drive/api-reference): Full endpoint docs and examples
+- [Agents](/agents): Build agents that use Drive as a tool
+- [Databases](/databases): Use semantic search for knowledge retrieval
 
 ---
 

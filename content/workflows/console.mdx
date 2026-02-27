@@ -1,0 +1,40 @@
+# Console
+
+Console is the fastest way to test a workflow while you build.
+
+## Open Console
+
+In the workflow canvas, click the play icon to open Console.
+
+## What to Check in Each Test Run
+
+1. Input payload shape
+2. Block-by-block output
+3. Final output schema
+4. Errors and timing
+
+## Debug Loop
+
+Use this cycle:
+
+1. Run with realistic input
+2. Inspect first failing or noisy block
+3. Fix block config or template
+4. Re-run with the same input
+5. Re-run with edge-case input
+
+## Console Tips
+
+- Keep a small library of test payloads for regression checks
+- Test both happy path and failure path
+- Validate output field names before exposing workflow as a tool
+
+## Next Steps
+
+- [Logs](/workflows/logs): Analyze production run history
+- [History](/workflows/history): Track what changed between revisions
+- [Creating Workflows](/workflows/creating-workflows): Improve workflow structure
+
+---
+
+Built with ❤️ by Scout OS

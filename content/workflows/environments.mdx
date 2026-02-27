@@ -1,0 +1,45 @@
+# Environments
+
+Use environments to promote workflow revisions safely from development to production.
+
+## Environment Model
+
+- `development`: Build and iterate
+- `staging`: Final validation
+- `production`: Live user traffic
+
+Each environment can point to a different revision.
+
+## Deployment Flow
+
+1. Test in `development`
+2. Deploy to `staging`
+3. Validate with real-like inputs
+4. Deploy to `production`
+
+## Diff Before Deploy
+
+Before production deploys, check revision diffs:
+
+- **Blocks view**: High-level structure and connection changes
+- **Code view**: Detailed JSON-level changes
+
+Use blocks view for speed and code view for precision.
+
+## Rollback Strategy
+
+If a release degrades output quality or reliability:
+
+1. Switch environment to last known good revision
+2. Confirm recovery in Logs
+3. Fix forward in `development`
+
+## Next Steps
+
+- [History](/workflows/history): Name and manage revisions
+- [Logs](/workflows/logs): Verify deployment health
+- [Running Workflows](/workflows/running-workflows): Execute with explicit environments
+
+---
+
+Built with ❤️ by Scout OS

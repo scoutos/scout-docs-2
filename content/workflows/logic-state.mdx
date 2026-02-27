@@ -1,0 +1,49 @@
+# Logic and State
+
+Workflows pass state from block to block. If state design is clean, workflows stay predictable and easy to debug.
+
+## How State Moves
+
+- `{{inputs.field_name}}` references Input block values
+- `{{block_id.output}}` references prior block output
+- Output from one block becomes input to downstream blocks
+
+Use explicit mappings so each block receives only what it needs.
+
+## Global Variables
+
+Scout provides global date and time variables you can use in templates:
+
+- `{{__exp_global.current_date}}`
+- `{{__exp_global.current_time}}`
+- `{{__exp_global.current_datetime}}`
+- Time zone variants like `{{__exp_global.current_time_utc}}` and `{{__exp_global.current_time_pacific}}`
+
+Use these for timestamps, logging and user-facing messages.
+
+## State Design Best Practices
+
+- Keep payloads small between blocks
+- Use stable key names across the workflow
+- Normalize data once, then reuse normalized fields
+- Prefer structured objects over string concatenation
+
+## Error and Fallback Paths
+
+Add branch logic for expected failures:
+
+- Missing input fields
+- Empty query results
+- External API failures
+
+Return explicit status fields like `ok`, `error_code` and `message` so downstream logic can branch safely.
+
+## Next Steps
+
+- [Blocks](/workflows/blocks): Choose the right block types
+- [Jinja Templates](/workflows/jinja-templates): Build dynamic expressions safely
+- [History](/workflows/history): Track and restore changes
+
+---
+
+Built with ❤️ by Scout OS

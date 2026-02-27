@@ -2,6 +2,28 @@
 
 Complete reference for Scout Drive API endpoints.
 
+## Endpoint Map for Agent Actions
+
+Use this map when translating agent behavior into API calls:
+
+| Agent Action | Endpoint |
+|--------------|----------|
+| Read a file | `GET /drive/download` |
+| Write a file | `POST /drive/upload` |
+| List a folder | `GET /drive/list` |
+| Create folder | `POST /drive/folders` |
+| Remove archived folder trees | `DELETE /drive/folders` |
+
+## Moving Files Between Folders
+
+Drive pathing is deterministic for uploads. A dedicated file move endpoint is not documented in this reference.
+
+For relocation workflows, use this pattern:
+
+1. Read from source path with `GET /drive/download`
+2. Write to destination path with `POST /drive/upload` and `metadata.path`
+3. Clean up old directory structures as needed with `DELETE /drive/folders` (for folder-level archive and cleanup)
+
 ## Upload Files
 
 Upload one or more files to Drive.
@@ -460,8 +482,8 @@ Drive API has the following rate limits:
 
 ## Next Steps
 
-- [Drive Overview](/drive/overview) — Introduction to Scout Drive
-- [API Keys](/settings/api-keys) — Manage your API authentication
+- [Drive Overview](/drive/overview): Introduction to Scout Drive
+- [API Keys](/settings/api-keys): Manage your API authentication
 
 ---
 

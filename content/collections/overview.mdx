@@ -49,6 +49,39 @@ Use Drive when you need:
 - **Asset Management** — Manage media files for workflows
 - **Simple Access** — Read files by path without complex querying
 
+## Use with Agents
+
+### 1) Enable Tools
+
+In the agent's **Tools** tab, enable the tools that let the agent read and write Collections data.
+
+### 2) Add Instruction Snippet
+
+Add this to your agent instructions:
+
+```markdown
+When a task depends on organizational knowledge or structured records:
+
+1. Query Collections first.
+2. Prefer hybrid search for broad user questions.
+3. Use metadata filters when the user specifies category, date or status.
+4. If information is missing and the user provided new facts, write the new record to the correct table.
+5. In your reply, distinguish clearly between retrieved data and newly added data.
+```
+
+### 3) Prompt Examples
+
+- "Search our support knowledge base for account recovery steps and summarize the answer."
+- "Find onboarding docs updated in the last 30 days and return only security-related items."
+- "Add this meeting note to the `customer_feedback` table with category `enterprise`."
+
+### 4) Expected Behavior
+
+- The agent queries the correct table before answering
+- The agent applies filters when constraints are present
+- The agent writes records only when asked or when instructions allow it
+- The final response cites what came from Collections data
+
 ## Quick Start
 
 ### Create a Collection

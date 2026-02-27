@@ -1,0 +1,61 @@
+# Jinja Templates
+
+Use Jinja to create dynamic inputs and outputs inside blocks.
+
+## Core Syntax
+
+- `{{ ... }}` for expressions
+- `{% ... %}` for control flow
+
+Examples:
+
+```jinja2
+{{ inputs.user_message }}
+{{ collection_lookup.output }}
+{% if inputs.priority == "high" %}urgent{% else %}normal{% endif %}
+```
+
+## Common Use Cases
+
+- Build prompts with workflow state
+- Build API payloads dynamically
+- Add timestamps to logs and messages
+- Apply conditional messaging by status or priority
+
+## Date and Time Utilities
+
+Available in templates:
+
+- `datetime`
+- `timezone`
+- `ZoneInfo`
+
+Examples:
+
+```jinja2
+{{ datetime.now(timezone.utc).isoformat() }}
+{{ datetime.now(ZoneInfo("America/Los_Angeles")).strftime('%Y-%m-%d %I:%M %p') }}
+```
+
+## Safe Templating Rules
+
+- Prefer explicit field references over broad objects
+- Keep templates readable, move complex logic into dedicated blocks
+- Validate output shape in Console before deploying
+- Use environment variables via `_env` for secrets
+
+Example:
+
+```jinja2
+{{ _env.API_KEY }}
+```
+
+## Next Steps
+
+- [Logic and State](/workflows/logic-state): Understand variable flow and references
+- [Console](/workflows/console): Validate rendered template output
+- [Creating Workflows](/workflows/creating-workflows): Build cleaner workflow architectures
+
+---
+
+Built with ❤️ by Scout OS

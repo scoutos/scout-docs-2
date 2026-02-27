@@ -2,6 +2,37 @@
 
 Learn how to create collections, configure tables with the right schema and populate them with data.
 
+## Use with Agents
+
+### 1) Enable Tools
+
+In the agent's **Tools** tab, enable Collections tools for document creation and querying.
+
+### 2) Add Instruction Snippet
+
+```markdown
+When creating or updating table records:
+
+1. Validate target collection and table before writing.
+2. Confirm required fields are present: `id`, `content` and key metadata.
+3. Use consistent values for taxonomy fields like `category` and `status`.
+4. If data is incomplete, ask for missing fields before saving.
+5. After writing, return the record IDs that were created or updated.
+```
+
+### 3) Prompt Examples
+
+- "Create a `release_notes` record for version 2.8.0 with category `platform`."
+- "Upsert these three customer call summaries into `customer_feedback`."
+- "Check whether this document already exists by URL before creating a new row."
+
+### 4) Expected Behavior
+
+- The agent writes to the correct schema
+- The agent avoids duplicate records when identifiers already exist
+- The agent reports what changed with record IDs
+- The agent asks for missing required fields before saving
+
 ## Creating a Collection
 
 ### From the Dashboard

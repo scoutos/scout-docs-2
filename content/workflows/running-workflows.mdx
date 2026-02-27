@@ -1,0 +1,47 @@
+# Running Workflows
+
+You can run Scout workflows from the UI, API and SDK depending on your use case.
+
+## Run Options
+
+### Console (fastest for development)
+
+Use Console when you are building, testing and debugging.
+
+### API and SDK (best for production systems)
+
+Use API or SDK when external apps, automations or backend services need to trigger runs.
+
+### Embedded and integration surfaces
+
+Workflows can also run through products like Copilot and Slack integrations when configured.
+
+## API Run Example
+
+```bash
+curl -X POST "https://api.scoutos.com/v2/workflows/{workflow_id}/execute?environment=production" \
+  -H "Authorization: Bearer $SCOUT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "inputs": {
+      "user_message": "Generate a weekly summary"
+    },
+    "streaming": false
+  }'
+```
+
+## Run Strategy
+
+- Use `development` for active build and debugging
+- Use `staging` for pre-production validation
+- Use `production` for user-facing traffic
+
+## Next Steps
+
+- [Console](/workflows/console): Test quickly in the workflow UI
+- [Environments](/workflows/environments): Deploy safely across stages
+- [Logs](/workflows/logs): Inspect run status, duration and failures
+
+---
+
+Built with ❤️ by Scout OS

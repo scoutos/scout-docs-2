@@ -1,0 +1,44 @@
+# Logs
+
+Logs show what happened in each workflow run so you can debug faster and operate with confidence.
+
+## What Logs Include
+
+- Run timestamp
+- Status (`completed`, `failed`, `running`)
+- Duration
+- Cost signals
+- Input and output context
+- Error messages when runs fail
+
+## Filter Strategy
+
+Use filters to find issues quickly:
+
+- **Date range** for incident windows
+- **Status = failed** for active debugging
+- **Status = completed** for performance review
+
+## Failure Triage Pattern
+
+1. Find first failing run in time window
+2. Open failing block details
+3. Identify whether failure is input, logic or external dependency
+4. Patch workflow and test in Console
+5. Re-run and confirm recovery
+
+## Operations Tips
+
+- Watch duration trends for performance regressions
+- Track recurring failure signatures by block type
+- Pair Logs with History to map failures to specific revisions
+
+## Next Steps
+
+- [Console](/workflows/console): Reproduce failures with controlled input
+- [History](/workflows/history): Identify the change that introduced failure
+- [Environments](/workflows/environments): Roll back or redeploy safely
+
+---
+
+Built with ❤️ by Scout OS

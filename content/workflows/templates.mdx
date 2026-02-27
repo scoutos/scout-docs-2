@@ -1,0 +1,51 @@
+# Workflow Templates
+
+Templates help you ship faster when the use case is familiar. Start from a template, then adapt it to your systems and data.
+
+## When to Use Templates
+
+Use a template when:
+
+- You need a working baseline quickly
+- The workflow pattern is common (research, routing, summarization)
+- You want proven block structure before customizing
+
+Build from scratch when the process is highly custom or compliance-heavy.
+
+## How to Use a Template
+
+1. Open **Workflows**
+2. Click **Browse Templates**
+3. Pick a template based on objective and inputs
+4. Review required integrations and data dependencies
+5. Click **Use Template**
+6. Update names, variables and destination systems
+7. Run test cases in Console before deployment
+
+## Template Hardening Checklist
+
+Before production:
+
+- Replace placeholder prompts and URLs
+- Connect required integrations
+- Confirm environment variables are set
+- Add error handling blocks for failure paths
+- Verify output schema for downstream consumers
+
+## Use with Agents
+
+If an agent will call the templated workflow as a tool:
+
+- Keep input names descriptive (`customer_id`, `ticket_text`)
+- Return concise structured outputs
+- Add idempotency where possible for repeated calls
+
+## Next Steps
+
+- [Creating Workflows](/workflows/creating-workflows): Build from first principles
+- [Running Workflows](/workflows/running-workflows): Execute via UI, API and SDK
+- [Environments](/workflows/environments): Promote safely to production
+
+---
+
+Built with ❤️ by Scout OS

@@ -1,0 +1,55 @@
+# Blocks
+
+Blocks are the units of execution in a workflow. Each block does one job, then passes output to the next block.
+
+## Core Block Categories
+
+### Input and Output
+
+- **Input**: Defines runtime payload fields
+- **Text / JSON**: Shapes output or intermediate data
+- **HTTP**: Calls external APIs
+
+### AI Processing
+
+- **LLM / Reasoning**: Generate and analyze text
+- **Web Search / Scrape**: Gather live external context
+- **JavaScript**: Custom logic when block config is not enough
+
+### Control Flow
+
+- **Conditional / Continue If / Stop If**: Branch workflow logic
+- **Delay**: Time-based pauses
+- **Reduce**: Iterate and aggregate across lists
+
+### Data and Integrations
+
+- **Query Collection Table**: Retrieve internal knowledge
+- **Save Document to Table**: Persist workflow output
+- **Slack / Discord / Twilio / CRM blocks**: Push actions into tools
+
+## Choosing the Right Block
+
+Use this quick rule:
+
+- Need data in, data out with predictable logic: standard blocks
+- Need judgment or generation: LLM or Reasoning block
+- Need side effects in external tools: integration blocks
+- Need custom edge-case logic: JavaScript block
+
+## Block Design Rules
+
+- Keep each block focused on one responsibility
+- Name blocks by intent, not by tool
+- Avoid long implicit chains, keep transformations explicit
+- Add guard conditions before expensive or irreversible actions
+
+## Next Steps
+
+- [Logic and State](/workflows/logic-state): Connect outputs safely across blocks
+- [Jinja Templates](/workflows/jinja-templates): Build dynamic block inputs
+- [Console](/workflows/console): Inspect each block run in real time
+
+---
+
+Built with ❤️ by Scout OS

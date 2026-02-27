@@ -124,6 +124,37 @@ Access in later blocks with Jinja:
 {{ query_results.output[0].record.attributes.title }}
 ```
 
+## Use with Agents
+
+### 1) Enable Tools
+
+In the agent's **Tools** tab, enable the Collections query capability.
+
+### 2) Add Instruction Snippet
+
+```markdown
+For questions that require internal knowledge:
+
+1. Query Collections before answering.
+2. Start with hybrid search using `min_similarity: 0.5` and `alpha: 0.5`.
+3. If results are noisy, increase `min_similarity`.
+4. If the user gives constraints like category, date or status, apply metadata filters.
+5. Return a concise answer, then include the key supporting records.
+```
+
+### 3) Prompt Examples
+
+- "Find troubleshooting steps for SSO login failures from the IT docs table."
+- "Search only `category = policy` and summarize PTO policy changes since Jan. 1."
+- "Query the sales enablement table for pricing objection handling and give me three approved responses."
+
+### 4) Expected Behavior
+
+- The agent chooses semantic or hybrid search based on the prompt
+- The agent narrows scope with filters instead of broad retries
+- The agent returns grounded answers based on retrieved records
+- The agent states when evidence is weak or missing
+
 ## Querying via API
 
 ### Basic Query
