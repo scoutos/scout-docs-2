@@ -1,40 +1,36 @@
 # Available Skills
 
-Explore the built-in skills that extend your agents with Scout's data platform capabilities.
+These are the official skills in [`scoutos/scout-skills`](https://github.com/scoutos/scout-skills). They cover Scout data APIs and workflow execution.
+
+## Install the Skill Pack
+
+```bash
+npx skills add scoutos/scout-skills
+```
+
+Set your API key before using the Scout endpoints:
+
+```bash
+export SCOUT_API_KEY="your-api-key-here"
+```
+
+Get your API key from [Scout Dashboard](https://scoutos.com) -> Settings -> API Keys.
 
 ## Scout API Skill
 
-The primary skill for interacting with Scout's data platform: collections, tables, documents, agents, drive storage, syncs and usage monitoring.
+Use `scout` when the task is about data operations in Scout.
 
 ### Capabilities
 
 | Feature | Description |
 |---------|-------------|
 | **Collections** | Create, list, update, delete top-level data containers |
-| **Tables** | Manage structured data with custom schemas |
+| **Tables** | Manage structured data with custom schemas (text, number, select, datetime and more) |
 | **Documents** | CRUD operations on table records with bulk insert support |
 | **Agents** | Manage AI assistants that interact with your Scout data |
 | **Drive** | Upload and download files to Scout storage |
 | **Syncs** | Sync data from external sources (websites, Notion, Google Drive, etc.) |
 | **Usage** | Monitor API usage and costs |
-
-### Installation
-
-```bash
-npx skills add scoutos/scout-skills
-```
-
-### Authentication
-
-Set your Scout API key as an environment variable:
-
-```bash
-export SCOUT_API_KEY="your-api-key-here"
-```
-
-Get your API key from [Scout Dashboard](https://scoutos.com) → Settings → API Keys.
-
----
 
 ## Sync Sources
 
@@ -44,6 +40,7 @@ The Scout skill supports syncing data from various external sources:
 |--------|-------------|-------------|
 | **Website Crawler** | `com.scoutos.website` | Intelligent website crawling with configurable depth |
 | **Sitemap** | `com.scoutos.sitemap` | Parse and crawl from sitemap.xml files |
+| **Crawl** | `com.scoutos.crawl` | Multi-page crawl across linked pages |
 | **Page Crawl** | `com.scoutos.page_crawl` | Single page content extraction |
 | **Notion** | `com.notion.notion` | Sync Notion pages and databases |
 | **Google Drive** | `com.google.drive` | Sync files from Google Drive |
@@ -53,15 +50,47 @@ The Scout skill supports syncing data from various external sources:
 
 ### When to Use Each Source
 
-**Website Crawler** — Best for general documentation sites and public content
+**Website Crawler**: Best for general documentation sites and public content.
 
-**Sitemap** — When you have a comprehensive sitemap.xml and want predictable crawling
+**Sitemap**: Use this when you have a comprehensive sitemap.xml and want predictable crawling.
 
-**Notion** — For syncing internal documentation, wikis or knowledge bases
+**Notion**: Use this for syncing internal documentation, wikis or knowledge bases.
 
-**Google Drive** — When your content lives in Google Docs or Drive folders
+**Google Drive**: Use this when your content lives in Google Docs or Drive folders.
 
-**Guided Crawl** — For sites requiring login, complex navigation or JavaScript-heavy pages
+**Guided Crawl**: Use this for sites requiring login, complex navigation or JavaScript-heavy pages.
+
+---
+
+## Scout Workflow Skill
+
+Use `scout-workflow` when the task is about creating, running or deploying Scout workflows.
+
+### Capabilities
+
+| Feature | Description |
+|---------|-------------|
+| **Workflow execution** | Run workflows with `POST /v2/workflows/{workflow_id}/execute` |
+| **Streaming runs** | Use streaming output for long-running workflow jobs |
+| **Revisions** | Create and run specific workflow revisions |
+| **SDK support** | Python and TypeScript examples for workflow run patterns |
+| **CLI workflows as code** | Local run and deployment via `scout workflows` commands |
+
+### Environments
+
+The workflow skill supports these execution environments:
+
+- `production` (default)
+- `staging`
+- `development`
+- `console`
+
+### Typical prompts for this skill
+
+- "Run workflow `wf_abc123` with these inputs"
+- "Execute this workflow in staging"
+- "Stream workflow output so I can monitor progress"
+- "Deploy this workflow with the Scout CLI"
 
 ---
 
@@ -120,11 +149,25 @@ curl -X POST \
   "https://api.scoutos.com/drive/upload"
 ```
 
+### Executing a Workflow
+
+```bash
+curl -X POST "https://api.scoutos.com/v2/workflows/wf_abc123/execute?environment=production" \
+  -H "Authorization: Bearer $SCOUT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "inputs": {
+      "user_message": "Generate a weekly summary"
+    },
+    "streaming": false
+  }'
+```
+
 ---
 
 ## Using Skills with Agents
 
-When an agent has the Scout skill enabled, you can ask it to:
+When an agent has `scout` enabled, you can ask it to:
 
 - "List all my collections and their tables"
 - "Search the knowledge base for documents about API design"
@@ -132,12 +175,18 @@ When an agent has the Scout skill enabled, you can ask it to:
 - "Create a new table called Tasks with columns for title, status and due date"
 - "Set up a sync from our Notion docs to the knowledge base"
 
-The agent will automatically use the appropriate API endpoints based on your request.
+When an agent has `scout-workflow` enabled, you can also ask it to:
+
+- "Run workflow `wf_123` in staging with this payload"
+- "Stream workflow output and report status changes"
+- "Create a new workflow revision and deploy it"
 
 ## Additional Resources
 
 - **Official Docs**: [https://docs.scoutos.com](https://docs.scoutos.com)
 - **API Reference**: [https://docs.scoutos.com/api-sdk](https://docs.scoutos.com/api-sdk)
+- **Workflow Docs**: [https://docs.scoutos.com/docs/workflows](https://docs.scoutos.com/docs/workflows)
+- **Workflow Run Endpoint**: [https://docs.scoutos.com/api-sdk/endpoints/workflows/run](https://docs.scoutos.com/api-sdk/endpoints/workflows/run)
 - **Status Page**: [https://status.scoutos.com](https://status.scoutos.com)
 - **Support**: [support@scoutos.com](mailto:support@scoutos.com)
 

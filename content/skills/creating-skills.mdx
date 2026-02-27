@@ -1,6 +1,6 @@
 # Creating Custom Skills
 
-Build your own skills to extend agents with custom capabilities, specialized knowledge or proprietary integrations.
+Build custom skills when you want agents to follow a specific playbook every time. A good skill keeps execution consistent, reduces prompt bloat and makes behavior easier to maintain.
 
 ## Skill Structure
 
@@ -9,12 +9,12 @@ A skill consists of a directory containing at minimum:
 ```
 my-skill/
 ├── SKILL.md       # Instructions for the agent
-└── skill.json     # Metadata and tool definitions (optional)
+└── skill.json     # Optional tool metadata/config
 ```
 
 ### SKILL.md
 
-The instruction file is the heart of a skill. It's written in Markdown and loaded into the agent's context when the skill is active.
+`SKILL.md` is the core of the skill. It is loaded into agent context when the skill is active.
 
 ```markdown
 ---
@@ -28,10 +28,10 @@ Detailed instructions for the agent on how to use this skill.
 
 ## Available Tools
 
-Describe the tools/endpoints available:
+Describe available tools and endpoints:
 
-- **Tool Name** — What it does
-- **Another Tool** — Another capability
+- **Tool Name**: What it does
+- **Another Tool**: Another capability
 
 ## When to Use
 
@@ -52,7 +52,7 @@ Provide example prompts and expected behavior.
 Guidance for handling common errors or edge cases.
 ```
 
-## Creating a Basic Skill
+## Create a Basic Skill
 
 ### Step 1: Create the Directory
 
@@ -60,7 +60,7 @@ Guidance for handling common errors or edge cases.
 mkdir -p skills/my-custom-skill
 ```
 
-### Step 2: Write SKILL.md
+### Step 2: Write `SKILL.md`
 
 Create `skills/my-custom-skill/SKILL.md`:
 
@@ -93,7 +93,7 @@ When the user asks about weather:
 GET https://api.weather.example.com/current
 
 Parameters:
-- `location` — City name or coordinates
+- `location`: City name or coordinates
 
 ## Example Prompts
 
@@ -112,7 +112,7 @@ npx skills add ./skills/my-custom-skill
 
 ### Write Clear Descriptions
 
-The description in the frontmatter is what agents use to decide when to activate your skill:
+Agents use the frontmatter description to decide when to activate your skill:
 
 ```markdown
 ---
@@ -136,7 +136,7 @@ Use this skill when the user:
 
 ### Document Authentication
 
-If your skill requires credentials, document how to set them up:
+If your skill requires credentials, document setup clearly:
 
 ```markdown
 ## Authentication
@@ -150,7 +150,7 @@ This skill requires an API key:
 
 ### Provide Examples
 
-Concrete examples help agents understand expected behavior:
+Concrete examples help agents choose the right action:
 
 ```markdown
 ## Examples
@@ -166,7 +166,7 @@ Concrete examples help agents understand expected behavior:
 
 ### Handle Errors Gracefully
 
-Include guidance for error scenarios:
+Include guidance for common failure scenarios:
 
 ```markdown
 ## Error Handling
@@ -223,9 +223,9 @@ Or in tool definitions:
 
 Skills can be shared via:
 
-- **GitHub repositories** — The standard way to distribute skills
-- **NPM packages** — For more formal distribution
-- **Direct sharing** — Copy the skill directory to share with teammates
+- **GitHub repositories**: Standard for distribution
+- **NPM packages**: Useful for formal versioning and release workflows
+- **Direct sharing**: Copy the skill directory to teammates
 
 ### Publishing to GitHub
 
@@ -246,6 +246,14 @@ Skills can be shared via:
 - Review the SKILL.md instructions for clarity
 - Add more specific examples
 - Document edge cases explicitly
+
+## Reference: Official Scout Skills
+
+Use the official repository as a model for structure and writing style:
+
+- Repo: [github.com/scoutos/scout-skills](https://github.com/scoutos/scout-skills)
+- Skills today: `scout` and `scout-workflow`
+- Pattern to follow: clear trigger description, explicit auth, concrete endpoint examples
 
 ---
 
