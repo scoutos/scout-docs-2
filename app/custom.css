@@ -329,6 +329,26 @@
   }
 }
 
+/* Navbar cleanup for custom search placement */
+@media (min-width: 48rem) {
+  /* Hide desktop navbar horizontal scrollbar artifact */
+  .nextra-navbar [class*="overflow-x-auto"].nextra-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .nextra-navbar [class*="overflow-x-auto"].nextra-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Remove any separator pseudo-content around custom search slot */
+  .nextra-navbar .docs-search::before,
+  .nextra-navbar .docs-search::after,
+  .nextra-navbar .docs-search *::before,
+  .nextra-navbar .docs-search *::after {
+    content: none !important;
+  }
+}
+
 /* ========================================
    TABLE RESPONSIVE FIXES
    ======================================== */
