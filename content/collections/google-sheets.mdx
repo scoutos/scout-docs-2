@@ -1,0 +1,83 @@
+# Google Sheets
+
+Use the Google Sheets source to sync spreadsheet rows into a Scout table. This works well for operational data, CRM exports and structured lists that change often.
+
+## Before You Start
+
+- Create a Collection and destination table
+- Ensure your sheet has a clear header row in row 1
+- Add table columns for the fields you want to keep searchable or filterable
+
+## Connect the Google Sheets Integration
+
+1. Open **Integrations** in Scout
+2. Connect **Google Sheets**
+3. Grant access to the Google account and spreadsheets you want to sync
+
+Note: Availability can vary by workspace while this integration rolls out.
+
+## Create a Google Sheets Source
+
+1. Open your Collection table
+2. Click **Sources** -> **Add Source**
+3. Select **Google Sheets**
+4. Select the spreadsheet and worksheet/tab
+5. Map sheet columns to table columns
+6. Optionally set sync frequency
+7. Click **Create**
+
+## Recommended Field Mapping
+
+Map by header name to keep the sync predictable:
+
+- `Title` -> `title`
+- `URL` -> `url`
+- `Description` -> `content`
+- `Updated At` -> `updated_at`
+
+If your sheet has many columns, start with a small subset and expand after validating data quality.
+
+## Run and Validate
+
+After setup:
+
+1. Run the source manually once
+2. Verify rows were created in the table
+3. Spot-check values for type and formatting
+4. Run a query to confirm retrieval quality
+
+## Common Issues
+
+### Wrong or Missing Values
+
+- Confirm header row exists and names are stable
+- Recheck column mapping in the source config
+- Ensure target column types match data shape
+
+### Duplicate or Stale Data
+
+- Review the sync strategy for updates vs full replacement
+- Keep a stable identifier column when possible
+- Re-run manually after major schema changes in the sheet
+
+### Permission Errors
+
+- Reconnect the integration with the correct Google account
+- Verify the connected account can access the spreadsheet
+
+## Best Practices
+
+- Keep header names consistent to avoid mapping drift
+- Use explicit table schemas instead of free-form ingestion
+- Use scheduled sync only for sheets that change frequently
+- Add metadata columns (team, status, region) to improve filtering
+
+## Next Steps
+
+- [Sources](/collections/sources): Compare all source types and sync options
+- [Querying Data](/collections/querying-data): Search synced sheet data with semantic and hybrid search
+- [Creating Collections](/collections/creating-collections): Design schemas for reliable sheet ingestion
+
+---
+
+Built with ❤️ by Scout OS

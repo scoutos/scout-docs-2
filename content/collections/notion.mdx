@@ -1,0 +1,79 @@
+# Notion
+
+Use the Notion source to sync pages and databases from Notion into a Scout table. This is the fastest way to keep internal docs searchable for agents and workflows.
+
+## Before You Start
+
+- Create a Collection and destination table first
+- Add at least these columns: `title` (Single Line Text), `url` (URL), `content` (Multi Line Text)
+- Make sure your Notion workspace has the pages or databases you want to sync
+
+## Connect the Notion Integration
+
+1. Open Scout integrations in the dashboard
+2. Connect **Notion**
+3. In Notion, pick the workspace and grant access to the pages/databases Scout should read
+
+Tip: Keep permissions scoped to only the content you need.
+
+## Create a Notion Source
+
+1. Open your Collection table
+2. Click **Sources** -> **Add Source**
+3. Select **Notion**
+4. Choose the connected Notion integration
+5. Map Notion fields into table columns
+6. Optionally set a sync frequency
+7. Click **Create**
+
+## Recommended Field Mapping
+
+Use explicit mappings so future syncs stay stable:
+
+- Notion title -> `title`
+- Notion page URL -> `url`
+- Notion body/content -> `content`
+- Notion last edited time -> `updated_at` (Number or Datetime)
+
+## Run and Validate
+
+After creating the source:
+
+1. Run the first sync manually
+2. Inspect several rows in your table
+3. Confirm that `content` contains useful body text
+4. Run a sample query to verify retrieval quality
+
+## Common Issues
+
+### Missing Pages
+
+- Recheck which pages were granted to the integration in Notion
+- Wait a few minutes and rerun if permissions were just changed
+
+### Empty or Thin Content
+
+- Verify body text is mapped to your `content` column
+- Confirm the page actually contains text content (not only embeds or attachments)
+
+### Sync Runs but Data Looks Outdated
+
+- Enable a schedule for automatic refresh
+- Re-run manually after major edits in Notion
+
+## Best Practices
+
+- Start with one Notion space or section, then expand
+- Keep mappings simple and consistent across tables
+- Use scheduled sync only for content that changes frequently
+- Combine with metadata filters in queries for better precision
+
+## Next Steps
+
+- [Sources](/collections/sources): Compare all source types and sync options
+- [Querying Data](/collections/querying-data): Search synced Notion content with semantic and hybrid search
+- [Web Scraping](/collections/web-scraping): Add public website content alongside Notion
+
+---
+
+Built with ❤️ by Scout OS

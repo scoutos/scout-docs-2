@@ -1,0 +1,104 @@
+# Sources
+
+Sources keep your tables up to date by syncing external data into Collections. Use Sources when you want repeatable ingestion instead of manual document entry.
+
+## What Sources Do
+
+Each source runs a sync job that:
+
+1. Pulls data from an external system
+2. Maps that data to your table columns
+3. Creates or updates documents in the destination table
+
+You can run sources manually or on a schedule.
+
+## Source Types
+
+Scout supports multiple source types in the same table:
+
+| Source Type | What It Pulls | Best For |
+|-------------|---------------|----------|
+| **Web Scrape** | Website pages via single URL, crawl or sitemap | Public docs, help centers, blogs |
+| **Notion** | Notion pages and databases | Internal knowledge bases and team wikis |
+| **Google Sheets** | Rows from spreadsheets | Operational data and structured lists |
+
+## Create a Source
+
+1. Open your Collection and select a table
+2. Click **Sources**
+3. Click **Add Source**
+4. Choose a source type
+5. Configure mapping and frequency
+6. Run the first sync
+
+## Source Mapping
+
+Each source returns slightly different fields. Map those fields to columns in your table.
+
+Typical mappings:
+
+- `title` -> `title`
+- `content` -> `content`
+- `url` -> `url`
+- `updated_at` -> `updated_at`
+
+If you are syncing long-form text for retrieval, map the main body into your `content` column.
+
+## Sync Frequency
+
+Frequency is optional. You can:
+
+- Run once manually
+- Enable a schedule for automatic refresh
+
+Use schedules for content that changes frequently, such as docs portals or active spreadsheets.
+
+## Monitoring and Re-runs
+
+From the **Sources** panel, you can:
+
+- View run status and sync history
+- Inspect errors and logs
+- Edit source configuration
+- Re-run failed or completed jobs
+
+## Web Scraping in Sources
+
+Web Scraping is a source type. Scout supports:
+
+- **Single Page** for one URL
+- **Website Crawl** for linked pages on a site
+- **Sitemap** for controlled URL discovery from `sitemap.xml`
+
+For full configuration details, see [Web Scraping](/collections/web-scraping).
+
+## Notion in Sources
+
+Notion is a source type for syncing workspace pages and databases into your table.
+
+For setup and mapping guidance, see [Notion](/collections/notion).
+
+## Google Sheets in Sources
+
+Google Sheets is a source type for syncing spreadsheet rows into a table.
+
+For setup and mapping guidance, see [Google Sheets](/collections/google-sheets).
+
+## Best Practices
+
+- Start with a small test sync before large runs
+- Keep column mappings explicit and stable
+- Use schedules only where freshness matters
+- Review failed runs regularly and fix mapping drift quickly
+
+## Next Steps
+
+- [Web Scraping](/collections/web-scraping): Configure crawl settings and extraction options
+- [Notion](/collections/notion): Connect and sync Notion pages and databases
+- [Google Sheets](/collections/google-sheets): Sync spreadsheet rows into table documents
+- [Creating Collections](/collections/creating-collections): Design tables for source data
+- [Querying Data](/collections/querying-data): Search synced content with semantic and hybrid search
+
+---
+
+Built with ❤️ by Scout OS
