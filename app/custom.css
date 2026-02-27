@@ -333,6 +333,7 @@
 @media (min-width: 48rem) {
   /* Hide desktop navbar horizontal scrollbar artifact */
   .nextra-navbar [class*="overflow-x-auto"].nextra-scrollbar {
+    overflow-x: visible !important;
     scrollbar-width: none;
   }
 
@@ -345,6 +346,14 @@
   .nextra-navbar .docs-search::after,
   .nextra-navbar .docs-search *::before,
   .nextra-navbar .docs-search *::after {
+    content: none !important;
+  }
+
+  /* Remove stray separator pseudo-content in desktop navbar */
+  .nextra-navbar a::before,
+  .nextra-navbar a::after,
+  .nextra-navbar button::before,
+  .nextra-navbar button::after {
     content: none !important;
   }
 }
