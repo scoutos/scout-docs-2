@@ -1,0 +1,54 @@
+# Integrations
+
+Connect Scout to the systems your team already uses. Once connected, agents and workflows can take action across those tools.
+
+Open integrations here:
+
+- [studio.scoutos.com/integrations](https://studio.scoutos.com/integrations)
+
+## Priority Integrations
+
+For most teams, start in this order:
+
+1. **CRM**: Salesforce and HubSpot
+2. **Email and Calendar**
+3. **Slack and Notion**
+4. **Google Drive and Microsoft 365**
+
+This gives agents access to customer data first, then communication and docs.
+
+## How Integrations Work
+
+1. Connect accounts in the Integrations page
+2. Enable the tools on each agent's **Tools** tab
+3. Add instruction guardrails for when and how tools should be used
+4. Test with real prompts before production rollout
+
+## Add Guardrails in Agent Instructions
+
+```markdown
+When using external integrations:
+
+1. Read before write when possible.
+2. Confirm record identity before updates.
+3. Return the object ID and action taken after each write.
+4. For risky actions (delete, overwrite, bulk update), ask for explicit confirmation.
+```
+
+## Prompt Examples
+
+- "Find open enterprise opportunities in Salesforce and summarize top risks."
+- "Check my calendar for next week and draft prep notes in Notion."
+- "Post today's pipeline summary to #sales-leadership in Slack."
+- "Read QBR docs from Google Drive and create an exec brief."
+
+## Next Steps
+
+- [CRM (Salesforce and HubSpot)](/integrations/crm): Connect revenue systems first
+- [Email and Calendar](/integrations/email-calendar): Automate communication workflows
+- [Slack and Notion](/integrations/slack-notion): Combine collaboration with knowledge
+- [Google Drive and Microsoft 365](/integrations/drive-m365): Work across file systems and suites
+
+---
+
+Built with ❤️ by Scout OS

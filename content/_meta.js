@@ -6,6 +6,7 @@ export default {
   drive: 'Drive',
   skills: 'Skills',
   workflows: 'Workflows',
+  integrations: 'Integrations',
   about: {
     title: 'About',
     type: 'page'

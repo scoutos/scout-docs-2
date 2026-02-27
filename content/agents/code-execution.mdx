@@ -1,0 +1,93 @@
+# Code Execution
+
+Code Execution lets an agent write JavaScript or TypeScript, run it in a secure sandbox and return results.
+
+Use this when the agent needs deterministic compute, custom parsing or direct API calls that are easier to express in code.
+
+## What It Is Good For
+
+- Calling third-party APIs with structured request/response handling
+- Transforming and validating complex JSON payloads
+- Running deterministic calculations and scoring logic
+- Building lightweight data pipelines inside a single request
+
+## What It Is Not For
+
+- Long-running batch jobs
+- Unbounded crawling or heavy background processing
+- High-risk side effects without explicit user confirmation
+
+## How It Works
+
+1. Agent decides code is the best path for the task
+2. Agent generates JS or TS code
+3. Code runs in a sandbox with execution limits
+4. Runtime output is returned to the agent
+5. Agent uses that output to respond or take the next step
+
+## Enable It on an Agent
+
+1. Open your agent
+2. Go to the **Tools** tab
+3. Enable **Code Execution**
+4. Save and run a test prompt
+
+## Instruction Snippet
+
+Add this to your agent instructions:
+
+```markdown
+When a task requires deterministic compute or structured API integration:
+
+1. Prefer Code Execution for calculations, parsing and strict data transforms.
+2. Keep code minimal and focused on the current task.
+3. Validate inputs before execution.
+4. Return structured outputs with clear field names.
+5. Explain failures with actionable error messages.
+```
+
+## Prompt Examples
+
+- "Call this REST API endpoint, normalize the response and return a table of active accounts."
+- "Compute weighted lead scores from this JSON payload and return top 10 with reasons."
+- "Write JS to parse these webhook events and group failures by error code."
+- "Fetch pricing data from this API, convert currencies to USD and summarize deltas by plan."
+
+## Safety and Reliability Guidelines
+
+- Validate required fields before code execution
+- Keep outputs structured and small
+- Handle retries and API failures explicitly
+- Avoid destructive actions unless the user asked for them
+- Log key decisions in the agent response for traceability
+
+## Failure Handling Pattern
+
+Use a consistent shape for execution outcomes:
+
+```json
+{
+  "ok": false,
+  "error_code": "UPSTREAM_TIMEOUT",
+  "message": "CRM API timed out after 10 seconds",
+  "next_action": "Retry with smaller batch size"
+}
+```
+
+This makes downstream tool chaining and human review much easier.
+
+## Code Execution vs Workflow JavaScript Block
+
+Use **Agent Code Execution** when the agent needs to decide logic dynamically at runtime.
+
+Use the **Workflow JavaScript block** when logic should be predefined, repeatable and versioned in a workflow.
+
+## Next Steps
+
+- [Getting Started with Agents](/agents/getting-started): Configure tools and instructions
+- [Planning Tools](/agents/planning): Improve reliability for multi-step tasks
+- [Workflows Blocks](/workflows/blocks): Use JavaScript blocks in deterministic automations
+
+---
+
+Built with ❤️ by Scout OS

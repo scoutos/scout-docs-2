@@ -1,0 +1,49 @@
+# CRM (Salesforce and HubSpot)
+
+Start here first. CRM access gives agents the highest operational leverage for sales, support and account workflows.
+
+## Why CRM Comes First
+
+- Customer and pipeline data is already structured
+- Most high-value automations depend on records and stages
+- Teams can measure impact quickly (speed, coverage, conversion)
+
+## Common Agent Capabilities
+
+- Find and summarize at-risk deals
+- Enrich account records from new research
+- Draft follow-ups based on stage and last activity
+- Create contacts, notes and tasks with audit-friendly outputs
+
+## Setup Flow
+
+1. Open [studio.scoutos.com/integrations](https://studio.scoutos.com/integrations)
+2. Connect **Salesforce** and or **HubSpot**
+3. Open your agent and enable CRM tools in **Tools**
+4. Add instruction rules for lookup, write and confirmation
+
+## Instruction Snippet
+
+```markdown
+For CRM tasks:
+
+1. Look up the record before writing.
+2. Match by stable identifier (record ID, email, domain) before updates.
+3. Return the CRM object ID, fields changed and reason.
+4. Ask before creating duplicates when confidence is low.
+```
+
+## Prompt Examples
+
+- "Find opportunities in stage `Negotiation` with no activity for 14 days."
+- "Create a follow-up task in HubSpot for these five accounts."
+- "Update Salesforce notes with this call summary and include next steps."
+
+## Next Steps
+
+- [Integrations Overview](/integrations/overview): Full integration strategy
+- [Slack and Notion](/integrations/slack-notion): Send CRM insights to team channels and docs
+
+---
+
+Built with ❤️ by Scout OS
