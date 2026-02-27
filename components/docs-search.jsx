@@ -3,20 +3,63 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
-let pagefindPromise
+let indexPromise
 
-async function loadPagefind() {
-  if (!pagefindPromise) {
-    pagefindPromise = import(
-      /* webpackIgnore: true */
-      '/_pagefind/pagefind.js'
-    ).then(async module => {
-      await module.options({ baseUrl: '/' })
-      return module
+async function loadSearchIndex() {
+  if (!indexPromise) {
+    indexPromise = fetch('/search-index.json', { cache: 'no-store' }).then(async response => {
+      if (!response.ok) {
+        throw new Error(`Search index request failed (${response.status})`)
+      }
+      return response.json()
     })
   }
 
-  return pagefindPromise
+  return indexPromise
+}
+
+function normalize(value) {
+  return value.toLowerCase().replace(/\s+/g, ' ').trim()
+}
+
+function createExcerpt(content, query) {
+  const value = content || ''
+  if (!value) return ''
+
+  const lower = value.toLowerCase()
+  const q = query.toLowerCase()
+  const index = lower.indexOf(q)
+  const start = index >= 0 ? Math.max(0, index - 70) : 0
+  const end = Math.min(value.length, start + 180)
+  const prefix = start > 0 ? '... ' : ''
+  const suffix = end < value.length ? ' ...' : ''
+  return `${prefix}${value.slice(start, end)}${suffix}`
+}
+
+function scoreDocument(doc, query, tokens) {
+  const title = normalize(doc.title)
+  const content = normalize(doc.content)
+
+  let score = 0
+  if (title.includes(query)) score += 80
+  if (content.includes(query)) score += 30
+
+  let matchedTokens = 0
+  for (const token of tokens) {
+    const inTitle = title.includes(token)
+    const inContent = content.includes(token)
+    if (inTitle || inContent) {
+      matchedTokens += 1
+      if (inTitle) score += 20
+      if (inContent) score += 6
+    }
+  }
+
+  if (matchedTokens < tokens.length) {
+    return -1
+  }
+
+  return score
 }
 
 export function DocsSearch() {
@@ -58,24 +101,28 @@ export function DocsSearch() {
         setLoading(true)
         setError('')
 
-        const pagefind = await loadPagefind()
-        const response = await pagefind.search(value)
+        const index = await loadSearchIndex()
 
         if (searchRunRef.current !== runId) return
 
-        const topResults = response.results.slice(0, 8)
-        const hydrated = await Promise.all(topResults.map(item => item.data()))
+        const normalizedQuery = normalize(value)
+        const tokens = normalizedQuery.split(' ').filter(Boolean)
 
-        if (searchRunRef.current !== runId) return
-
-        setResults(
-          hydrated.map(item => ({
-            id: item.url,
-            url: item.url,
-            title: item.meta?.title || item.url,
-            excerpt: item.excerpt || ''
+        const ranked = (index.documents || [])
+          .map(doc => ({
+            doc,
+            score: scoreDocument(doc, normalizedQuery, tokens)
           }))
-        )
+          .filter(item => item.score >= 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 8)
+
+        setResults(ranked.map(({ doc }) => ({
+          id: doc.url,
+          url: doc.url,
+          title: doc.title,
+          excerpt: createExcerpt(doc.content, normalizedQuery)
+        })))
       } catch (err) {
         if (searchRunRef.current !== runId) return
         setResults([])
@@ -152,12 +199,7 @@ export function DocsSearch() {
                     onClick={() => setOpen(false)}
                   >
                     <span className="docs-search-title">{result.title}</span>
-                    {result.excerpt ? (
-                      <span
-                        className="docs-search-excerpt"
-                        dangerouslySetInnerHTML={{ __html: result.excerpt }}
-                      />
-                    ) : null}
+                    {result.excerpt ? <span className="docs-search-excerpt">{result.excerpt}</span> : null}
                   </Link>
                 </li>
               ))}
