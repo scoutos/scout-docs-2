@@ -1,6 +1,7 @@
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Banner, Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
+import { DocsSearch } from '../components/docs-search'
 import 'nextra-theme-docs/style.css'
 import './custom.css'
 
@@ -43,6 +44,7 @@ export default async function RootLayout({ children }) {
           banner={banner}
           navbar={navbar}
           pageMap={await getPageMap()}
+          search={<DocsSearch />}
           docsRepositoryBase="https://github.com/scoutos/scout-docs-2/blob/main"
           footer={footer}
         >

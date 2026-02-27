@@ -4,10 +4,10 @@
   "description": "Scout Documentation - Nextra 4",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && pagefind --site out --output-subdir _pagefind --quiet",
+    "build": "next build && pagefind --site out --output-subdir _pagefind --quiet && node scripts/verify-pagefind-index.mjs",
     "start": "next start",
     "deploy": "node deploy.mjs",
-    "search:index": "pagefind --site out --output-subdir _pagefind --quiet",
+    "search:index": "pagefind --site out --output-subdir _pagefind --quiet && node scripts/verify-pagefind-index.mjs",
     "sync:openapi": "node scripts/update-openapi.mjs",
     "validate:openapi": "node scripts/validate-openapi.mjs"
   },

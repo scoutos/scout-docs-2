@@ -23,13 +23,20 @@ function getApiKey() {
   if (process.env.ONHYPER_API_KEY) {
     return process.env.ONHYPER_API_KEY;
   }
+
+  // Backward-compatible token name
+  if (process.env.ONHYPER_TOKEN) {
+    return process.env.ONHYPER_TOKEN;
+  }
   
   // Check .env.local
   const envLocalPath = join(__dirname, '.env.local');
   if (existsSync(envLocalPath)) {
     const content = readFileSync(envLocalPath, 'utf-8');
-    const match = content.match(/ONHYPER_API_KEY=(.+)/);
-    if (match) return match[1].trim();
+    const apiKeyMatch = content.match(/ONHYPER_API_KEY=(.+)/);
+    if (apiKeyMatch) return apiKeyMatch[1].trim();
+    const tokenMatch = content.match(/ONHYPER_TOKEN=(.+)/);
+    if (tokenMatch) return tokenMatch[1].trim();
   }
   
   // Check ~/.onhyper-api-key
@@ -38,7 +45,7 @@ function getApiKey() {
     return readFileSync(homeKeyPath, 'utf-8').trim();
   }
   
-  console.error('❌ No API key found. Set ONHYPER_API_KEY environment variable.');
+  console.error('❌ No API key found. Set ONHYPER_API_KEY or ONHYPER_TOKEN.');
   console.error('   Example: ONHYPER_API_KEY=oh_live_xxx pnpm deploy');
   process.exit(1);
 }
