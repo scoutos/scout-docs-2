@@ -356,6 +356,13 @@
   .nextra-navbar button::after {
     content: none !important;
   }
+
+  /* Nextra wraps custom search in .x:max-md:hidden and adds a separator pseudo-element */
+  .nextra-navbar .x\:max-md\:hidden:has(.docs-search)::before,
+  .nextra-navbar .x\:max-md\:hidden:has(.docs-search)::after {
+    content: none !important;
+    display: none !important;
+  }
 }
 
 /* ========================================
