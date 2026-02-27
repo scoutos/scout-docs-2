@@ -1,89 +1,84 @@
-# Scout Docs 2 - Project Tasks
+# Scout Docs 2 - Project Reference
 
-**Project:** Scout Documentation (Nextra 4)  
-**Created:** Feb 23, 2026  
+**Project:** Scout Documentation (Nextra 4)
+**Created:** Feb 23, 2026
 **Goal:** Modern, searchable documentation for Scout OS
+**Live:** https://scout-docs.onhyper.io
+**Repo:** https://github.com/scoutos/scout-docs-2
 
 ---
 
-## Phase 1: Setup & Foundation
+## Tech Stack
 
-- [x] Install dependencies (`pnpm install`)
-- [x] Verify dev server works (`pnpm dev`)
-- [x] Configure deployment (onhyper.io)
-- [ ] Publish to GitHub (`github.com/scoutos/scout-docs-2`)
+- **Framework:** Next.js + Nextra 4 docs theme
+- **Template:** `shuding/nextra-docs-template`
+- **Styling:** Tailwind CSS
+- **Deploy:** Hyper (onhyper.io)
 
-## Phase 2: Content Planning
+---
 
-### Documentation Structure (Draft)
+## Documentation Structure
 
 ```
-pages/
-├── index.md              # Landing page
+content/
+├── index.mdx                    # Landing page
 ├── getting-started/
-│   ├── _meta.json
-│   ├── what-is-scout.md
-│   ├── quick-start.md
-│   └── core-concepts.md
-├── agents/              # DONE: Agents documentation
-│   ├── _meta.json
-│   ├── overview.md
-│   └── getting-started.md
-├── drive/               # DONE: Drive documentation
-│   ├── _meta.json
-│   ├── overview.md
-│   └── api-reference.md
-├── collections/         # NEW: Collections & Tables documentation
-│   ├── _meta.json
-│   ├── overview.md
-│   ├── creating-collections.md
-│   └── querying-data.md
-└── api/
-    ├── _meta.json
-    └── reference.md
+│   ├── what-is-scout.mdx
+│   ├── quick-start.mdx
+│   └── core-concepts.mdx
+├── agents/
+│   ├── overview.mdx
+│   ├── getting-started.mdx
+│   ├── agent-blocks.mdx
+│   ├── delegation.mdx
+│   ├── planning.mdx
+│   ├── scheduling.mdx
+│   └── templates.mdx
+├── collections/
+│   ├── overview.mdx
+│   ├── creating-collections.mdx
+│   └── web-scraping.mdx
+├── drive/
+│   ├── overview.mdx
+│   └── api-reference.mdx
+├── skills/
+│   ├── overview.mdx
+│   └── creating-skills.mdx
+├── workflows/
+│   └── overview.mdx
+└── api-reference.mdx
 ```
-
-- [x] Remove blocks/ and workflows/ directories (not current features)
-- [x] Update _meta.js navigation
-- [x] Review Scout OS changelog for Agents & Drive features
-- [x] Document Agents functionality
-- [x] Document Drive functionality
-- [x] Document Collections & Tables functionality (create detailed guides)
-- [ ] **Redefine "What is Scout" page** - Position Scout as an "agentic workforce studio" that enables technical and non-technical users to create and run autonomous agents
-- [ ] **Research Scout blog for documentation insights** - Review https://www.scoutos.com/blog for topics, examples, and use cases to improve docs
-- [ ] **Review Scout changelog for feature updates** - Analyze https://www.scoutos.com/changelog and create plan to update docs with new features
-- [ ] **Document Scout Skills** - Create documentation for https://github.com/scoutos/scout-skills (skill system, available skills, creating custom skills)
-- [ ] **Update Introduction page** - Rewrite index.mdx to reflect Scout's agentic vibe and workforce studio positioning
-- [ ] **Fix hamburger menu** - Investigate mobile hamburger menu display issue on scout-docs.onhyper.io using agent-browser; identify and fix the CSS/layout problem
-- [ ] **Fix mobile responsiveness** - Audit and improve overall mobile responsiveness of scout-docs site
-- [ ] **Fix mobile navigation panel** - Improve readability and usability of navigation panel in mobile view
-- [ ] **Add GitHub URL to navbar** - Update projectLink in layout.jsx to point to https://github.com/scoutos/scout-docs-2
-- [ ] Migrate content from docs.scoutos.com
-- [ ] Audit for outdated/missing info
-- [ ] Add code examples and screenshots
-- [ ] Create API reference section
-
-## Phase 3: Customization
-
-- [ ] Custom Scout branding (logo, colors)
-- [ ] Navigation structure
-- [ ] Search configuration (Algolia or Nextra built-in)
-- [ ] Dark/light mode defaults
-
-## Phase 4: Deployment
-
-- [ ] Deploy to Vercel
-- [ ] Configure custom domain (docs.scoutos.com)
-- [ ] Set up redirects from old docs
-- [ ] Analytics integration
 
 ---
 
-## Notes
+## Completed Phases
 
-- Using Nextra 4 docs theme
-- Base template: `shuding/nextra-docs-template`
-- Stack: Next.js + Nextra + TypeScript
+### Phase 1: Setup & Foundation ✅
+- Install dependencies (`pnpm install`)
+- Dev server working (`pnpm dev`)
+- Deploy to Hyper (onhyper.io)
+
+### Phase 2: Content Creation ✅
+- Agents documentation complete
+- Drive documentation complete
+- Collections documentation complete
+- Skills documentation started
+- Quick Start improvements
+- Core Concepts reorganized
+
+---
+
+## Active Tasks
+
+All open tasks are tracked in `tasks/todos/` with prefix `scout-docs-*`:
+- 2026-02-27-scout-docs-what-is-scout.md
+- 2026-02-27-scout-docs-blog-research.md
+- 2026-02-27-scout-docs-changelog-review.md
+- 2026-02-27-scout-docs-skills-documentation.md
+- 2026-02-27-scout-docs-index-rewrite.md
+- 2026-02-27-scout-docs-mobile-fixes.md
+- 2026-02-27-scout-docs-github-navbar.md
+- 2026-02-27-scout-docs-publish-github.md
 
 ---
 
