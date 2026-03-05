@@ -1,0 +1,59 @@
+# Copilot
+
+Embed Scout agents on any website with Copilot, an embeddable chat widget.
+
+## Quick Start
+
+1. Create a Copilot in Scout Studio
+2. Attach it to a workflow
+3. Embed the widget on your website
+
+Your users can now interact with your agent directly from your site.
+
+## Configuration
+
+Copilot can be customized with the following attributes:
+
+| Attribute | Description | Default |
+|-----------|-------------|---------|
+| `tts-enabled` | Enable text-to-speech for assistant messages | `false` |
+
+## Text-to-Speech (TTS)
+
+Copilot supports reading assistant messages aloud for accessibility. When enabled, a speaker icon appears next to each assistant message.
+
+### Enabling TTS
+
+Add the `tts-enabled` attribute to your Copilot embedding code:
+
+```html
+<scout-copilot
+  copilot-id="your-copilot-id"
+  tts-enabled="true"
+></scout-copilot>
+```
+
+### How It Works
+
+- **Per-message control**: Click the speaker icon on any assistant message to hear it read aloud
+- **One at a time**: Starting a new message stops any currently playing message
+- **Locale-aware**: Voice automatically matches your Copilot's configured locale
+- **Keyboard accessible**: Tab to the control and press Enter to play/stop
+
+### Browser Support
+
+TTS uses the browser's Web Speech API. Supported in:
+- Chrome 33+
+- Safari 7+
+- Edge 14+
+- Firefox 49+
+
+If TTS is enabled but the browser doesn't support it, the speaker control appears disabled with an accessible message.
+
+### Privacy
+
+TTS runs entirely client-side. Message content is not sent to any third party for speech synthesis.
+
+---
+
+*Feature added: March 2026 | [PRO-6747](https://linear.app/scoutshq/issue/PRO-6747)*

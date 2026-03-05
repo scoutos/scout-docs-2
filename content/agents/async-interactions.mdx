@@ -1,0 +1,115 @@
+# Asynchronous Agent Interactions
+
+For long-running agent tasks, use async mode with callbacks instead of waiting on a single HTTP request.
+
+## When to Use Async
+
+- Agent tasks that may exceed typical HTTP timeout limits (30+ seconds)
+- Automation workflows with strict timeout requirements
+- Scenarios where connection stability isn't guaranteed
+
+## How It Works
+
+1. You provide a `callback_url` when starting the interaction
+2. Scout responds immediately with `202 Accepted` and a `session_id`
+3. The agent runs asynchronously in the background
+4. When complete, Scout POSTs to your callback URL with the result
+
+## API Reference
+
+### Start Async Interaction
+
+**Request**
+
+```bash
+POST /v1/agents/{agent_id}/interact
+Content-Type: application/json
+
+{
+  "message": "Process all pending orders and send confirmation emails",
+  "callback_url": "https://your-app.com/webhooks/scout-callback"
+}
+```
+
+**Response (202 Accepted)**
+
+```json
+{
+  "session_id": "sess_abc123",
+  "events_url": "https://api.scoutos.com/v1/agent-sessions/sess_abc123/events"
+}
+```
+
+### Callback Payload
+
+When the agent completes, Scout POSTs to your `callback_url`:
+
+**Success**
+
+```json
+{
+  "callback_event_id": "2b2f5b7d-7a5d-4f9b-9f6d-8ed0d2c7a1d2",
+  "session_id": "sess_abc123",
+  "status": "succeeded",
+  "completed_at": "2026-03-05T14:30:00Z",
+  "events_url": "https://api.scoutos.com/v1/agent-sessions/sess_abc123/events"
+}
+```
+
+**Failure**
+
+```json
+{
+  "callback_event_id": "2b2f5b7d-7a5d-4f9b-9f6d-8ed0d2c7a1d2",
+  "session_id": "sess_abc123",
+  "status": "failed",
+  "completed_at": "2026-03-05T14:30:00Z",
+  "events_url": "https://api.scoutos.com/v1/agent-sessions/sess_abc123/events",
+  "error": {
+    "code": "EXECUTION_ERROR",
+    "message": "Agent exceeded maximum step count"
+  }
+}
+```
+
+### Fetching Results
+
+Use the `events_url` to retrieve the full event stream:
+
+```bash
+GET https://api.scoutos.com/v1/agent-sessions/sess_abc123/events
+Authorization: Bearer your-api-key
+```
+
+## Callback Authentication
+
+Callbacks include a signature header for verification:
+
+```
+X-Scout-Signature-Alg: HMAC-SHA256
+X-Scout-Signature: t=1709651400,sig=base64-encoded-signature
+```
+
+### Verifying the Signature
+
+1. Extract `t` (timestamp) and `sig` (signature) from the header
+2. Build the signature base: `{timestamp}.{raw_request_body}`
+3. Compute HMAC-SHA256 using your org secret key
+4. Compare to the provided signature
+
+## Retry Behavior
+
+- **At-least-once delivery**: Callbacks may be delivered multiple times
+- **Deduplication**: Use `callback_event_id` to identify duplicates
+- **Retry schedule**: Exponential backoff over ~24 hours
+- **Retry triggers**: Network errors, 5xx responses
+
+## Requirements
+
+- `callback_url` must be HTTPS
+- Private/internal URLs are not allowed (SSRF protection)
+- Your endpoint should respond within 10 seconds
+
+---
+
+*Feature added: March 2026 | [PRO-6729](https://linear.app/scoutshq/issue/PRO-6729)*
